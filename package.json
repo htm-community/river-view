@@ -1,0 +1,42 @@
+{
+  "name": "river-stream",
+  "version": "1.0.0",
+  "description": "Public data stream framework.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "istanbul cover _mocha -- --recursive -R spec && istanbul report text-summary > coverage/summary.txt &&     cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rhyolight/river-stream.git"
+  },
+  "keywords": [
+    "data",
+    "stream",
+    "redis",
+    "public",
+    "framework"
+  ],
+  "author": "Matthew Taylor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rhyolight/river-stream/issues"
+  },
+  "homepage": "https://github.com/rhyolight/river-stream",
+  "dependencies": {
+    "async": "^1.2.1",
+    "lodash": "^3.9.3",
+    "request": "^2.58.0"
+  },
+"devDependencies": {
+     "chai": "2.2.0",
+     "coveralls": "2.11.2",
+     "istanbul": "0.3.13",
+     "mocha": "2.2.4",
+     "proxyquire": "1.4.0",
+     "sinon": "1.14.1"
+   }
+}

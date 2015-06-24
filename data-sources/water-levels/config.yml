@@ -1,0 +1,12 @@
+description: "Missouri water levels provided by National Weather Service."
+
+urls:
+  - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=trym7&output=xml"
+  - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=trym8&output=xml"
+
+interval: "15 minutes"
+window: "6 months"
+
+columns: 
+  - Stage
+  - Flow

@@ -1,0 +1,4 @@
+"default-interval": "10 minutes"
+"data-sources":
+  - "nyc-traffic"
+  - "water-levels"

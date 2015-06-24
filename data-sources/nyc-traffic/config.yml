@@ -1,0 +1,18 @@
+description: "New York City traffic speeds and travel times across certain paths provided by the NYDOT."
+
+url: http://207.251.86.229/nyc-links-cams/LinkSpeedQuery.txt
+
+interval: "10 minutes"
+window: "6 months"
+
+columns: 
+  - Speed
+  - TravelTime
+
+meta: 
+  - Borough
+  - linkName
+  - linkId
+  - linkPoints
+  - Owner
+  - Transcom_id
