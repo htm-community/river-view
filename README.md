@@ -1,6 +1,6 @@
 # River View
 
-> Public Data Streaming Service Framework
+> Public Streaming Data Service Framework
 
 * * *
 
