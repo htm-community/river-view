@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "start": "node index.js",
     "test": "istanbul cover _mocha -- --recursive -R spec && istanbul report text-summary > coverage/summary.txt &&     cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
@@ -28,15 +29,16 @@
   "homepage": "https://github.com/rhyolight/river-stream",
   "dependencies": {
     "async": "^1.2.1",
+    "js-yaml": "^3.3.1",
     "lodash": "^3.9.3",
     "request": "^2.58.0"
   },
-"devDependencies": {
-     "chai": "2.2.0",
-     "coveralls": "2.11.2",
-     "istanbul": "0.3.13",
-     "mocha": "2.2.4",
-     "proxyquire": "1.4.0",
-     "sinon": "1.14.1"
-   }
+  "devDependencies": {
+    "chai": "2.2.0",
+    "coveralls": "2.11.2",
+    "istanbul": "0.3.13",
+    "mocha": "2.2.4",
+    "proxyquire": "1.4.0",
+    "sinon": "1.14.1"
+  }
 }
