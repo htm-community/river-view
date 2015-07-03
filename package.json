@@ -29,8 +29,12 @@
   "homepage": "https://github.com/rhyolight/river-stream",
   "dependencies": {
     "async": "^1.2.1",
+    "express": "^4.13.0",
     "js-yaml": "^3.3.1",
     "lodash": "^3.9.3",
+    "metalsmith": "^1.7.0",
+    "metalsmith-templates": "^0.7.0",
+    "redis": "^0.12.1",
     "request": "^2.58.0"
   },
   "devDependencies": {

@@ -7,6 +7,6 @@ urls:
 interval: "15 minutes"
 window: "6 months"
 
-columns: 
+fields: 
   - Stage
   - Flow

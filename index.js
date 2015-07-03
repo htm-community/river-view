@@ -1,39 +1,57 @@
 var path = require('path')
-  , Registrar = require('./lib/registrar')
+  , url = require('url')
+  , _ = require('lodash')
+  , express = require('express')
   , DataSourceFactory = require('./lib/data-source-factory')
+  , CronManager = require('./lib/cron-manager')
   , configuration = require('./lib/configuration')
+  , RedisClient = require('./lib/redis-client')
   , appConfig = path.join(__dirname, 'config.yml')
   , CONFIG
+  , REDIS_URL
+  , redisClient
+  , cronMananger
   , dataSources = []
+  , webapp = express()
   ;
 
 // read application configuration
 CONFIG = configuration.parseYaml(appConfig);
+console.log('Application Configuration');
+console.log('==============================================');
 console.log(CONFIG);
+console.log('==============================================');
+
+// Fail fast
+if (! process.env[CONFIG.redisEnv]) {
+    throw new Error('Expected REDIS URL set into environment varible "' + CONFIG.redisEnv + '".');
+} else {
+    REDIS_URL = process.env[CONFIG.redisEnv];
+}
 
 // Look for data-sources.
 dataSources = DataSourceFactory.createDataSources(CONFIG.dataSourceDir)
 
-console.log(dataSources);
+console.log('Data-Sources:');
+console.log('==============================================');
+_.each(dataSources, function(s) { console.log(s); });
+console.log('==============================================');
 
-// For each data-source:
-    // parse config
-    // load parser
-    // validate config
-        // validate url(s)
+// Connect to redis
+redisClient = new RedisClient(REDIS_URL);
+redisClient.initialize(function(err) {
+    if (err) throw err;
 
-// connect to redis
+    cronManager = new CronManager({
+        config: CONFIG
+      , redisClient: redisClient
+      , dataSources: dataSources
+    });
 
-// for each data source
-    // check registration for data source, if not registered:
-        // register data source in redis
-    // if registered
-        // print a warning and overwrite
-    // create redis client
-    // create cron job use data source parser, config, and redis client
+    cronManager.start();
 
-// create administractive cron jobs for:
-// - data cleanup
+
+});
 
 // Start web server with:
 // - HTML handlers for:

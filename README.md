@@ -62,4 +62,21 @@ Displays information about this River View instance and its data sources.
 - http://localhost:8080/:datasource/:id.html
 - http://localhost:8080/:datasource/:id.csv
 
-##
+# Addendum
+
+## Redis Storage Schema
+
+Each _data-source_ will be stored in the same fashion. The following describes this, given the following variable values:
+
+- `<data-source-name>`: The name of the _data-source_, identified by the name of its directory in `/data-sources`.
+- `<id>`: The unique identier for a temporal data stream.
+
+### Data Element Properties
+
+Each data element might have static properties that do not change temporally. These are stored in the `<data-source-name>:<id>:props` key, and the value is a one-level JSON object.
+
+### Data Element Stream
+
+Temporal data for a data stream are stored as a sorted set in Redis, keyed by `<id>` and using timestamp as the "score".
+
+`<data-source-name>:<id>`

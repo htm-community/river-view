@@ -1,5 +1,3 @@
 redisEnv: REDIS_URL
 dataSourceDir: data-sources
-
-
 defaultInterval: 10 minutes

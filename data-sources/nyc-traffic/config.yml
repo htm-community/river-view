@@ -5,11 +5,11 @@ url: http://207.251.86.229/nyc-links-cams/LinkSpeedQuery.txt
 interval: "10 minutes"
 window: "6 months"
 
-columns: 
+fields:
   - Speed
   - TravelTime
 
-meta: 
+properties: 
   - Borough
   - linkName
   - linkId
