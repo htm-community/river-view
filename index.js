@@ -2,16 +2,16 @@ var path = require('path')
   , url = require('url')
   , _ = require('lodash')
   , express = require('express')
-  , DataSourceFactory = require('./lib/data-source-factory')
-  , CronManager = require('./lib/cron-manager')
+  , RiverFactory = require('./lib/river-factory')
+  , Lockmaster = require('./lib/lockmaster')
   , configuration = require('./lib/configuration')
   , RedisClient = require('./lib/redis-client')
   , appConfig = path.join(__dirname, 'config.yml')
   , CONFIG
   , REDIS_URL
   , redisClient
-  , cronMananger
-  , dataSources = []
+  , lockmaster
+  , rivers = []
   , webapp = express()
   ;
 
@@ -30,11 +30,11 @@ if (! process.env[CONFIG.redisEnv]) {
 }
 
 // Look for data-sources.
-dataSources = DataSourceFactory.createDataSources(CONFIG.dataSourceDir)
+rivers = RiverFactory.createRivers(CONFIG.riverDir)
 
-console.log('Data-Sources:');
+console.log('Starting with %s rivers:', rivers.length);
 console.log('==============================================');
-_.each(dataSources, function(s) { console.log(s); });
+_.each(rivers, function(s) { console.log(s); });
 console.log('==============================================');
 
 // Connect to redis
@@ -42,14 +42,13 @@ redisClient = new RedisClient(REDIS_URL);
 redisClient.initialize(function(err) {
     if (err) throw err;
 
-    cronManager = new CronManager({
+    lockmaster = new Lockmaster({
         config: CONFIG
       , redisClient: redisClient
-      , dataSources: dataSources
+      , rivers: rivers
     });
 
-    cronManager.start();
-
+    lockmaster.start();
 
 });
 

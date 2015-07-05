@@ -4,9 +4,11 @@ urls:
   - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=trym7&output=xml"
   - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=trym8&output=xml"
 
-interval: "15 minutes"
+# interval: "15 minutes"
+interval: "3 seconds"
+
 window: "6 months"
 
-fields: 
+fields:
   - Stage
   - Flow

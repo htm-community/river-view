@@ -1,15 +1,18 @@
 description: "New York City traffic speeds and travel times across certain paths provided by the NYDOT."
 
-url: http://207.251.86.229/nyc-links-cams/LinkSpeedQuery.txt
+urls:
+  - http://207.251.86.229/nyc-links-cams/LinkSpeedQuery.txt
 
-interval: "10 minutes"
+# interval: "10 minutes"
+interval: "1 second"
+
 window: "6 months"
 
 fields:
   - Speed
   - TravelTime
 
-properties: 
+properties:
   - Borough
   - linkName
   - linkId
