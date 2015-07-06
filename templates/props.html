@@ -1,0 +1,23 @@
+{{> header }}
+
+<h1>{{name}}</h1>
+<h2>{{id}} Properties</h2>
+
+<blockquote>
+    <a href="props.json">JSON</a>
+</blockquote>
+
+<a href="data.html">See data</a>
+
+<table>
+<tbody>
+{{#each properties}}
+    <tr>
+        <th>{{@key}}</th>
+        <td>{{this}}</td>
+    </tr>
+{{/each}}
+</tbody>
+</table>
+
+{{> footer }}

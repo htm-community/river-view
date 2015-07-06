@@ -1,11 +1,29 @@
 {{> header }}
 
-<h1>{{name}}</h1>
+<h1>{{name}} Keys</h1>
 
-<ul>
+<blockquote>
+    <a href="keys.json">JSON</a>
+</blockquote>
+
+<table>
+<tbody>
 {{#each keys}}
-    <li>{{this}}</li>
+    <tr>
+        <td>{{this}}</td>
+        <td>
+        <a href="{{../baseurl}}/{{../name}}/{{this}}/data.html">
+            data
+        </a>
+        </td>
+        <td>
+        <a href="{{../baseurl}}/{{../name}}/{{this}}/props.html">
+            properties
+        </a>
+        </td>
+    </tr>
 {{/each}}
-</ul>
+</tbody>
+</table>
 
 {{> footer }}

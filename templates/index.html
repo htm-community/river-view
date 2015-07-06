@@ -2,17 +2,18 @@
 
 <h1>Active Rivers</h1>
 
+<blockquote>
+    <a href="index.json">JSON</a>
+</blockquote>
+
+<ul>
 {{#each rivers}}
-    <h2>
-        <a href="{{../baseurl}}/{{this.name}}/keys">
-            {{this.name}}
+    <li>
+        <a href="{{name}}/props.html">
+            {{name}}
         </a>
-    </h2>
-    <ul>
-    {{#each this}}
-        <li>{{@key}}: {{this}}</li>
-    {{/each}}
-    </ul>
+    </li>
 {{/each}}
+</ul>
 
 {{> footer }}

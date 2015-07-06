@@ -1,0 +1,45 @@
+{{> header }}
+
+<h1>
+    <a href="{{../baseurl}}/{{this.name}}/keys.html">
+        {{this.name}}
+    </a>
+</h1>
+
+<blockquote class="description">{{this.description}}</blockquote>
+
+<h4>Author: <a href="mailto:{{email}}">{{author}}</a></h4>
+
+<dl>
+    <dt>Collection Interval</dt>
+    <dd>{{interval}}</dd>
+</dl>
+<dl>
+    <dt>Data Expires After</dt>
+    <dd>{{expires}}</dd>
+</dl>
+
+<h4>Data Source(s)</h4>
+<ul>
+    {{#each sources}}
+    <li><a href="{{this}}" target="_blank">{{this}}</a></li>
+    {{/each}}
+</ul>
+
+<h4>Data Attributes</h4>
+<h5>Fields</h5>
+<ul>
+    {{#each fields}}
+    <li>{{this}}</li>
+    {{/each}}
+</ul>
+
+<h5>Properties</h5>
+<ul>
+    {{#each properties}}
+    <li>{{this}}</li>
+    {{/each}}
+</ul>
+
+
+{{> footer }}
