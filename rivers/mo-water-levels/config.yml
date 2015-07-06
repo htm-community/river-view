@@ -8,6 +8,9 @@ timezone: America/Chicago
 sources:
   - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=trym7&output=xml"
   - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=trym8&output=xml"
+  - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=grfi2&output=xml"
+  - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=clkm7&output=xml"
+  - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=sclm7&output=xml"
 
 interval: 15 minutes
 

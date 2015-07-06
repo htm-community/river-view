@@ -23,7 +23,13 @@ module.exports = function(config, body, url, fieldCallback, propertyCallback) {
             var timeString = point.valid[0]._
               , timestamp = moment(new Date(timeString)).tz(timezone).unix()
               , stage = parseFloat(point.primary[0]._)
-              , flow = parseFloat(point.secondary[0]._)
+              , flow = 0.0
+              ;
+
+            // Some locations don't have this info
+            if (point.secondary) {
+                 flow = parseFloat(point.secondary[0]._)
+            }
 
             fieldCallback(null, id, timestamp, [stage, flow]);
         });
