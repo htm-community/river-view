@@ -2,6 +2,7 @@ var path = require('path')
   , url = require('url')
   , _ = require('lodash')
   , express = require('express')
+  , buildStaticSite = require('./lib/site-builder')
   , RiverFactory = require('./lib/river-factory')
   , Lockmaster = require('./lib/lockmaster')
   , startDataService = require('./lib/data-server')
@@ -20,11 +21,14 @@ var path = require('path')
 CONFIG = configuration.parseYaml(appConfig);
 
 // Make local config substitutions
-if (process.env['BASE_URL']) {
-    config.baseurl = process.env['BASE_URL'];
-}
 if (process.env['PORT']) {
-    config.baseurl = process.env['PORT'];
+    CONFIG.port = process.env['PORT'];
+}
+if (process.env['HOST']) {
+    CONFIG.host = process.env['HOST'];
+}
+if (CONFIG.port != 80) {
+    CONFIG.baseurl = CONFIG.host + ':' + CONFIG.port;
 }
 
 console.log('Application Configuration');
@@ -59,6 +63,9 @@ redisClient.initialize(function(err) {
     });
 
     lockmaster.start();
+
+    buildStaticSite(CONFIG);
+    webapp.use(express.static('build'));
 
     startDataService({
         app: webapp

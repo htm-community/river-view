@@ -4,6 +4,9 @@
 # Logs
 *.log
 
+# Static file build dir
+build/
+
 # Coverage directory used by tools like istanbul
 coverage/
 

@@ -1,5 +1,6 @@
 redisEnv: REDIS_URL
 riverDir: rivers
 defaultInterval: 10 minutes
-baseurl: 'http://localhost'
+
+host: 'http://localhost'
 port: 8085
