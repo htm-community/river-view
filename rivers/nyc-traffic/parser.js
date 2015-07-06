@@ -26,8 +26,7 @@ function dateStringToTimestampWithZone(timeIn, zone) {
 }
 
 module.exports = function(config, body, url, fieldCallback, propertyCallback) {
-    var temporalData
-      , propertyNames = config.properties
+    var propertyNames = config.properties
       , fieldNames = config.fields
       ;
 

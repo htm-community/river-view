@@ -1,14 +1,24 @@
-description: "Missouri water levels provided by National Weather Service."
+name: mo-water-levels
+description: Missouri water levels provided by National Weather Service.
+author: Matthew Taylor
+email: matt@numenta.org
 
-urls:
+timezone: America/Chicago
+
+sources:
   - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=trym7&output=xml"
   - "http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=trym8&output=xml"
 
-# interval: "15 minutes"
-interval: "3 seconds"
+interval: 15 minutes
 
-window: "6 months"
+expires: 6 months
 
 fields:
   - Stage
   - Flow
+
+properties:
+  - originator
+  - name
+  - id
+  - generationtime

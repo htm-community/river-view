@@ -1,0 +1,10 @@
+<h1>Active Rivers</h1>
+
+{{#each rivers}}
+    <h2>{{this.name}}</h2>
+    <ul>
+    {{#each this}}
+        <li>{{@key}}: {{this}}</li>
+    {{/each}}
+    </ul>
+{{/each}}

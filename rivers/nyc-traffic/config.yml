@@ -1,12 +1,16 @@
-description: "New York City traffic speeds and travel times across certain paths provided by the NYDOT."
+name: nyc-traffic
+description: New York City traffic speeds and travel times across certain paths provided by the NYDOT.
+author: Matthew Taylor
+email: matt@numenta.org
 
-urls:
+timezone: America/New_York
+
+sources:
   - http://207.251.86.229/nyc-links-cams/LinkSpeedQuery.txt
 
-# interval: "10 minutes"
-interval: "1 second"
+interval: 10 minutes
 
-window: "6 months"
+expires: 6 months
 
 fields:
   - Speed
