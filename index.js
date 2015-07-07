@@ -27,8 +27,10 @@ if (process.env['PORT']) {
 if (process.env['HOST']) {
     CONFIG.host = process.env['HOST'];
 }
-if (CONFIG.port != 80) {
+if (CONFIG.host == 'http://localhost') {
     CONFIG.baseurl = CONFIG.host + ':' + CONFIG.port;
+} else {
+    CONFIG.baseurl = CONFIG.host;
 }
 
 console.log('Application Configuration');
