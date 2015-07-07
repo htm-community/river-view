@@ -75,13 +75,3 @@ redisClient.initialize(function(err) {
     });
 
 });
-
-
-
-
-// Start web server with:
-// - HTML handlers for:
-//   - main River View page with data source listing
-//   - data source pages
-//     - index with list of data items
-//     - charts
