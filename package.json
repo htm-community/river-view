@@ -40,6 +40,7 @@
     "metalsmith-permalinks": "^0.4.0",
     "metalsmith-templates": "^0.7.0",
     "moment": "^2.10.3",
+    "moment-timezone": "^0.4.0",
     "redis": "^0.12.1",
     "request": "^2.58.0",
     "xml2js": "^0.4.9"
