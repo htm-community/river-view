@@ -41,6 +41,8 @@
 
         var docWidth = $(document).width()
           , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv'
+          , lastField = '{{headers}}'.split(',').pop()
+          , graphConfig = {}
           ;
 
         function highlightWeekends(canvas, area, g) {
@@ -91,11 +93,16 @@
             }
         }
 
-        new Dygraph(document.getElementById('chart'), csvPath, {
+        graphConfig = {
             title: name
           , width: docWidth * 0.9
           , underlayCallback: highlightWeekends
-        })
+        };
+
+        // This will plot the last field on the ride Y axis.
+        graphConfig[lastField] = { axis: {} };
+
+        new Dygraph(document.getElementById('chart'), csvPath, graphConfig);
 
     });
 </script>
