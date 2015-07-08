@@ -4,17 +4,21 @@
 
 ![A View of the Mississippi River](https://c1.staticflickr.com/5/4009/4616069553_1740ff78b3_z.jpg)
 
-* * *
-
-## Work In Progress
-
-> The documentation below is a **DRAFT**.
-
-* * *
-
 _**River View**_ is a data streaming framework for public data. It provides a pluggable interface for users to expose public data sources in a transient windowed format that is easily query-able. It was built to provide a longer-lasting historical window for public data sources that provide only real-time data snapshots, especially for sensor data from public government services like weather, traffic, and geological data.
 
 _River View_ fetches data from user-defined [_Rivers_](#Rivers) at regular intervals, populating a local [Redis](http://redis.io) database. This data is provided in a windowed format, so that data older than a certain configured age is lost. But the window should be large enough to provide enough historical data to potentially train machine intelligence models on the data patterns within it.
+
+## Dependencies
+
+- [Redis](http://redis.io)
+
+You must have a Redis instance available. The URL to the instance should be set in an environment variable called `REDIS_URL`, something like:
+
+    export REDIS_URL=redis://127.0.0.1:6379
+
+You may use authentication in the Redis URL string:
+
+    export REDIS_URL=redis://username:password@hostname:port
 
 ## Rivers
 
