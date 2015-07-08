@@ -35,7 +35,7 @@ Please see [Creating a River](https://github.com/rhyolight/river-view/wiki/Creat
 
 ## Web Services
 
-In addition to collected and storing data from _Rivers_, a simple HTTP API for reading the data is also active on startup. It returns HTML, JSON, and (in some cases) CSV data for each _River_ configured at startup.
+In addition to collecting and storing data from _Rivers_, a simple HTTP API for reading the data is also active on startup. It returns HTML, JSON, and (in some cases) CSV data for each _River_ configured at startup.
 
 ### URLs
 
