@@ -71,7 +71,6 @@ redisClient.initialize(function(err) {
 
     startDataService({
         app: webapp
-      , redisClient: redisClient
       , rivers: rivers
       , config: CONFIG
     });
