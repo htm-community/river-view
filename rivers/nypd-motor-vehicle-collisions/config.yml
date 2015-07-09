@@ -1,0 +1,49 @@
+# Please name this the same as the directory it is in.
+name: nypd-motor-vehicle-collisions
+type: geotemporal
+    
+# Short text description of the data you are providing.
+description: Details of Motor Vehicle Collisions in New York City provided by the Police Department (NYPD). See https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95/about for details.
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/New_York
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+  # see http://dev.socrata.com/
+  # - https://data.cityofnewyork.us/resource/qiz3-axqb.json?$limit=5000&$order=date%20DESC,time%20DESC
+  - https://data.cityofnewyork.us/resource/qiz3-axqb.json?$limit=50&$order=date%20DESC,time%20DESC
+
+# How often should River View poll your data sources?
+interval: 5 days
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+fields:
+  - latitude
+  - longitude
+  - id
+  - borough
+  - contributing_factor_vehicle_1
+  - contributing_factor_vehicle_2
+  - number_of_cyclist_injured
+  - number_of_cyclist_killed
+  - number_of_motorist_injured
+  - number_of_motorist_killed
+  - number_of_pedestrians_injured
+  - number_of_pedestrians_killed
+  - number_of_persons_injured
+  - number_of_persons_killed
+  - off_street_name
+  - on_street_name
+  - vehicle_type_code1
+  - vehicle_type_code2
+  - zip_code

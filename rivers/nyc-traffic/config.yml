@@ -1,5 +1,7 @@
 # Please name this the same as the directory it is in.
 name: nyc-traffic
+type: temporal
+
 # Short text description of the data you are providing.
 description: New York City traffic speeds and travel times across certain paths provided by the NYDOT.
 
@@ -23,8 +25,7 @@ interval: 10 minutes
 # a time-boxed window of data. Data outside of this timebox will be flushed.
 expires: 6 months
 
-# These are the field names for your data that changes over time. These are
-# like keys, where the values are extracted from the data sources above.
+# Primary data, usually collected in one location. Should both be scalar values.
 fields:
   - Speed
   - TravelTime

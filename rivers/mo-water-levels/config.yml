@@ -1,5 +1,8 @@
 name: mo-water-levels
+type: temporal
+
 description: Missouri water levels provided by National Weather Service.
+
 author: Matthew Taylor
 email: matt@numenta.org
 

@@ -33,6 +33,10 @@ A _**River**_ is a pluggable public data stream gathered from one or more origin
 
 Each _River_ may produce data for many unique data items, but they must have unique identifiers. For example, a city traffic data source may produce data for many traffic paths within the city, each identified with a unique ID. A US state water level data source might have unique sources for each water level sensor in the state, each with a unique ID.
 
+### River Types
+
+A river can be `temporal` or `geotemporal`. Both contain timestamped data, but `geothermal` data is presented a bit differently.
+
 ### Creating a River
 
 Please see [Creating a River](https://github.com/rhyolight/river-view/wiki/Creating-a-River) in our wiki.

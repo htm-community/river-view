@@ -5,7 +5,7 @@ var _ = require('lodash')
 
 
 
-module.exports = function(config, body, url, fieldCallback, propertyCallback) {
+module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
     var propertyNames = config.properties
       , fieldNames = config.fields
       , timezone = config.timezone
@@ -31,13 +31,13 @@ module.exports = function(config, body, url, fieldCallback, propertyCallback) {
                  flow = parseFloat(point.secondary[0]._)
             }
 
-            fieldCallback(null, id, timestamp, [stage, flow]);
+            temporalDataCallback(null, id, timestamp, [stage, flow]);
         });
 
         _.each(propertyNames, function(propName) {
             dataProperties[propName] = props[propName];
         });
-        propertyCallback(null, id, dataProperties);
+        metaDataCallback(null, id, dataProperties);
 
     });
 };

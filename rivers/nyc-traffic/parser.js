@@ -25,7 +25,7 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     return timestamp;
 }
 
-module.exports = function(config, body, url, fieldCallback, propertyCallback) {
+module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
     var propertyNames = config.properties
       , fieldNames = config.fields
       ;
@@ -43,19 +43,19 @@ module.exports = function(config, body, url, fieldCallback, propertyCallback) {
                 , pathId = path[headers.indexOf('Id')]
                 , timeString = path[headers.indexOf('DataAsOf')]
                 , timestamp = dateStringToTimestampWithZone(
-                    timeString, "America/New_York"
+                    timeString, config.timezone
                   )
                 ;
 
               _.each(propertyNames, function(propName) {
                   dataProperties[propName] = path[headers.indexOf(propName)];
               });
-              propertyCallback(null, pathId, dataProperties);
+              metaDataCallback(null, pathId, dataProperties);
 
               _.each(fieldNames, function(fieldName) {
                   fieldValues.push(path[headers.indexOf(fieldName)]);
               });
-              fieldCallback(null, pathId, timestamp, fieldValues);
+              temporalDataCallback(null, pathId, timestamp, fieldValues);
           });
 
       });

@@ -67,7 +67,7 @@ redisClient.initialize(function(err) {
     lockmaster.start();
 
     buildStaticSite(CONFIG);
-    webapp.use(express.static('build'));
+    webapp.use('/static', express.static('build'));
 
     startDataService({
         app: webapp
