@@ -39,7 +39,7 @@ Each _River_ may produce data for many unique data items, but they must have uni
 
 ### River Types
 
-A river can be `temporal` or `geotemporal`. Both contain timestamped data, but `geothermal` data is presented a bit differently.
+A river can be `temporal` or `geotemporal`. Both contain timestamped data, but `geotemporal` data is presented a bit differently.
 
 ### Creating a River
 
