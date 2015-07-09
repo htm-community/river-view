@@ -2,26 +2,58 @@
 
 <a href="https://github.com/rhyolight/river-view"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
-<h1>River View</h1>
 
-<p>River View is a <em>Public Streaming Data Service Framework</em>. It allows anyone to expose static temporal public data in a way that is cached and query-able.</p>
+<div class="page-header">
+  <h1>River View <small><em>Public Streaming Data Service Framework</em></small></h1>
+</div>
 
-<h2>Rivers</h2>
+<div align="center">
+<img src="{{ baseurl }}/static/images/river-view.jpg"/>
+</div>
 
-<p>This <em>River View</em> instances contains the data streams (or <em>Rivers</em>) shown below. Any HTML page you view on this website can also be viewed in JSON by changing the file extension in the URL to <code>.json</code>.</p>
+<div style="margin: 20px 200px;">
 
-<blockquote>
-    <a href="index.json">JSON</a>
-</blockquote>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">What Is This?</h2>
+      </div>
+      <div class="panel-body">
+        <p><strong><em>River View</em></strong> is a data streaming framework for public data. It provides a pluggable interface for users to expose public data sources in a transient windowed format that is easily query-able. It was built to provide a longer-lasting historical window for public data sources that provide only real-time data snapshots, especially for sensor data from public government services like weather, traffic, and geological data.</p>
 
-<ul>
-{{#each rivers}}
-    <li>
-        <a href="{{name}}/props.html">
-            {{name}}
-        </a>
-    </li>
-{{/each}}
-</ul>
+        <p><em>River View</em> fetches data from user-defined <a href="#rivers">rivers</a> at regular intervals, populating a local <a href="http://redis.io">Redis</a> database. This data is provided in a windowed format, so that data older than a certain configured age is lost. But the window should be large enough to provide enough historical data to potentially train machine intelligence models on the data patterns within it.</p>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">Rivers</h2>
+      </div>
+      <div class="panel-body">
+        <p>This <em>River View</em> instances contains the data streams (or <em>Rivers</em>) shown below. Any HTML page you view on this website can also be viewed in JSON by changing the file extension in the URL to <code>.json</code>.</p>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">See For Yourself</h2>
+      </div>
+      <div class="panel-body">
+        <blockquote>
+            <a href="index.json">JSON</a>
+        </blockquote>
+
+        <ul>
+        {{#each rivers}}
+            <li>
+                <a href="{{name}}/props.html">
+                    {{name}}
+                </a>
+            </li>
+        {{/each}}
+        </ul>
+      </div>
+    </div>
+
+</div>
 
 {{> footer }}
