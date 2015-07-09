@@ -2,7 +2,11 @@
 
 > Public Streaming Data Service Framework
 
-![A View of the Mississippi River](https://c1.staticflickr.com/5/4009/4616069553_1740ff78b3_z.jpg)
+
+[![A View of the Mississippi River](/images/river-view.jpg)](https://river-view.herokuapp.com/index.html)
+
+[See **River View** in action ⤤](https://river-view.herokuapp.com/index.html)
+
 
 _**River View**_ is a data streaming framework for public data. It provides a pluggable interface for users to expose public data sources in a transient windowed format that is easily query-able. It was built to provide a longer-lasting historical window for public data sources that provide only real-time data snapshots, especially for sensor data from public government services like weather, traffic, and geological data.
 
