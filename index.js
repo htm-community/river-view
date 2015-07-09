@@ -66,13 +66,17 @@ redisClient.initialize(function(err) {
 
     lockmaster.start();
 
-    buildStaticSite(CONFIG);
-    webapp.use('/static', express.static('build'));
+    buildStaticSite(CONFIG, function(err) {
+        if (err) throw err;
 
-    startDataService({
-        app: webapp
-      , rivers: rivers
-      , config: CONFIG
+        webapp.use('/static', express.static('build'));
+        startDataService({
+            app: webapp
+          , rivers: rivers
+          , config: CONFIG
+
+        });
+        
     });
 
 });
