@@ -1,6 +1,6 @@
 # River View
 
-> Public Streaming Data Service Framework
+> Public Temporal Streaming Data Service Framework
 
 
 [![A View of the Mississippi River](/site/images/river-view.jpg)](https://river-view.herokuapp.com/index.html)
