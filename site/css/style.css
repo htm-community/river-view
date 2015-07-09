@@ -1,5 +1,6 @@
 body {
     margin: 20px 40px;
+    font-size: 18px;
 }
 
 table td, table th {
@@ -15,7 +16,7 @@ table.data {
 }
 
 table.rivers td {
-    font-size: 26pt;
+    font-size: 24px;
     font-weight: bold;
     padding: 0 50px;
 }
