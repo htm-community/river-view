@@ -6,7 +6,7 @@ var _ = require('lodash')
 
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var propertyNames = config.properties
+    var metaDataNames = config.metadata
       , fieldNames = config.fields
       , timezone = config.timezone
       ;
@@ -14,7 +14,7 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
     xml2js.parseString(body, function(err, result) {
         var props = result.site['$']
           , id = props.id
-          , dataProperties = {}
+          , metaData = {}
           , fieldValues = []
           , data = result.site.observed[0].datum.reverse()
           ;
@@ -34,10 +34,10 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             temporalDataCallback(null, id, timestamp, [stage, flow]);
         });
 
-        _.each(propertyNames, function(propName) {
-            dataProperties[propName] = props[propName];
+        _.each(metaDataNames, function(propName) {
+            metaData[propName] = props[propName];
         });
-        metaDataCallback(null, id, dataProperties);
+        metaDataCallback(null, id, metaData);
 
     });
 };

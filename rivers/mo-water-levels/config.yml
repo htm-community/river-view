@@ -23,7 +23,7 @@ fields:
   - Stage
   - Flow
 
-properties:
+metadata:
   - originator
   - name
   - id

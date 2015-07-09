@@ -26,7 +26,7 @@ function dateStringToTimestampWithZone(timeIn, zone) {
 }
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var propertyNames = config.properties
+    var metadataNames = config.metadata
       , fieldNames = config.fields
       ;
 
@@ -37,7 +37,7 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
           var headers = data.shift()
 
           _.each(data, function(path) {
-              var dataProperties = {}
+              var metaData = {}
                 , fieldValues = []
                 , typeValues = {}
                 , pathId = path[headers.indexOf('Id')]
@@ -47,10 +47,10 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
                   )
                 ;
 
-              _.each(propertyNames, function(propName) {
-                  dataProperties[propName] = path[headers.indexOf(propName)];
+              _.each(metadataNames, function(propName) {
+                  metaData[propName] = path[headers.indexOf(propName)];
               });
-              metaDataCallback(null, pathId, dataProperties);
+              metaDataCallback(null, pathId, metaData);
 
               _.each(fieldNames, function(fieldName) {
                   fieldValues.push(path[headers.indexOf(fieldName)]);

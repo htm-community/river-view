@@ -30,9 +30,9 @@ fields:
   - Speed
   - TravelTime
 
-# These are like meta data about each data element. They are more like static
-# data values, which provide additional information about the data.
-properties:
+# This provides more information about the data. This data doesn't change over 
+# time like the fields.
+metadata:
   - Borough
   - linkName
   - linkId

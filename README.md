@@ -53,4 +53,4 @@ In addition to collecting and storing data from _Rivers_, a simple HTTP API for 
 | `/<river-name>/props.[html|json]` | Detailed information about a _river_, including the URL to the river's keys |
 | `/<river-name>/keys.[html|json]` | All unique ids for data within _river_ |
 | `/<river-name>/<id>/data.[html|json|csv]` | All data for specified key |
-| `/<river-name>/<id>/props.[html|json]` | All properties for specified key |
+| `/<river-name>/<id>/meta.[html|json]` | All metadata for specified key |
