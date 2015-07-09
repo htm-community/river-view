@@ -3,7 +3,7 @@
 > Public Streaming Data Service Framework
 
 
-[![A View of the Mississippi River](/images/river-view.jpg)](https://river-view.herokuapp.com/index.html)
+[![A View of the Mississippi River](/site/images/river-view.jpg)](https://river-view.herokuapp.com/index.html)
 
 [See **River View** in action ⤤](https://river-view.herokuapp.com/index.html)
 
