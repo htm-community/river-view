@@ -1,0 +1,49 @@
+# Please name this the same as the directory it is in.
+name: chicago-solar-radiation
+type: temporal
+
+# Short text description of the data you are providing.
+description: City of Chicago Beach Weather Stations - Automated Sensors - 2015 - Solar Radiation
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/Chicago
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+  - https://data.cityofchicago.org/resource/5rxc-uczg.json?$limit=5000
+
+# How often should River View poll your data sources?
+interval: 1 hour
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+# Primary data, usually collected in one location. Should both be scalar values.
+fields:
+- solar_radiation
+- barometric_pressure
+- wind_direction
+- interval_rain
+- wind_speed
+- wet_bulb_temperature
+- air_temperature
+- humidity
+- precipitation_type
+- total_rain
+- maximum_wind_speed
+- heading
+- rain_intensity
+
+# This provides more information about the data. This data doesn't change over 
+# time like the fields.
+metadata:
+- station_name
+- battery_life
+
