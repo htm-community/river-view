@@ -50,6 +50,7 @@
     $(function() {
 
         var docWidth = $(document).width()
+          , $chart = $('#chart')
           , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv'
           , lastField = '{{headers}}'.split(',').pop()
           , graphConfig = {}
@@ -109,10 +110,24 @@
           , underlayCallback: highlightWeekends
         };
 
-        // This will plot the last field on the ride Y axis.
-        graphConfig[lastField] = { axis: {} };
+        if ({{splitCharts}}) {
+            graphConfig.height = 100;
+            _.each('{{headers}}'.split(','), function(header, i) {
+                var myCsvPath;
+                // Ignore the 'datetime' header
+                if (header == 'datetime') {
+                    return;
+                }
+                myCsvPath = csvPath + '?field=' + header;
+                $chart.append('<div id="subchart-' + i + '"></div>');
+                new Dygraph(document.getElementById('subchart-' + i), myCsvPath, graphConfig);
+            });
+        } else {
+            // This will plot the last field on the ride Y axis.
+            graphConfig[lastField] = { axis: {} };
 
-        new Dygraph(document.getElementById('chart'), csvPath, graphConfig);
+            new Dygraph($chart[0], csvPath, graphConfig);
+        }
 
     });
 </script>
