@@ -43,7 +43,7 @@ A river can be `temporal` or `geotemporal`. Both contain timestamped data, but `
 
 ### Creating a River
 
-Please see [Creating a River](https://github.com/rhyolight/river-view/wiki/Creating-a-River) in our wiki.
+Please see [Creating a River](https://github.com/nupic-community/river-view/wiki/Creating-a-River) in our wiki.
 
 ## Web Services
 

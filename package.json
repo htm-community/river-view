@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rhyolight/river-stream.git"
+    "url": "https://github.com/nupic-community/river-stream.git"
   },
   "keywords": [
     "data",
@@ -24,9 +24,9 @@
   "author": "Matthew Taylor",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rhyolight/river-stream/issues"
+    "url": "https://github.com/nupic-community/river-stream/issues"
   },
-  "homepage": "https://github.com/rhyolight/river-stream",
+  "homepage": "https://river-view.herokuapp.com/",
   "dependencies": {
     "async": "^1.2.1",
     "csv-parse": "^0.1.3",
