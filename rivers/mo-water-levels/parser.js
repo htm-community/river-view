@@ -31,13 +31,13 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
                  flow = parseFloat(point.secondary[0]._)
             }
 
-            temporalDataCallback(null, id, timestamp, [stage, flow]);
+            temporalDataCallback(id, timestamp, [stage, flow]);
         });
 
         _.each(metaDataNames, function(propName) {
             metaData[propName] = props[propName];
         });
-        metaDataCallback(null, id, metaData);
+        metaDataCallback(id, metaData);
 
     });
 };

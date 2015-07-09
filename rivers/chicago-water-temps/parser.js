@@ -49,14 +49,14 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             fieldValues.push(parseFloat(dataPoint[fieldName]));
         });
 
-        temporalDataCallback(null, sensorId, timestamp, fieldValues);
+        temporalDataCallback(sensorId, timestamp, fieldValues);
 
         // Metadata
         _.each(metadataNames, function(metadataName) {
             metadata[metadataName] = dataPoint[metadataName];
         });
 
-        metaDataCallback(null, sensorId, metadata);
+        metaDataCallback(sensorId, metadata);
 
 
     });

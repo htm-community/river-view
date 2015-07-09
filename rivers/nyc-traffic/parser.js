@@ -50,12 +50,12 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
               _.each(metadataNames, function(propName) {
                   metaData[propName] = path[headers.indexOf(propName)];
               });
-              metaDataCallback(null, pathId, metaData);
+              metaDataCallback(pathId, metaData);
 
               _.each(fieldNames, function(fieldName) {
                   fieldValues.push(path[headers.indexOf(fieldName)]);
               });
-              temporalDataCallback(null, pathId, timestamp, fieldValues);
+              temporalDataCallback(pathId, timestamp, fieldValues);
           });
 
       });

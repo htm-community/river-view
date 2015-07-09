@@ -10,8 +10,7 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
     moment.tz.setDefault(config.timezone);
 
     _.each(data, function(event) {
-        var error
-          , dateString = event.date.split('T').shift()
+        var dateString = event.date.split('T').shift()
           , timeString = event.time
           , date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm')
           , timestamp = date.unix()
@@ -47,6 +46,6 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
           , event.zip_code
         ];
 
-        temporalDataCallback(error, id, timestamp, fieldValues);
+        temporalDataCallback(id, timestamp, fieldValues);
     });
 };

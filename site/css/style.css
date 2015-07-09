@@ -9,3 +9,13 @@ table td, table th {
 footer {
     margin-top: 20px;
 }
+
+table.data {
+    margin: 20px;
+}
+
+table.rivers td {
+    font-size: 26pt;
+    font-weight: bold;
+    padding: 0 50px;
+}

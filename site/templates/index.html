@@ -26,31 +26,34 @@
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h2 class="panel-title">Rivers</h2>
+        <h1 class="panel-title">Rivers</h1>
       </div>
       <div class="panel-body">
         <p>This <em>River View</em> instances contains the data streams (or <em>Rivers</em>) shown below. Any HTML page you view on this website can also be viewed in JSON by changing the file extension in the URL to <code>.json</code>.</p>
-      </div>
-    </div>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="panel-title">See For Yourself</h2>
-      </div>
-      <div class="panel-body">
-        <blockquote>
-            <a href="index.json">JSON</a>
-        </blockquote>
-
-        <ul>
+        <table class="rivers">
+        <tbody>
         {{#each rivers}}
-            <li>
-                <a href="{{name}}/meta.html">
+            <tr>
+                <td>
                     {{name}}
-                </a>
-            </li>
+                </td>
+                <td>
+                    <a href="{{name}}/meta.html">
+                        HTML
+                    </a>
+                </td>
+                <td>
+                    <a href="{{name}}/meta.json">
+                        JSON
+                    </a>
+                </td>
+            </tr>
         {{/each}}
-        </ul>
+        </tbody>
+        </table>
+
+
       </div>
     </div>
 
