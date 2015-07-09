@@ -37,12 +37,16 @@
     {{/each}}
 </ul>
 
-<h5>Properties</h5>
+{{# if metadata }}
+
+<h5>Metadata</h5>
 <ul>
-    {{#each properties}}
+    {{#each metadata}}
     <li>{{this}}</li>
     {{/each}}
 </ul>
+
+{{/if}}
 
 
 {{> footer }}
