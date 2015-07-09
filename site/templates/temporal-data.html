@@ -51,7 +51,7 @@
 
         var docWidth = $(document).width()
           , $chart = $('#chart')
-          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv'
+          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv?limit=500'
           , lastField = '{{headers}}'.split(',').pop()
           , graphConfig = {}
           ;
@@ -118,7 +118,7 @@
                 if (header == 'datetime') {
                     return;
                 }
-                myCsvPath = csvPath + '?field=' + header;
+                myCsvPath = csvPath + '&field=' + header;
                 $chart.append('<div id="subchart-' + i + '"></div>');
                 new Dygraph(document.getElementById('subchart-' + i), myCsvPath, graphConfig);
             });

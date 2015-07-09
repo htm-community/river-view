@@ -61,7 +61,7 @@
                 markerTemplate = response;
             });
 
-            $.getJSON('{{ baseurl }}/{{name}}/{{id}}/data.json?limit=100', function(payload) {
+            $.getJSON('{{ baseurl }}/{{name}}/{{id}}/data.json?limit=500', function(payload) {
                 _.each(payload.data, function(eventData) {
                     var event = _.zipObject(payload.headers, eventData)
                       , latitude = event.latitude
