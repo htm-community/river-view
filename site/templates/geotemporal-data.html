@@ -7,36 +7,38 @@
   <li class="active">{{ id }} data</li>
 </ol>
 
-<h1>
-    <a href="{{ baseurl }}/{{name}}/meta.html">
-    {{name}}
-    </a>
-</h1>
+<div class="row">
 
-<h2>{{id}} Data</h2>
+    <div class="col-md-9">
+        <div class="jumbotron">
+          <h1>{{ name }}</h1>
+          <p>{{ id }} <em>(<strong>{{type}}</strong> data stream)</em></p>
+          <div class="btn-group" role="group">
+              <a class="btn btn-primary btn-lg" href="data.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
+              <a class="btn btn-primary btn-lg" href="data.csv" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download CSV</a>
+              <a class="btn btn-primary btn-lg" href="meta.html" role="button"><span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span> Metadata</a>
+          </div>
+        </div>
+    </div>
 
-<h3>Data type: {{type}}</h3>
+    <div class="col-md-3">
+        <p>The following URL query parameters are available for all data formats:</p>
+        <ul>
+            <li><code>limit=N</code></li>
+            <li><code>since=timestamp</code></li>
+            <li><code>until=timestamp</code></li>
+        </ul>
+    </div>
 
-<p>Other data types:</p>
-<ul>
-    <li><a href="data.json">JSON</a></li>
-    <li><a href="data.csv">CSV</a></li>
-</ul>
+</div>
 
-<p>Available URL query params:</p>
-<ul>
-    <li><code>limit=X</code></li>
-    <li><code>since=timestamp</code></li>
-    <li><code>until=timestamp</code></li>
-</ul>
-
-<a href="meta.html">See properties</a>
-
-<div id="map-canvas"></div>
+<div class="container">
+    <div id="map-canvas"></div>
+</div>
 
 <p>Map above shows latest 500 data points.</p>
 
-<table class="data">
+<table class="table table-sriped table-condensed table-bordered">
     <thead>
         <tr>
             {{#each headers}}
@@ -75,6 +77,7 @@
                       , longitude = event.longitude
                       , latlng
                       , marker
+                      , markerData = {}
                       , contentString
                       , infoWindow;
 
@@ -91,7 +94,10 @@
                           , title: event.contributing_factor_vehicle_1
                         });
 
-                        contentString = Handlebars.compile(markerTemplate)(event);
+                        markerData.name = 'id: ' + event.id;
+                        markerData.time = event.datetime;
+
+                        contentString = Handlebars.compile(markerTemplate)(markerData);
 
                         infoWindow = new google.maps.InfoWindow({
                             content: contentString
