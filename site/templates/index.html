@@ -18,7 +18,43 @@
 <hr />
 <div class="row">
 
-    <div class="col-md-5">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h1 class="panel-title">Rivers</h1>
+          </div>
+          <div class="panel-body">
+            {{#each rivers}}
+            <div class="rivers row">
+                <div class="col-md-6 river-name">
+                    {{ name }}
+                </div>
+                <div class="col-md-3">
+                    <a href="{{name}}/meta.html">
+                        <button type="button" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View HTML
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{name}}/meta.json">
+                        <button type="button" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON
+                        </button>
+                    </a>
+                </div>
+
+            </div>
+            {{/each}}
+
+          </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h2 class="panel-title">What Is This?</h2>
@@ -30,39 +66,6 @@
 
             <p>The type of streaming temporal data contained within <em>River View</em> is ready for processing with Hierarchical Temporal Memory (HTM) systems like <a href="http://numenta.org">NuPIC</a>. And you can create your own <em>rivers</em> by <a href="https://github.com/nupic-community/river-view/wiki/Creating-a-River">following these instructions</a>.</p>
 
-          </div>
-        </div>
-    </div>
-
-    <div class="col-md-7">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title">Rivers</h1>
-          </div>
-          <div class="panel-body">
-            <p>This <em>River View</em> instances contains the data streams (or <em>Rivers</em>) shown below. Any HTML page you view on this website can also be viewed in JSON by changing the file extension in the URL to <code>.json</code>.</p>
-
-            <table class="rivers">
-            <tbody>
-            {{#each rivers}}
-                <tr>
-                    <td>
-                        {{name}}
-                    </td>
-                    <td>
-                        <a href="{{name}}/meta.html">
-                            HTML
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{name}}/meta.json">
-                            JSON
-                        </a>
-                    </td>
-                </tr>
-            {{/each}}
-            </tbody>
-            </table>
           </div>
         </div>
     </div>

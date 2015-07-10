@@ -1,20 +1,24 @@
 {{> header }}
 
-<h1>
-    <a href="{{ baseurl }}/{{name}}/meta.html">
-    {{name}}
-    </a>
-</h1>
+<ol class="breadcrumb">
+  <li><a href="{{ baseurl }}">Home</a></li>
+  <li><a href="../meta.html">{{ name }}</a></li>
+  <li><a href="../keys.html">streams</a></li>
+  <li class="active">{{ id }} metadata</li>
+</ol>
 
-<h2>{{id}} Properties</h2>
+<div class="page-header">
+  <h1>{{id}} <small><em>metadata</em></small></h1>
+</div>
 
-<blockquote>
-    <a href="meta.json">JSON</a>
-</blockquote>
+<div class="btn-group" role="group">
+    <a class="btn btn-primary btn-lg" href="meta.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
+    <a class="btn btn-primary btn-lg" href="data.html" role="button"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View Data</a>
+</div>
 
-<a href="data.html?limit=500">See data</a>
+<hr />
 
-<table class="data">
+<table class="table table-striped">
 <tbody>
 {{#each metadata}}
     <tr>
