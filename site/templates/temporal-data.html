@@ -32,8 +32,8 @@
 
 </div>
 
-<div class="alert alert-info" role="alert">
-    The chart(s) below only contain the latest <span></span> data points.
+<div class="alert alert-warning" role="alert">
+    This page only contain the latest <span id="data-limit"></span> data points. Specify a <code>limit=X</code> URL parameter to change.
 </div>
 
 <div id="chart-container" class="container">
@@ -69,6 +69,8 @@
           , lastField = '{{headers}}'.split(',').pop()
           , graphConfig = {}
           ;
+
+        $('#data-limit').html(dataLimit);
 
         function highlightWeekends(canvas, area, g) {
             var yellow = "rgba(255, 255, 102, 1.0)";

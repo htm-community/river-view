@@ -32,11 +32,13 @@
 
 </div>
 
+<div class="alert alert-warning" role="alert">
+    This page only contain the latest <span id="data-limit"></span> data points. Specify a <code>limit=X</code> URL parameter to change.
+</div>
+
 <div class="container">
     <div id="map-canvas"></div>
 </div>
-
-<p>Map above shows latest 500 data points.</p>
 
 <table class="table table-sriped table-condensed table-bordered">
     <thead>
@@ -64,13 +66,16 @@
               , map = new google.maps.Map(mapDiv, {
                     zoom: 11,
                 })
+              , dataLimit = RV.utils.getUrlVars().limit || 500
               ;
+
+            $('#data-limit').html(dataLimit);
 
             $.get('{{ baseurl }}/static/templates/partials/markerLabel/index.html', function(response) {
                 markerTemplate = response;
             });
 
-            $.getJSON('{{ baseurl }}/{{name}}/{{id}}/data.json?limit=500', function(payload) {
+            $.getJSON('{{ baseurl }}/{{name}}/{{id}}/data.json?limit=' + dataLimit, function(payload) {
                 _.each(payload.data, function(eventData) {
                     var event = _.zipObject(payload.headers, eventData)
                       , latitude = event.latitude
