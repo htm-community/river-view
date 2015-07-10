@@ -1,52 +1,109 @@
 {{> header }}
 
-<h1>
-    {{this.name}}
-</h1>
+<ol class="breadcrumb">
+  <li><a href="{{ baseurl }}">Home</a></li>
+  <li class="active">{{ this.name }}</li>
+</ol>
 
-<blockquote class="description">{{this.description}}</blockquote>
+<div class="jumbotron">
+  <h1>{{ this.name }}</h1>
+  <p>{{ this.description }}</p>
 
-<h3>
-    <a href="{{../baseurl}}/{{this.name}}/keys.html">Data Keys</a>
-</h3>
+  <div class="btn-group" role="group">
+      <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{this.name}}/keys.html" role="button"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View Data Streams</a>
+      <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{this.name}}/meta.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
+  </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="http://www.gravatar.com/avatar/{{emailHash}}" class="img-thumbnail"/>
+                            </div>
+                            <div class="col-md-8">
+                                <h4>Author: <a href="mailto:{{email}}">{{author}}</a></h4>
+                                <h4><a href="https://github.com/nupic-community/river-view/tree/master/rivers/{{this.name}}">Source Code</a></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
-<h4>Author: <a href="mailto:{{email}}">{{author}}</a></h4>
+            </div>
 
-<dl>
-    <dt>Collection Interval</dt>
-    <dd>{{interval}}</dd>
-</dl>
-<dl>
-    <dt>Data Expires After</dt>
-    <dd>{{expires}}</dd>
-</dl>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <dl>
+                            <dt>Collection Interval</dt>
+                            <dd>{{interval}}</dd>
+                        </dl>
+                        <dl>
+                            <dt>Data Expires After</dt>
+                            <dd>{{expires}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
 
-<h4>Data Source(s)</h4>
-<ul>
-    {{#each sources}}
-    <li><a href="{{this}}" target="_blank">{{this}}</a></li>
-    {{/each}}
-</ul>
+        </div>
 
-<h4>Data Attributes</h4>
-<h5>Fields</h5>
-<ul>
-    {{#each fields}}
-    <li>{{this}}</li>
-    {{/each}}
-</ul>
+        <div class="row">
 
-{{# if metadata }}
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
 
-<h5>Metadata</h5>
-<ul>
-    {{#each metadata}}
-    <li>{{this}}</li>
-    {{/each}}
-</ul>
+                        <h4>Data Source(s)</h4>
+                        <ul>
+                            {{#each sources}}
+                            <li><a href="{{this}}" target="_blank">{{this}}</a></li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-{{/if}}
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <h5>Fields</h5>
+                <ul>
+                    {{#each fields}}
+                    <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+
+                {{# if metadata }}
+                    <h5>Metadata</h5>
+                    <ul>
+                        {{#each metadata}}
+                        <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
 
 
 {{> footer }}

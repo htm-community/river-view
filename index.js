@@ -64,7 +64,7 @@ redisClient.initialize(function(err) {
       , rivers: rivers
     });
 
-    // lockmaster.start();
+    lockmaster.start();
 
     buildStaticSite(CONFIG, function(err) {
         if (err) throw err;

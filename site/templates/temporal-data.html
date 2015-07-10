@@ -1,33 +1,44 @@
 {{> header }}
 
-<h1>
-    <a href="{{ baseurl }}/{{name}}/meta.html">
-    {{name}}
-    </a>
-</h1>
+<ol class="breadcrumb">
+  <li><a href="{{ baseurl }}">Home</a></li>
+  <li><a href="../meta.html">{{ name }}</a></li>
+  <li><a href="../keys.html">streams</a></li>
+  <li class="active">{{ id }} data</li>
+</ol>
 
-<h2>{{id}} Data</h2>
 
-<h3>Data type: {{type}}</h3>
+<div class="row">
 
-<p>Other data types:</p>
-<ul>
-    <li><a href="data.json">JSON</a></li>
-    <li><a href="data.csv">CSV</a></li>
-</ul>
+    <div class="col-md-9">
+        <div class="jumbotron">
+          <h1>{{ name }}</h1>
+          <p>{{ id }} <em>(<strong>{{type}}</strong> data stream)</em></p>
+          <div class="btn-group" role="group">
+              <a class="btn btn-primary btn-lg" href="data.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
+              <a class="btn btn-primary btn-lg" href="data.csv" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download CSV</a>
+              <a class="btn btn-primary btn-lg" href="meta.html" role="button"><span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span> Stream Metadata</a>
+          </div>
+        </div>
+    </div>
 
-<p>Available URL query params:</p>
-<ul>
-    <li><code>limit=X</code></li>
-    <li><code>since=timestamp</code></li>
-    <li><code>until=timestamp</code></li>
-</ul>
+    <div class="col-md-3">
+        <p>The following URL query parameters are available for all data formats:</p>
+        <ul>
+            <li><code>limit=N</code></li>
+            <li><code>since=timestamp</code></li>
+            <li><code>until=timestamp</code></li>
+        </ul>
+    </div>
 
-<a href="meta.html">See properties</a>
+</div>
 
-<div id="chart"></div>
 
-<table class="data">
+<div class="container">
+    <div id="chart"></div>
+</div>
+
+<table class="table table-sriped table-condensed table-bordered">
     <thead>
         <tr>
             {{#each headers}}
