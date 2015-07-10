@@ -25,6 +25,10 @@
 
 <a href="meta.html">See properties</a>
 
+<div class="alert alert-info" role="alert">
+    The chart(s) below only contain the latest <span></span> data points.
+</div>
+
 <div id="chart"></div>
 
 <table class="data">
@@ -51,7 +55,8 @@
 
         var docWidth = $(document).width()
           , $chart = $('#chart')
-          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv?limit=500'
+          , dataLimit = RV.utils.getUrlVars().limit || 500
+          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv?limit=' + dataLimit
           , lastField = '{{headers}}'.split(',').pop()
           , graphConfig = {}
           ;
