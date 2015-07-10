@@ -14,8 +14,8 @@
           <h1>{{ name }}</h1>
           <p>{{ id }} <em>(<strong>{{type}}</strong> data stream)</em></p>
           <div class="btn-group" role="group">
-              <a class="btn btn-primary btn-lg" href="data.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
-              <a class="btn btn-primary btn-lg" href="data.csv" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download CSV</a>
+              <a class="btn btn-primary btn-lg download" href="data.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
+              <a class="btn btn-primary btn-lg download" href="data.csv" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download CSV</a>
               <a class="btn btn-primary btn-lg" href="meta.html" role="button"><span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span> Metadata</a>
           </div>
         </div>
@@ -70,6 +70,10 @@
               ;
 
             $('#data-limit').html(dataLimit);
+            $('a.download').each(function(i, a) {
+                var $a = $(a);
+                $a.attr('href', $a.attr('href') + '?limit=' + dataLimit);
+            });
 
             $.get('{{ baseurl }}/static/templates/partials/markerLabel/index.html', function(response) {
                 markerTemplate = response;
