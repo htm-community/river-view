@@ -1,0 +1,38 @@
+# Please name this the same as the directory it is in.
+name: sfpd-incidents
+type: geotemporal
+
+# Short text description of the data you are providing.
+description: Incidents derived from SFPD Crime Incident Reporting system Updated daily, showing data from 1/1/2003 up until two weeks ago from current date. (https://data.sfgov.org/Public-Safety/SFPD-Incidents-from-1-January-2003/tmnf-yvry)
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/Los_Angeles
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+  # see http://dev.socrata.com/
+- https://data.sfgov.org/resource/tmnf-yvry.json?%24order=date%20DESC&%24limit=5000
+
+# How often should River View poll your data sources?
+interval: 5 days
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+fields:
+- latitude
+- longitude
+- id
+- category
+- pddistrict
+- pdid
+- address
+- descript
+- resolution

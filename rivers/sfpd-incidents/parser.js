@@ -1,0 +1,41 @@
+var _ = require('lodash')
+  , moment = require('moment-timezone')
+  ;
+
+module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
+    var data = JSON.parse(body)
+      , id = 'sfpd-incidents';
+
+    // This is important.
+    moment.tz.setDefault(config.timezone);
+
+    _.each(data, function(event) {
+        var dateString = event.date.split('T').shift()
+          , timeString = event.time
+          , date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm')
+          , timestamp = date.unix()
+          , latitude = parseFloat(event.y)
+          , longitude = parseFloat(event.x)
+          , fieldValues
+          ;
+
+        if (isNaN(latitude) || isNaN(longitude)) {
+            latitude = null
+            longitude = null
+        }
+
+        fieldValues = [
+            latitude
+          , longitude
+          , parseInt(event.incidntnum)
+          , event.category
+          , event.pddistrict
+          , event.pdid
+          , event.address
+          , event.descript
+          , event.resolution
+        ];
+
+        temporalDataCallback(id, timestamp, fieldValues);
+    });
+};
