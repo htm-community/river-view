@@ -34,7 +34,7 @@
 </div>
 
 
-<div class="container">
+<div id="chart-container" class="container">
     <div id="chart"></div>
 </div>
 
@@ -60,7 +60,7 @@
 <script type="text/javascript">
     $(function() {
 
-        var docWidth = $(document).width()
+        var chartWidth = $('#chart-container').width()
           , $chart = $('#chart')
           , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv?limit=500'
           , lastField = '{{headers}}'.split(',').pop()
@@ -117,7 +117,7 @@
 
         graphConfig = {
             title: name
-          , width: docWidth * 0.9
+          , width: chartWidth
           , underlayCallback: highlightWeekends
         };
 

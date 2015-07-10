@@ -18,30 +18,12 @@
 <hr />
 <div class="row">
 
-    <div class="col-md-5">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">What Is This?</h2>
-          </div>
-          <div class="panel-body">
-            <p><strong><em>River View</em></strong> is a <em>Public Temporal Streaming Data Service Framework</em> (yes, that's a mouthful!). It provides a pluggable interface for users to expose temporal data streams in a time-boxed format that is easily query-able. (<a href="{{ baseurl }}/chicago-water-temps/Rainbow%20Beach/data.html?limit=500">Here's an example of oceanographic data collected at Chicago beaches</a>.) It was built to provide a longer-lasting historical window for public data sources that provide only real-time data snapshots, especially for sensor data from public government services like weather, traffic, and geological data.</p>
-
-            <p><em>River View</em> fetches data from user-defined <a href="#rivers">rivers</a> at regular intervals, populating a local <a href="http://redis.io">Redis</a> database. This data is provided in a windowed format, so that data older than a certain configured age is lost. But the window should be large enough to provide enough historical data to potentially train machine intelligence models on the data patterns within it.</p>
-
-            <p>The type of streaming temporal data contained within <em>River View</em> is ready for processing with Hierarchical Temporal Memory (HTM) systems like <a href="http://numenta.org">NuPIC</a>. And you can create your own <em>rivers</em> by <a href="https://github.com/nupic-community/river-view/wiki/Creating-a-River">following these instructions</a>.</p>
-
-          </div>
-        </div>
-    </div>
-
-    <div class="col-md-7">
+    <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title">Rivers</h1>
           </div>
           <div class="panel-body">
-            <p>This <em>River View</em> instances contains the data streams (or <em>Rivers</em>) shown below. Any HTML page you view on this website can also be viewed in JSON by changing the file extension in the URL to <code>.json</code>.</p>
-
             {{#each rivers}}
             <div class="rivers row">
                 <div class="col-md-6 river-name">
@@ -64,6 +46,25 @@
 
             </div>
             {{/each}}
+
+          </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">What Is This?</h2>
+          </div>
+          <div class="panel-body">
+            <p><strong><em>River View</em></strong> is a <em>Public Temporal Streaming Data Service Framework</em> (yes, that's a mouthful!). It provides a pluggable interface for users to expose temporal data streams in a time-boxed format that is easily query-able. (<a href="{{ baseurl }}/chicago-water-temps/Rainbow%20Beach/data.html?limit=500">Here's an example of oceanographic data collected at Chicago beaches</a>.) It was built to provide a longer-lasting historical window for public data sources that provide only real-time data snapshots, especially for sensor data from public government services like weather, traffic, and geological data.</p>
+
+            <p><em>River View</em> fetches data from user-defined <a href="#rivers">rivers</a> at regular intervals, populating a local <a href="http://redis.io">Redis</a> database. This data is provided in a windowed format, so that data older than a certain configured age is lost. But the window should be large enough to provide enough historical data to potentially train machine intelligence models on the data patterns within it.</p>
+
+            <p>The type of streaming temporal data contained within <em>River View</em> is ready for processing with Hierarchical Temporal Memory (HTM) systems like <a href="http://numenta.org">NuPIC</a>. And you can create your own <em>rivers</em> by <a href="https://github.com/nupic-community/river-view/wiki/Creating-a-River">following these instructions</a>.</p>
 
           </div>
         </div>
