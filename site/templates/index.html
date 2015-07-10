@@ -42,27 +42,29 @@
           <div class="panel-body">
             <p>This <em>River View</em> instances contains the data streams (or <em>Rivers</em>) shown below. Any HTML page you view on this website can also be viewed in JSON by changing the file extension in the URL to <code>.json</code>.</p>
 
-            <table class="rivers">
-            <tbody>
             {{#each rivers}}
-                <tr>
-                    <td>
-                        {{name}}
-                    </td>
-                    <td>
-                        <a href="{{name}}/meta.html">
-                            HTML
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{name}}/meta.json">
-                            JSON
-                        </a>
-                    </td>
-                </tr>
+            <div class="rivers row">
+                <div class="col-md-6 river-name">
+                    {{ name }}
+                </div>
+                <div class="col-md-3">
+                    <a href="{{name}}/meta.html">
+                        <button type="button" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-star" aria-hidden="true"></span> View HTML
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{name}}/meta.json">
+                        <button type="button" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Download JSON
+                        </button>
+                    </a>
+                </div>
+
+            </div>
             {{/each}}
-            </tbody>
-            </table>
+
           </div>
         </div>
     </div>

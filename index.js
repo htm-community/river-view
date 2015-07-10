@@ -54,9 +54,9 @@ redisClient.initialize(function(err) {
     rivers = RiverFactory.createRivers(CONFIG.riverDir, redisClient)
 
     console.log('Starting with %s rivers:', rivers.length);
-    console.log('==============================================');
-    _.each(rivers, function(s) { console.log(s); });
-    console.log('==============================================');
+    // console.log('==============================================');
+    // _.each(rivers, function(s) { console.log(s); });
+    // console.log('==============================================');
 
 
     lockmaster = new Lockmaster({
@@ -64,7 +64,7 @@ redisClient.initialize(function(err) {
       , rivers: rivers
     });
 
-    lockmaster.start();
+    // lockmaster.start();
 
     buildStaticSite(CONFIG, function(err) {
         if (err) throw err;
