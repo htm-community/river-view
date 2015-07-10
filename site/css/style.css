@@ -20,3 +20,62 @@ table.rivers td {
     font-weight: bold;
     padding: 0 50px;
 }
+
+.starburst {
+  font: 2em/1.4 'Lobster', georgia, serif;
+  background: #202020;
+  background: radial-gradient(circle, #FF9100 20%, #FFD347 80%);
+  text-shadow: 0 .05em .05em rgba(0,0,0,.5);
+  width: 4.5em;
+  height: 4.5em;
+  text-align: center;
+  color: #fff;
+  z-index: 999;
+}
+
+.starburst p {
+  transform: rotate(15deg);
+}
+
+.starburst,
+.starburst span {
+  display: box;
+  box-align: center;
+  box-pack: center;
+  z-index: 999;
+}
+
+
+.starburst span {
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  transform: rotate(45deg);
+  z-index: 999;
+}
+
+.starburst:before,
+.starburst:after ,
+.starburst span:before,
+.starburst span:after {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: inherit;
+   z-index: -1;
+  transform: rotate(30deg);
+}
+
+.starburst:after {
+  transform: rotate(-30deg);
+}
+
+.starburst span:after {
+  transform: rotate(30deg);
+}
+.starburst span:before {
+  transform: rotate(-30deg);
+}

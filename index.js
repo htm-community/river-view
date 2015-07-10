@@ -72,11 +72,12 @@ redisClient.initialize(function(err) {
         webapp.use('/static', express.static('build'));
         startDataService({
             app: webapp
+          , redisClient: redisClient
           , rivers: rivers
           , config: CONFIG
 
         });
-        
+
     });
 
 });
