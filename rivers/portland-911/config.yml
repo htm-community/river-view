@@ -40,3 +40,7 @@ metadata:
  - subtitle
  - author
  - email
+
+
+# You want a "new" badge on this?
+new: true

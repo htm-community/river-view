@@ -82,3 +82,7 @@ fields:
 # time like the fields.
 metadata:
 - neighborhood
+
+
+# You want a "new" badge on this?
+new: true

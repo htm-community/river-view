@@ -28,6 +28,9 @@
             <div class="rivers row">
                 <div class="col-md-6 river-name">
                     {{ name }}
+                    {{#if new}}
+                    <img src="{{ baseurl }}/static/images/new-icon.png" />
+                    {{/if}}
                 </div>
                 <div class="col-md-3">
                     <a href="{{name}}/meta.html">
