@@ -21,12 +21,11 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     timeObject.hour = parseInt(timePieces.shift())
     timeObject.minute = parseInt(timePieces.shift())
 
-    if (ampm.toLowerCase() == 'pm') {
+    if (ampm.toLowerCase() == 'pm' && timeObject.hour != 12) {
         timeObject.hour += 12;
     }
 
     timestamp = moment.tz(timeObject, zone).unix();
-
     return timestamp;
 }
 
@@ -35,6 +34,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
       , fieldNames = config.fields
       , metadataNames = config.metadata
       ;
+
+    // This is important.
+    moment.tz.setDefault(config.timezone);
 
     _.each(dataArray, function(dataPoint) {
         var fieldValues = []
