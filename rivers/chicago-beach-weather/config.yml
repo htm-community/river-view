@@ -1,9 +1,9 @@
 # Please name this the same as the directory it is in.
-name: chicago-water-temps
+name: chicago-beach-weather
 type: temporal
 
 # Short text description of the data you are providing.
-description: City of Chicago Beach Water Quality - Automated Sensors - 2015 - Water Temperature. See https://data.cityofchicago.org/Parks-Recreation/Beach-Water-Quality-Automated-Sensors-2015-Water-T/3ipq-j3gd/about.
+description: City of Chicago Beach Weather Stations - Automated Sensors - 2015 - Solar Radiation
 
 author: Matthew Taylor
 email: matt@numenta.org
@@ -16,7 +16,7 @@ timezone: America/Chicago
 # A list of URLs that contain the raw data. Each of these will be polled at the
 # interval specified below, and the response text will be sent to your parser.
 sources:
-  - https://data.cityofchicago.org/resource/3ipq-j3gd.json?$limit=100
+  - https://data.cityofchicago.org/resource/5rxc-uczg.json?$limit=5000
 
 # How often should River View poll your data sources?
 interval: 1 hour
@@ -27,14 +27,22 @@ expires: 6 months
 
 # Primary data, usually collected in one location. Should both be scalar values.
 fields:
-- water_temperature # Water temperature in Celsius degrees.
-- turbidity         # Water turbidity in Nephelometric Turbidity Units (NTU)
-- wave_height       # Wave height in meters.
-- wave_period       # Wave period in seconds.
+- solar_radiation
+- barometric_pressure
+- wind_direction
+- interval_rain
+- wind_speed
+- wet_bulb_temperature
+- air_temperature
+- humidity
+- precipitation_type
+- total_rain
+- maximum_wind_speed
+- heading
+- rain_intensity
 
-# This provides more information about the data. This data doesn't change over 
+# This provides more information about the data. This data doesn't change over
 # time like the fields.
 metadata:
-- beach_name
+- station_name
 - battery_life
-- last_updated_label
