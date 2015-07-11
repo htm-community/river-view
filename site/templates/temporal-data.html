@@ -12,7 +12,8 @@
     <div class="col-md-9">
         <div class="jumbotron">
           <h1>{{ name }}</h1>
-          <p>{{ id }} <em>(<strong>{{type}}</strong> data stream)</em></p>
+          <h3>{{ id }} <small><em>(<strong>{{type}}</strong> data stream)</em></small></h3>
+          <p>All times in this data set are in <strong>{{timezone}}</strong>. Last updated {{lastUpdated}}.</p>
           <div class="btn-group" role="group">
               <a class="btn btn-primary btn-lg download" href="data.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
               <a class="btn btn-primary btn-lg download" href="data.csv" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download CSV</a>

@@ -73,6 +73,9 @@ function systemWideDemand(config, body, url, temporalDataCallback, metaDataCallb
       , downloaders = []
       ;
 
+    // This is important.
+    moment.tz.setDefault(config.timezone);
+
     $($('table')[2]).find ('tr').each(function(i, tr) {
         var $tr = $(tr)
           , href

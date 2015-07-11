@@ -32,6 +32,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
       , id = 'actual_loads_of_weather_zones'
       ;
 
+    // This is important.
+    moment.tz.setDefault(config.timezone);
+
     $('#today tr').each(function(i, tr) {
         var row = []
           , dateString
