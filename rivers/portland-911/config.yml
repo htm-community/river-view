@@ -1,0 +1,42 @@
+# Please name this the same as the directory it is in.
+name: portland-911
+type: geotemporal
+
+# Short text description of the data you are providing.
+description: An RSS feed which contains geographic locations for the 100 most recent, closed, non-confidential, 911 calls for service received by the City of Portland’s 911 system. This feed is updated every 30 seconds.
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/Los_Angeles
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+- http://www.portlandonline.com/scripts/911incidents.cfm
+
+# How often should River View poll your data sources?
+interval: 30 seconds
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+fields:
+ - latitude
+ - longitude
+ - id
+ - summary
+ - category
+ - updated
+ - published
+
+metadata:
+ - id
+ - title
+ - subtitle
+ - author
+ - email
