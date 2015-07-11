@@ -21,6 +21,11 @@ div.river-name {
     padding: 0 50px;
 }
 
+.beta {
+    font-style: italic;
+    font-weight: lighter;
+}
+
 .starburst {
   font: 2em/1.4 'Lobster', georgia, serif;
   background: #202020;
