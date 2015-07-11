@@ -16,7 +16,7 @@ timezone: America/Chicago
 # A list of URLs that contain the raw data. Each of these will be polled at the
 # interval specified below, and the response text will be sent to your parser.
 sources:
-  - https://data.cityofchicago.org/resource/5rxc-uczg.json?$limit=5000
+  - https://data.cityofchicago.org/resource/5rxc-uczg.json?$limit=100
 
 # How often should River View poll your data sources?
 interval: 1 hour
