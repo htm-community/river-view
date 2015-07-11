@@ -1,6 +1,4 @@
-# River View
-
-[![Join the chat at https://gitter.im/nupic-community/river-view](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nupic-community/river-view?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# River View [![Join the chat at https://gitter.im/nupic-community/river-view](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nupic-community/river-view?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > Public Temporal Streaming Data Service Framework
 
