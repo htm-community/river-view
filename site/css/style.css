@@ -84,3 +84,8 @@ div.river-name {
 .starburst span:before {
   transform: rotate(-30deg);
 }
+
+
+.mono {
+    font-family: "Courier New", monospace;
+}

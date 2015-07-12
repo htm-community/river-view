@@ -7,31 +7,49 @@
 
 <div class="row">
 
-    <div class="col-md-9">
+    <div class="col-md-8">
         <div class="jumbotron">
           <h1>{{ name }}</h1>
           <h3>{{ id }} <small><em>(<strong>{{type}}</strong> data stream)</em></small></h3>
-          <p>All times in this data set are in <strong>{{timezone}}</strong>. Last updated {{lastUpdated}}.</p>
-          <div class="btn-group" role="group">
+          <div class="btn-group btn-group-justified" role="group">
               <a class="btn btn-primary btn-lg download" href="data.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
               <a class="btn btn-primary btn-lg download" href="data.csv" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download CSV</a>
               <a class="btn btn-primary btn-lg" href="meta.html" role="button"><span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span> Metadata</a>
           </div>
+
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-body">
+    <div class="col-md-4">
 
-                <p>The following URL query parameters are available for all data formats:</p>
-                <ul>
-                    <li><code>limit=N</code></li>
-                    <li><code>since=timestamp</code></li>
-                    <li><code>until=timestamp</code></li>
-                </ul>
-            </div>
+        <table class="table table-bordered">
+            <tbody>
+                <thead>
+                    <tr><th colspan="2" class="mono text-center">Stream Statistics</th></tr>
+                </thead>
+                <tr>
+                    <th>First data</th>
+                    <td class="mono text-right">{{firstData}}</td>
+                </tr>
+                <tr>
+                    <th>Last data</th>
+                    <td class="mono text-right">{{lastData}}</td>
+                </tr>
+                <tr>
+                    <th>Timezone</th>
+                    <td class="mono text-right">{{timezone}}</td>
+                </tr>
+                <tr>
+                    <th>Row count</th>
+                    <td class="mono text-right">{{dataCount}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-info" role="alert">
+            Updated {{lastDataLabel}}.
         </div>
+
     </div>
 
 </div>
