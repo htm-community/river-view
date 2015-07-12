@@ -33,10 +33,10 @@ if (CONFIG.host == 'http://localhost') {
     CONFIG.baseurl = CONFIG.host;
 }
 
-console.log('Application Configuration');
-console.log('==============================================');
-console.log(CONFIG);
-console.log('==============================================');
+// console.log('Application Configuration');
+// console.log('==============================================');
+// console.log(CONFIG);
+// console.log('==============================================');
 
 // Fail fast
 if (! process.env[CONFIG.redisEnv]) {
