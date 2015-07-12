@@ -11,6 +11,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
       , timezone = config.timezone
       ;
 
+    // This is important.
+    moment.tz.setDefault(config.timezone);
+
     xml2js.parseString(body, function(err, result) {
         var props = result.site['$']
           , id = props.id

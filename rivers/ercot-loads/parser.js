@@ -32,6 +32,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
       , id = 'actual_loads_of_weather_zones'
       ;
 
+    // This is important.
+    moment.tz.setDefault(config.timezone);
+
     $('#today tr').each(function(i, tr) {
         var row = []
           , dateString
@@ -58,6 +61,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             dateString = row[columnNames.indexOf('Oper Day')];
             timeString = row[columnNames.indexOf('Hour Ending')];
             timestamp = dateStringToTimestampWithZone(dateString, timeString, config.timezone);
+            // Shift off the first two values, which are date and time strings.
+            row.shift();
+            row.shift();
             temporalDataCallback(id, timestamp, row);
         }
     });

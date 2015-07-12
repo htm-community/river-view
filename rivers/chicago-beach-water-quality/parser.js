@@ -21,20 +21,29 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     timeObject.hour = parseInt(timePieces.shift())
     timeObject.minute = parseInt(timePieces.shift())
 
-    if (ampm.toLowerCase() == 'pm') {
+    if (ampm.toLowerCase() == 'pm' && (timeObject.hour != 12 || timeObject.hour != 24) ) {
         timeObject.hour += 12;
     }
 
     timestamp = moment.tz(timeObject, zone).unix();
-
     return timestamp;
 }
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var dataArray = JSON.parse(body)
+    var dataArray
       , fieldNames = config.fields
       , metadataNames = config.metadata
       ;
+
+    try {
+        dataArray = JSON.parse(body)
+    } catch (err) {
+        console.error(body);
+        throw new Error('JSON parse error: ' + err.message);
+    }
+
+    // This is important.
+    moment.tz.setDefault(config.timezone);
 
     _.each(dataArray, function(dataPoint) {
         var fieldValues = []

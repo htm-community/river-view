@@ -1,52 +1,12 @@
 {{> geotemporal-data-header }}
 
-<h1>
-    <a href="{{ baseurl }}/{{name}}/meta.html">
-    {{name}}
-    </a>
-</h1>
+{{> data-header }}
 
-<h2>{{id}} Data</h2>
+<div class="container">
+    <div id="map-canvas"></div>
+</div>
 
-<h3>Data type: {{type}}</h3>
-
-<p>Other data types:</p>
-<ul>
-    <li><a href="data.json">JSON</a></li>
-    <li><a href="data.csv">CSV</a></li>
-</ul>
-
-<p>Available URL query params:</p>
-<ul>
-    <li><code>limit=X</code></li>
-    <li><code>since=timestamp</code></li>
-    <li><code>until=timestamp</code></li>
-</ul>
-
-<a href="meta.html">See properties</a>
-
-<div id="map-canvas"></div>
-
-<p>Map above shows latest 500 data points.</p>
-
-<table class="data">
-    <thead>
-        <tr>
-            {{#each headers}}
-            <th>{{this}}</th>
-            {{/each}}
-        </tr>
-    </thead>
-    <tbody>
-    {{#each data}}
-        <tr>
-            {{#each this}}
-            <td>{{this}}</td>
-            {{/each}}
-        </tr>
-    {{/each}}
-    </tbody>
-</table>
+{{> data-table }}
 
 <script type="text/javascript">
         function initialize() {
@@ -55,19 +15,27 @@
               , map = new google.maps.Map(mapDiv, {
                     zoom: 11,
                 })
+              , dataLimit = RV.utils.getUrlVars().limit || 100
               ;
+
+            $('#data-limit').html(dataLimit);
+            $('a.download').each(function(i, a) {
+                var $a = $(a);
+                $a.attr('href', $a.attr('href') + '?limit=' + dataLimit);
+            });
 
             $.get('{{ baseurl }}/static/templates/partials/markerLabel/index.html', function(response) {
                 markerTemplate = response;
             });
 
-            $.getJSON('{{ baseurl }}/{{name}}/{{id}}/data.json?limit=500', function(payload) {
+            $.getJSON('{{ baseurl }}/{{name}}/{{id}}/data.json?limit=' + dataLimit, function(payload) {
                 _.each(payload.data, function(eventData) {
                     var event = _.zipObject(payload.headers, eventData)
                       , latitude = event.latitude
                       , longitude = event.longitude
                       , latlng
                       , marker
+                      , markerData = {}
                       , contentString
                       , infoWindow;
 
@@ -84,7 +52,10 @@
                           , title: event.contributing_factor_vehicle_1
                         });
 
-                        contentString = Handlebars.compile(markerTemplate)(event);
+                        markerData.name = 'id: ' + event.id;
+                        markerData.time = event.datetime;
+
+                        contentString = Handlebars.compile(markerTemplate)(markerData);
 
                         infoWindow = new google.maps.InfoWindow({
                             content: contentString

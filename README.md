@@ -1,11 +1,11 @@
-# River View
+# River View [![Build Status](https://travis-ci.org/nupic-community/river-view.svg)](https://travis-ci.org/nupic-community/river-view) [![Coverage Status](https://coveralls.io/repos/nupic-community/river-view/badge.svg?branch=master&service=github)](https://coveralls.io/github/nupic-community/river-view?branch=master) [![Join the chat at https://gitter.im/nupic-community/river-view](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nupic-community/river-view?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > Public Temporal Streaming Data Service Framework
 
 
 [![A View of the Mississippi River](/site/images/river-view.jpg)](https://river-view.herokuapp.com/index.html)
 
-[See **River View** in action ⤤](https://river-view.herokuapp.com/index.html)
+[See **River View** in action ⤤](http://data.numenta.org)
 
 
 _**River View**_ is a _Public Temporal Streaming Data Service Framework_ (yes, that's a mouthful!). It provides a pluggable interface for users to expose temporal data streams in a time-boxed format that is easily query-able. It was built to provide a longer-lasting historical window for public data sources that provide only real-time data snapshots, especially for sensor data from public government services like weather, traffic, and geological data.

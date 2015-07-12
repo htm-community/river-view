@@ -33,14 +33,14 @@ if (CONFIG.host == 'http://localhost') {
     CONFIG.baseurl = CONFIG.host;
 }
 
-console.log('Application Configuration');
-console.log('==============================================');
-console.log(CONFIG);
-console.log('==============================================');
+// console.log('Application Configuration');
+// console.log('==============================================');
+// console.log(CONFIG);
+// console.log('==============================================');
 
 // Fail fast
 if (! process.env[CONFIG.redisEnv]) {
-    throw new Error('Expected REDIS URL set into environment varible "' + CONFIG.redisEnv + '".');
+    throw new Error('Expected Redis connection to be set into environment variable "' + CONFIG.redisEnv + '".');
 } else {
     REDIS_URL = process.env[CONFIG.redisEnv];
 }
@@ -54,9 +54,9 @@ redisClient.initialize(function(err) {
     rivers = RiverFactory.createRivers(CONFIG.riverDir, redisClient)
 
     console.log('Starting with %s rivers:', rivers.length);
-    console.log('==============================================');
-    _.each(rivers, function(s) { console.log(s); });
-    console.log('==============================================');
+    // console.log('==============================================');
+    // _.each(rivers, function(s) { console.log(s); });
+    // console.log('==============================================');
 
 
     lockmaster = new Lockmaster({

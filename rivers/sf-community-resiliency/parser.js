@@ -5,6 +5,10 @@ var _ = require('lodash')
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
     var neighborhoods = JSON.parse(body);
+
+    // This is important.
+    moment.tz.setDefault(config.timezone);
+
     _.each(neighborhoods, function(hood) {
         var neighborhood = hood.neighborhood.replace('/', '-')
           , timestamp = moment().tz(config.timezone).unix()

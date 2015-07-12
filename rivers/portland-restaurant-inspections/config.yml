@@ -1,9 +1,9 @@
 # Please name this the same as the directory it is in.
-name: chicago-water-temps
-type: temporal
+name: portland-restaurant-inspections
+type: geotemporal
 
 # Short text description of the data you are providing.
-description: City of Chicago Beach Water Quality - Automated Sensors - 2015 - Water Temperature. See https://data.cityofchicago.org/Parks-Recreation/Beach-Water-Quality-Automated-Sensors-2015-Water-T/3ipq-j3gd/about.
+description: Restaurant inspection scores by date in Portland, OR. http://www.civicapps.org/datasets/restaurant-inspections
 
 author: Matthew Taylor
 email: matt@numenta.org
@@ -11,15 +11,17 @@ email: matt@numenta.org
 # Timezone is important! You should use the timezone that the data is
 # collected, or if time of day does not matter in the data patterns, you many
 # use "UTC"
-timezone: America/Chicago
+timezone: America/Los_Angeles
 
 # A list of URLs that contain the raw data. Each of these will be polled at the
 # interval specified below, and the response text will be sent to your parser.
 sources:
-  - https://data.cityofchicago.org/resource/3ipq-j3gd.json?$limit=100
+    # Putting the "to" date 100 years in the future, because it is required and
+    # I don't want to miss any data.
+  - http://api.civicapps.org/restaurant-inspections/?from=2015-01-01&to=2115-01-01
 
 # How often should River View poll your data sources?
-interval: 1 hour
+interval: 1 week
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
@@ -27,14 +29,17 @@ expires: 6 months
 
 # Primary data, usually collected in one location. Should both be scalar values.
 fields:
-- water_temperature # Water temperature in Celsius degrees.
-- turbidity         # Water turbidity in Nephelometric Turbidity Units (NTU)
-- wave_height       # Wave height in meters.
-- wave_period       # Wave period in seconds.
+  - latitude
+  - longitude
+  - restaurant_id
+  - name
+  - score
+  - inspection_number
+  - type
+  - address_street
+  - address_city
+  - address_zip
 
-# This provides more information about the data. This data doesn't change over 
-# time like the fields.
-metadata:
-- beach_name
-- battery_life
-- last_updated_label
+
+# You want a "new" badge on this?
+new: true

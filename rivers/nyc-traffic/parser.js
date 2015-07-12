@@ -30,34 +30,37 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
       , fieldNames = config.fields
       ;
 
-      csvParse(body, {
-          delimiter: '\t'
-        , auto_parse: true
-      }, function(err, data) {
-          var headers = data.shift()
+    // This is important.
+    moment.tz.setDefault(config.timezone);
 
-          _.each(data, function(path) {
-              var metaData = {}
-                , fieldValues = []
-                , typeValues = {}
-                , pathId = path[headers.indexOf('Id')]
-                , timeString = path[headers.indexOf('DataAsOf')]
-                , timestamp = dateStringToTimestampWithZone(
-                    timeString, config.timezone
-                  )
-                ;
+    csvParse(body, {
+        delimiter: '\t'
+      , auto_parse: true
+    }, function(err, data) {
+        var headers = data.shift()
 
-              _.each(metadataNames, function(propName) {
-                  metaData[propName] = path[headers.indexOf(propName)];
-              });
-              metaDataCallback(pathId, metaData);
+        _.each(data, function(path) {
+            var metaData = {}
+            , fieldValues = []
+            , typeValues = {}
+            , pathId = path[headers.indexOf('Id')]
+            , timeString = path[headers.indexOf('DataAsOf')]
+            , timestamp = dateStringToTimestampWithZone(
+                  timeString, config.timezone
+              )
+            ;
 
-              _.each(fieldNames, function(fieldName) {
-                  fieldValues.push(path[headers.indexOf(fieldName)]);
-              });
-              temporalDataCallback(pathId, timestamp, fieldValues);
-          });
+            _.each(metadataNames, function(propName) {
+                metaData[propName] = path[headers.indexOf(propName)];
+            });
+            metaDataCallback(pathId, metaData);
 
-      });
+            _.each(fieldNames, function(fieldName) {
+                fieldValues.push(path[headers.indexOf(fieldName)]);
+            });
+            temporalDataCallback(pathId, timestamp, fieldValues);
+        });
+
+    });
 
 };

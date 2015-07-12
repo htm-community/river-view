@@ -1,9 +1,9 @@
 # Please name this the same as the directory it is in.
-name: sfpd-incidents
-type: geotemporal
+name: chicago-beach-weather
+type: temporal
 
 # Short text description of the data you are providing.
-description: Incidents derived from SFPD Crime Incident Reporting system Updated daily, showing data from 1/1/2003 up until two weeks ago from current date. (https://data.sfgov.org/Public-Safety/SFPD-Incidents-from-1-January-2003/tmnf-yvry)
+description: City of Chicago Beach Weather Stations - Automated Sensors - 2015 - Solar Radiation
 
 author: Matthew Taylor
 email: matt@numenta.org
@@ -11,32 +11,38 @@ email: matt@numenta.org
 # Timezone is important! You should use the timezone that the data is
 # collected, or if time of day does not matter in the data patterns, you many
 # use "UTC"
-timezone: America/Los_Angeles
+timezone: America/Chicago
 
 # A list of URLs that contain the raw data. Each of these will be polled at the
 # interval specified below, and the response text will be sent to your parser.
 sources:
-  # see http://dev.socrata.com/
-- https://data.sfgov.org/resource/tmnf-yvry.json?%24order=date%20DESC&%24limit=5000
+  - https://data.cityofchicago.org/resource/5rxc-uczg.json?$limit=100
 
 # How often should River View poll your data sources?
-interval: 5 days
+interval: 1 hour
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
 expires: 6 months
 
+# Primary data, usually collected in one location. Should both be scalar values.
 fields:
-- latitude
-- longitude
-- id
-- category
-- pddistrict
-- pdid
-- address
-- descript
-- resolution
+- solar_radiation
+- barometric_pressure
+- wind_direction
+- interval_rain
+- wind_speed
+- wet_bulb_temperature
+- air_temperature
+- humidity
+- precipitation_type
+- total_rain
+- maximum_wind_speed
+- heading
+- rain_intensity
 
-
-# You want a "new" badge on this?
-new: true
+# This provides more information about the data. This data doesn't change over
+# time like the fields.
+metadata:
+- station_name
+- battery_life

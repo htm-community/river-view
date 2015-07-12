@@ -15,10 +15,15 @@ table.data {
     margin: 20px;
 }
 
-table.rivers td {
+div.river-name {
     font-size: 24px;
     font-weight: bold;
     padding: 0 50px;
+}
+
+.beta {
+    font-style: italic;
+    font-weight: lighter;
 }
 
 .starburst {
@@ -78,4 +83,24 @@ table.rivers td {
 }
 .starburst span:before {
   transform: rotate(-30deg);
+}
+
+.new {
+    background-image: url(/static/images/new-icon.png);
+    background-position: left;
+    background-repeat: no-repeat;
+}
+
+td.river-name h3 {
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+table.table-rivers td {
+    padding: 0px !important;
+    vertical-align: inherit;
+}
+
+.mono {
+    font-family: "Courier New", monospace;
 }
