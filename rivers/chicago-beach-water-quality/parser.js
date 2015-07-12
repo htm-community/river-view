@@ -21,7 +21,7 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     timeObject.hour = parseInt(timePieces.shift())
     timeObject.minute = parseInt(timePieces.shift())
 
-    if (ampm.toLowerCase() == 'pm' && timeObject.hour != 12) {
+    if (ampm.toLowerCase() == 'pm' && (timeObject.hour != 12 || timeObject.hour != 24) ) {
         timeObject.hour += 12;
     }
 
