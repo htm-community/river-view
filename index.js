@@ -62,6 +62,7 @@ redisClient.initialize(function(err) {
     lockmaster = new Lockmaster({
         config: CONFIG
       , rivers: rivers
+      , redisClient: redisClient
     });
 
     lockmaster.start();
