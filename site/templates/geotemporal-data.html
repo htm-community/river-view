@@ -1,69 +1,12 @@
 {{> geotemporal-data-header }}
 
-<ol class="breadcrumb">
-  <li><a href="{{ baseurl }}">Home</a></li>
-  <li><a href="../meta.html">{{ name }}</a></li>
-  <li><a href="../keys.html">streams</a></li>
-  <li class="active">{{ id }} data</li>
-</ol>
-
-<div class="row">
-
-    <div class="col-md-9">
-        <div class="jumbotron">
-          <h1>{{ name }}</h1>
-          <h3>{{ id }} <small><em>(<strong>{{type}}</strong> data stream)</em></small></h3>
-          <p>All times in this data set are in <strong>{{timezone}}</strong>. Last updated {{lastUpdated}}.</p>
-          <div class="btn-group" role="group">
-              <a class="btn btn-primary btn-lg download" href="data.json" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON</a>
-              <a class="btn btn-primary btn-lg download" href="data.csv" role="button"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download CSV</a>
-              <a class="btn btn-primary btn-lg" href="meta.html" role="button"><span class="glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span> Metadata</a>
-          </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-body">
-
-                <p>The following URL query parameters are available for all data formats:</p>
-                <ul>
-                    <li><code>limit=N</code></li>
-                    <li><code>since=timestamp</code></li>
-                    <li><code>until=timestamp</code></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="alert alert-warning" role="alert">
-    This page only contain the latest <span id="data-limit"></span> data points. Specify a <code>limit=X</code> URL parameter to change.
-</div>
+{{> data-header }}
 
 <div class="container">
     <div id="map-canvas"></div>
 </div>
 
-<table class="table table-striped table-condensed table-bordered">
-    <thead>
-        <tr>
-            {{#each headers}}
-            <th>{{this}}</th>
-            {{/each}}
-        </tr>
-    </thead>
-    <tbody>
-    {{#each data}}
-        <tr>
-            {{#each this}}
-            <td>{{this}}</td>
-            {{/each}}
-        </tr>
-    {{/each}}
-    </tbody>
-</table>
+{{ > data-table }}
 
 <script type="text/javascript">
         function initialize() {
