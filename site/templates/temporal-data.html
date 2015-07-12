@@ -13,7 +13,7 @@
 
         var chartWidth = $('#chart-container').width()
           , $chart = $('#chart')
-          , dataLimit = RV.utils.getUrlVars().limit || 500
+          , dataLimit = RV.utils.getUrlVars().limit || 100
           , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv?limit=' + dataLimit
           , lastField = '{{headers}}'.split(',').pop()
           , graphConfig = {}
