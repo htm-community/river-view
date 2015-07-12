@@ -12,6 +12,7 @@
   <div class="btn-group" role="group">
       <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{this.name}}/keys.html" role="button"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Streams</a>
       <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{this.name}}/meta.json" role="button"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span> JSON API</a>
+      <a class="btn btn-primary btn-lg" href="https://github.com/nupic-community/river-view/tree/master/rivers/{{this.name}}" role="button" target="_blank"><span class="glyphicon glyphicon-console" aria-hidden="true"></span> Source Code</a>
   </div>
 
 </div>
@@ -31,7 +32,6 @@
                             </div>
                             <div class="col-md-8">
                                 <h4>Author: <a href="mailto:{{email}}">{{author}}</a></h4>
-                                <h4><a href="https://github.com/nupic-community/river-view/tree/master/rivers/{{this.name}}" target="_blank">Source Code ⤤</a></h4>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                 <h5>Fields</h5>
                 <ul>
                     {{#each fields}}
-                    <li>{{this}}</li>
+                    <li class="mono">{{this}}</li>
                     {{/each}}
                 </ul>
 
@@ -92,7 +92,7 @@
                     <h5>Metadata</h5>
                     <ul>
                         {{#each metadata}}
-                        <li>{{this}}</li>
+                        <li class="mono">{{this}}</li>
                         {{/each}}
                     </ul>
                 {{/if}}
