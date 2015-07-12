@@ -32,22 +32,21 @@
                     <img src="{{ baseurl }}/static/images/new-icon.png" />
                     {{/if}}
                 </div>
-                <div class="col-md-3">
-                    <a href="{{name}}/meta.html">
-                        <button type="button" class="btn btn-default btn-md">
-                          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View HTML
-                        </button>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="{{name}}/meta.json">
-                        <button type="button" class="btn btn-default btn-md">
-                          <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Download JSON
-                        </button>
-                    </a>
+
+                <div class="col-md-6">
+
+                    <div class="btn-group btn-group-justified" role="group">
+                        <a class="btn btn-primary btn-lg" href="{{name}}/meta.html" role="button"><span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span> HTML</a>
+
+                        <a class="btn btn-primary btn-lg" href="{{name}}/meta.json" role="button"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span> JSON API</a>
+
+                        <a class="btn btn-primary btn-lg" href="https://github.com/nupic-community/river-view/tree/master/rivers/{{name}}" role="button"><span class="glyphicon glyphicon glyphicon-console" aria-hidden="true"></span> Source code</a>
+                    </div>
+
                 </div>
 
             </div>
+
             {{/each}}
 
           </div>
