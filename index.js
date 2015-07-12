@@ -40,7 +40,7 @@ console.log('==============================================');
 
 // Fail fast
 if (! process.env[CONFIG.redisEnv]) {
-    throw new Error('Expected REDIS URL set into environment varible "' + CONFIG.redisEnv + '".');
+    throw new Error('Expected Redis connection to be set into environment variable "' + CONFIG.redisEnv + '".');
 } else {
     REDIS_URL = process.env[CONFIG.redisEnv];
 }
