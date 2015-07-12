@@ -85,6 +85,21 @@ div.river-name {
   transform: rotate(-30deg);
 }
 
+.new {
+    background-image: url(/static/images/new-icon.png);
+    background-position: left;
+    background-repeat: no-repeat;
+}
+
+td.river-name h3 {
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+table.table-rivers td {
+    padding: 0px !important;
+    vertical-align: inherit;
+}
 
 .mono {
     font-family: "Courier New", monospace;

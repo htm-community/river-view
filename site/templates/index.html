@@ -24,30 +24,42 @@
             <h1 class="panel-title">Rivers</h1>
           </div>
           <div class="panel-body">
-            {{#each rivers}}
-            <div class="rivers row">
-                <div class="col-md-6 river-name">
-                    {{ name }}
-                    {{#if new}}
-                    <img src="{{ baseurl }}/static/images/new-icon.png" />
-                    {{/if}}
-                </div>
 
-                <div class="col-md-6">
+                <table class="table table-striped table-rivers">
+                <tbody>
 
-                    <div class="btn-group btn-group-justified" role="group">
-                        <a class="btn btn-primary btn-lg" href="{{name}}/meta.html" role="button"><span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span> HTML</a>
+                    {{#each rivers}}
+                    <tr>
 
-                        <a class="btn btn-primary btn-lg" href="{{name}}/meta.json" role="button"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span> JSON API</a>
+                        <td class="river-name
+                        {{#if new}}
+                            new
+                        {{/if}}
+                        "
 
-                        <a class="btn btn-primary btn-lg" href="https://github.com/nupic-community/river-view/tree/master/rivers/{{name}}" role="button"><span class="glyphicon glyphicon glyphicon-console" aria-hidden="true"></span> Source code</a>
-                    </div>
 
-                </div>
+                        style="width:50%">
+                            <h3>
+                                {{ name }}
+                            </h3>
+                        </td>
 
-            </div>
+                        <td style="width:50%">
+                            <div class="btn-group btn-group-justified" role="group">
+                                <a class="btn btn-primary btn-lg" href="{{name}}/meta.html" role="button"><span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span> HTML</a>
 
-            {{/each}}
+                                <a class="btn btn-primary btn-lg" href="{{name}}/meta.json" role="button"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span> JSON API</a>
+
+                                <a class="btn btn-primary btn-lg" href="https://github.com/nupic-community/river-view/tree/master/rivers/{{name}}" role="button"><span class="glyphicon glyphicon glyphicon-console" aria-hidden="true"></span> Source code</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                {{/each}}
+
+                </tbody>
+                </table>
+
 
           </div>
         </div>
