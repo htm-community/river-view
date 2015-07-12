@@ -1,4 +1,4 @@
-# River View [![Coverage Status](https://coveralls.io/repos/nupic-community/river-view/badge.svg?branch=master&service=github)](https://coveralls.io/github/nupic-community/river-view?branch=master) [![Join the chat at https://gitter.im/nupic-community/river-view](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nupic-community/river-view?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# River View [![Build Status](https://travis-ci.org/nupic-community/river-view.svg)](https://travis-ci.org/nupic-community/river-view) [![Coverage Status](https://coveralls.io/repos/nupic-community/river-view/badge.svg?branch=master&service=github)](https://coveralls.io/github/nupic-community/river-view?branch=master) [![Join the chat at https://gitter.im/nupic-community/river-view](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nupic-community/river-view?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > Public Temporal Streaming Data Service Framework
 
