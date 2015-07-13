@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: twitter-511nyc
-type: categorical
+type: geospatial
 
 # Short text description of the data you are providing.
 description: Tweets from @511NYC, in an attempt to get live traffic events.
@@ -38,5 +38,7 @@ fields:
   - description
   - begins
   - last_updated
+  - latitude
+  - longitude
 
 new: true

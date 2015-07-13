@@ -1,6 +1,7 @@
 var fs = require('fs')
   , _ = require('lodash')
   , request = require('request')
+  , geocoder = require('node-geocoder')('google', 'http')
   , moment = require('moment-timezone')
   , cheerio = require('cheerio')
   , hashtagRegex = /(^|\s)(#[a-z\d-]+)/gi
@@ -26,7 +27,18 @@ function fetchMoreDataFrom(url, callback) {
         $('#content p').each(function(i, p) {
             out[headers[i]] = $(p).html().trim();
         });
-        callback(null, out);
+
+        if (out.roadway) {
+            geocoder.geocode(out.roadway + ', New York City, NY', function(err, res) {
+                if (err) return callback(null, out);
+                out.latitude = res[0].latitude;
+                out.longitude = res[0].longitude;
+                callback(null, out);
+            });
+        } else {
+            callback(null, out);
+        }
+
     });
 }
 
@@ -98,11 +110,13 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
                   , moreData.description
                   , moreData.begins
                   , moreData.last_updated
+                  , moreData.latitude
+                  , moreData.longitude
                 ]);
                 temporalDataCallback(id, timestamp, fieldValues);
             });
         } else {
-            fieldValues = fieldValues.concat([null,null,null,null,null,null,null,]);
+            fieldValues = fieldValues.concat([null,null,null,null,null,null,null,null,null]);
             temporalDataCallback(id, timestamp, fieldValues);
         }
 
