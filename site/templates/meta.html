@@ -18,6 +18,12 @@
 
 <hr />
 
+{{#if metadata.latitude}}
+    <div class="container">
+        <div id="map-canvas"></div>
+    </div>
+{{/if}}
+
 <table class="table table-striped">
 <tbody>
 {{#each metadata}}

@@ -104,3 +104,9 @@ table.table-rivers td {
 .mono {
     font-family: "Courier New", monospace;
 }
+
+#map-canvas {
+    position: relative;
+    width: 100%;
+    height: 600px;
+}

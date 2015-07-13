@@ -79,7 +79,7 @@
           , underlayCallback: highlightWeekends
         };
 
-        if ({{splitCharts}}) {
+        if ({{tmpl.splitCharts}}) {
             graphConfig.height = 100;
             _.each('{{headers}}'.split(','), function(header, i) {
                 var myCsvPath;
