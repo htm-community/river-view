@@ -1,9 +1,34 @@
 var fs = require('fs')
   , _ = require('lodash')
+  , request = require('request')
   , moment = require('moment-timezone')
   , cheerio = require('cheerio')
   , hashtagRegex = /(^|\s)(#[a-z\d-]+)/gi
+  , urlRegex = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?/i
   ;
+
+function fetchMoreDataFrom(url, callback) {
+    request.get(url, function(err, resp, body) {
+        var $, $content, $dataTexts, out = {}, headers;
+        if (err) return callback(err);
+        $ = cheerio.load(body);
+        out = {};
+
+        if ($('#content h1').html() == 'Item Not Found') {
+            return callback(null, out);
+        }
+
+        headers = [
+            'region', 'county', 'roadway', 'direction'
+          , 'description', 'begins', 'lastUpdated'
+        ];
+
+        $('#content p').each(function(i, p) {
+            out[headers[i]] = $(p).html().trim();
+        });
+        callback(null, out);
+    });
+}
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
     var $ = cheerio.load(body)
@@ -23,6 +48,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
           , colonSplit
           , hashMatch
           , hashtag
+          , urlMatch
+          , url
+          , fieldValues
           ;
 
         text = $tweet.find('.tweet-text').text();
@@ -50,12 +78,34 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             hashtag = hashMatch.shift().trim();
         }
 
-        temporalDataCallback(id, timestamp, [
-            text
-          , eventType
-          , eventStatus
-          , hashtag
-        ]);
+        urlMatch = text.match(urlRegex)
+        if (urlMatch) {
+            url = urlMatch.shift().trim();
+        }
+
+        fieldValues = [
+            eventType, eventStatus, text, hashtag
+        ];
+
+        if (url) {
+            fetchMoreDataFrom(url, function(error, moreData) {
+                if (error) throw error;
+                fieldValues = fieldValues.concat([
+                    moreData.region
+                  , moreData.roadway
+                  , moreData.county
+                  , moreData.direction
+                  , moreData.description
+                  , moreData.begins
+                  , moreData.last_updated
+                ]);
+                temporalDataCallback(id, timestamp, fieldValues);
+            });
+        } else {
+            fieldValues = fieldValues.concat([null,null,null,null,null,null,null,]);
+            temporalDataCallback(id, timestamp, fieldValues);
+        }
+
 
     });
 };
