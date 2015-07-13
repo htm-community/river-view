@@ -31,3 +31,5 @@ fields:
   - event_type
   - event_status
   - hashtag
+
+new: true
