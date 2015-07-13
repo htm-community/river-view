@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: ercot
-type: temporal
+type: scalar
 
 # Short text description of the data you are providing.
 description: The Electric Reliability Council of Texas (ERCOT) manages scheduling on an electric grid carrying 85 percent of Texas' load.

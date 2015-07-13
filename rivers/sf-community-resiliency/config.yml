@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: sf-community-resiliency
-type: temporal
+type: geospatial
 
 # Short text description of the data you are providing.
 description: The Community Resiliency Indicator System was developed by San Francisco’s Climate and Health Program and is part of San Francisco’s Climate and Health Profile. The system includes 40 indicators and an additive index which is a compilation of all of the indicators. See attached methods and project description documents for more details, you can also visit San Francisco's Climate and Health Profile website - www.sfclimatehealth.org (available Feb-2015)

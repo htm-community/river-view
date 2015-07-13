@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: chicago-beach-water-quality
-type: temporal
+type: scalar
 
 # Short text description of the data you are providing.
 description: City of Chicago Beach Water Quality - Automated Sensors - 2015 - Water Temperature. See https://data.cityofchicago.org/Parks-Recreation/Beach-Water-Quality-Automated-Sensors-2015-Water-T/3ipq-j3gd/about.

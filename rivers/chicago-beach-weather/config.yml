@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: chicago-beach-weather
-type: temporal
+type: scalar
 
 # Short text description of the data you are providing.
 description: City of Chicago Beach Weather Stations - Automated Sensors - 2015 - Solar Radiation

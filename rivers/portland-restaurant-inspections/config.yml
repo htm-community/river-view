@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: portland-restaurant-inspections
-type: geotemporal
+type: geospatial
 
 # Short text description of the data you are providing.
 description: Restaurant inspection scores by date in Portland, OR. http://www.civicapps.org/datasets/restaurant-inspections

@@ -1,9 +1,9 @@
 # Please name this the same as the directory it is in.
-name: md-traffic
-type: scalar
+name: twitter-511nyc
+type: categorical
 
 # Short text description of the data you are providing.
-description: Maryland traffic speeds for key roadways. Lifted from http://www.chart.state.md.us/rss/rssfeeds.asp.
+description: Tweets from @511NYC, in an attempt to get live traffic events.
 
 author: Matthew Taylor
 email: matt@numenta.org
@@ -16,10 +16,10 @@ timezone: America/New_York
 # A list of URLs that contain the raw data. Each of these will be polled at the
 # interval specified below, and the response text will be sent to your parser.
 sources:
-  - http://www.chart.state.md.us/rss/ProduceRSS.aspx?Type=TravelSpeedsXML&filter=ALL
+  - https://twitter.com/511nyc
 
 # How often should River View poll your data sources?
-interval: 10 minutes
+interval: 1 minute
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
@@ -27,18 +27,7 @@ expires: 6 months
 
 # Primary data, usually collected in one location. Should both be scalar values.
 fields:
-  - minSpeed
-  - maxSpeed
-
-# This provides more information about the data. This data doesn't change over
-# time like the fields.
-metadata:
-  - devideID
-  - location
-  - latitude
-  - longitude
-  - direction
-
-
-# You want a "new" badge on this?
-new: true
+  - tweet_text
+  - event_type
+  - event_status
+  - hashtag

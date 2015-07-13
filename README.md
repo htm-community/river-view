@@ -39,7 +39,13 @@ Each _River_ may produce data for many unique data items, but they must have uni
 
 ### River Types
 
-A river can be `temporal` or `geotemporal`. Both contain timestamped data, but `geotemporal` data is presented a bit differently.
+All river streams must have a timestamp for each row of data. Other than that, they might have different primary types of data, as described below:
+
+- _spacial_: integer or float values
+- _geospatial_: latitude / longitude (floats)
+- _categorical_: string values
+
+The data streams will be presented differently, both in JSON and HTML, depending on the type specified in the `config.yml` file.
 
 ### Creating a River
 

@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: nyc-traffic
-type: temporal
+type: scalar
 
 # Short text description of the data you are providing.
 description: New York City traffic speeds and travel times across certain paths provided by the NYDOT.
@@ -30,7 +30,7 @@ fields:
   - Speed
   - TravelTime
 
-# This provides more information about the data. This data doesn't change over 
+# This provides more information about the data. This data doesn't change over
 # time like the fields.
 metadata:
   - Borough

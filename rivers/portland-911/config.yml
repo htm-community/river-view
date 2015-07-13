@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: portland-911
-type: geotemporal
+type: geospatial
 
 # Short text description of the data you are providing.
 description: An RSS feed which contains geographic locations for the 100 most recent, closed, non-confidential, 911 calls for service received by the City of Portland’s 911 system. This feed is updated every 30 seconds.

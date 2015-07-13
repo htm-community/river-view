@@ -1,7 +1,7 @@
 # Please name this the same as the directory it is in.
 name: nypd-motor-vehicle-collisions
-type: geotemporal
-    
+type: geospatial
+
 # Short text description of the data you are providing.
 description: Details of Motor Vehicle Collisions in New York City provided by the Police Department (NYPD). See https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95/about for details.
 

@@ -1,5 +1,5 @@
 name: mo-water-levels
-type: temporal
+type: scalar
 
 description: Missouri water levels provided by National Weather Service.
 

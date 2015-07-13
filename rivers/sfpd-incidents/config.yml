@@ -1,6 +1,6 @@
 # Please name this the same as the directory it is in.
 name: sfpd-incidents
-type: geotemporal
+type: geospatial
 
 # Short text description of the data you are providing.
 description: Incidents derived from SFPD Crime Incident Reporting system Updated daily, showing data from 1/1/2003 up until two weeks ago from current date. (https://data.sfgov.org/Public-Safety/SFPD-Incidents-from-1-January-2003/tmnf-yvry)
