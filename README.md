@@ -61,13 +61,14 @@ In addition to collecting and storing data from _Rivers_, a simple HTTP API for 
 
 ### Running Locally (on OS X)
 OS X has some weird built in behaviors regarding the maximum number of open file descriptors. River-view
-need the system to handle around 1024 open descriptors to actually start up, so if you run into any sort of
+needs the system to handle around 1024 open descriptors to actually start up, so if you run into any sort of
 *file-can't-be-opened* errors, check that you have an appropriate number of maximum open file descriptors by
-running ```ulimit -n```. If this number is less than 1024, you'll need to update it.
+running `ulimit -n`. If this number is less than 1024, you'll need to update it.
 
 ## Updating the maximum number of open file descriptors
 - ```sudo launchctl limit maxfiles 1024 unlimited```
-This updates the maximum number of open file descriptors
-your Mac will allow. This number is not persistant across reboots. To make it persistant add ```limit maxfiles 1024 unlimited``` to ```/etc/launchd.conf```
+
+This updates the maximum number of open file descriptors your Mac will allow. This number is not persistant across reboots. To make it persistant add `limit maxfiles 1024 unlimited` to `/etc/launchd.conf`
 - ```ulimit -n 1024``` 
+
 This updates the current shell you're in to be able to make use of all those file descriptors. 
