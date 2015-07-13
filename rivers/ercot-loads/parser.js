@@ -1,11 +1,6 @@
 var fs = require('fs')
-  , nodeUrl = require('url')
-  , http = require('http')
-  , request = require('request')
   , _ = require('lodash')
-  , csvParse = require('csv-parse')
   , async = require('async')
-  , AdmZip = require('adm-zip')
   , moment = require('moment-timezone')
   , cheerio = require('cheerio')
   ;
