@@ -34,6 +34,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
     moment.tz.setDefault(config.timezone);
 
     xml2js.parseString(body, function(err, result) {
+        if (err) {
+            return console.error(err);
+        }
         var meta = result.feed
           , data = result.feed.entry
           , id = 'portland-911'

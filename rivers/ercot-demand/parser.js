@@ -86,11 +86,15 @@ function systemWideDemand(config, body, url, temporalDataCallback, metaDataCallb
             downloadUrl = sourceDomain + href;
             downloaders.push(function(callback) {
                 unzipToString(downloadUrl, function(err, csvContents) {
-                    if (err) throw err;
+                    if (err) {
+                        return console.error(err);
+                    }
                     csvParse(csvContents.trim(), {
                         auto_parse: true
                     }, function(err, data) {
-                        if (err) throw err;
+                        if (err) {
+                            return console.error(err);
+                        }
                         var headers = data.shift()
                         _.each(data, function(row) {
                             var dateString = row[0]

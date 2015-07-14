@@ -101,7 +101,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
 
         if (url) {
             fetchMoreDataFrom(url, function(error, moreData) {
-                if (error) throw error;
+                if (error) {
+                    return console.error(error);
+                }
                 fieldValues = fieldValues.concat([
                     moreData.region
                   , moreData.roadway

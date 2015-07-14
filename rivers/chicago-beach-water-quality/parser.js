@@ -39,7 +39,7 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
         dataArray = JSON.parse(body)
     } catch (err) {
         console.error(body);
-        throw new Error('JSON parse error: ' + err.message);
+        return console.error(new Error('JSON parse error: ' + err.message));
     }
 
     // This is important.

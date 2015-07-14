@@ -59,6 +59,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
     moment.tz.setDefault(config.timezone);
 
     xml2js.parseString(body, function(err, result) {
+        if (err) {
+            return console.error(err);
+        }
         _.each(result.speedSensors.sensor, function(sensor) {
             var minMax
               , metadata
