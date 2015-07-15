@@ -1,15 +1,13 @@
-var _ = require('lodash')
-  , moment = require('moment-timezone')
-  , xml2js = require('xml2js')
-  ;
+
+var _ = require('lodash'),
+    moment = require('moment-timezone'),
+    xml2js = require('xml2js');
 
 
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var metaDataNames = config.metadata
-      , fieldNames = config.fields
-      , timezone = config.timezone
-      ;
+    var metaDataNames = config.metadata,
+        timezone = config.timezone;
 
     // This is important.
     moment.tz.setDefault(config.timezone);
@@ -19,23 +17,20 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             return console.error(err);
         }
 
-        var props = result.site['$']
-          , id = props.id
-          , metaData = {}
-          , fieldValues = []
-          , data = result.site.observed[0].datum.reverse()
-          ;
+        var props = result.site['$'],
+            id = props.id,
+            metaData = {},
+            data = result.site.observed[0].datum.reverse();
 
         _.each(data, function(point) {
-            var timeString = point.valid[0]._
-              , timestamp = moment(new Date(timeString)).tz(timezone).unix()
-              , stage = parseFloat(point.primary[0]._)
-              , flow = 0.0
-              ;
+            var timeString = point.valid[0]._,
+                timestamp = moment(new Date(timeString)).tz(timezone).unix(),
+                stage = parseFloat(point.primary[0]._),
+                flow = 0.0;
 
             // Some locations don't have this info
             if (point.secondary) {
-                 flow = parseFloat(point.secondary[0]._)
+                flow = parseFloat(point.secondary[0]._)
             }
 
             temporalDataCallback(id, timestamp, [stage, flow]);

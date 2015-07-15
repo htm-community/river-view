@@ -1,7 +1,5 @@
-var _ = require('lodash')
-  , moment = require('moment-timezone')
-  , csvParse = require('csv-parse')
-  ;
+var _ = require('lodash'),
+    moment = require('moment-timezone');
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
     var neighborhoods = JSON.parse(body);
@@ -10,10 +8,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
     moment.tz.setDefault(config.timezone);
 
     _.each(neighborhoods, function(hood) {
-        var neighborhood = hood.neighborhood.replace('/', '-')
-          , timestamp = moment().tz(config.timezone).unix()
-          , fieldValues
-          ;
+        var neighborhood = hood.neighborhood.replace('/', '-'),
+            timestamp = moment().tz(config.timezone).unix(),
+            fieldValues;
 
         metaDataCallback(neighborhood, {
             neighborhood: neighborhood

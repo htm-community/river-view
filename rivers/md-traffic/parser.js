@@ -1,25 +1,24 @@
-var _ = require('lodash')
-  , moment = require('moment-timezone')
-  , xml2js = require('xml2js')
-  ;
+
+var _ = require('lodash'),
+    moment = require('moment-timezone'),
+    xml2js = require('xml2js');
 
 function dateStringToTimestampWithZone(timeIn, zone) {
     // 2015-07-11T15:08:30
-    var dateString = timeIn.split('T').shift()
-      , timeString = timeIn.split('T').pop()
-      , datePieces = dateString.split('-')
-      , timePieces = timeString.split(':')
-      , timeObject = {}
-      , timestamp
-      ;
+    var dateString = timeIn.split('T').shift(),
+        timeString = timeIn.split('T').pop(),
+        datePieces = dateString.split('-'),
+        timePieces = timeString.split(':'),
+        timeObject = {},
+        timestamp;
 
-    timeObject.year = parseInt(datePieces.shift())
-    timeObject.month = parseInt(datePieces.shift()) - 1
-    timeObject.day = parseInt(datePieces.shift())
+    timeObject.year = parseInt(datePieces.shift());
+    timeObject.month = parseInt(datePieces.shift()) - 1;
+    timeObject.day = parseInt(datePieces.shift());
 
-    timeObject.hour = parseInt(timePieces.shift())
-    timeObject.minute = parseInt(timePieces.shift())
-    timeObject.second = parseInt(timePieces.shift())
+    timeObject.hour = parseInt(timePieces.shift());
+    timeObject.minute = parseInt(timePieces.shift());
+    timeObject.second = parseInt(timePieces.shift());
 
     timestamp = moment.tz(timeObject, zone).unix();
 
@@ -33,9 +32,9 @@ function calculateMinAndMaxSpeed(speedString) {
     // - 'Over 65 MPH'
     // - 'Under 10 MPH'
     var out = {
-            min: undefined
-          , max: undefined
-        };
+        min: undefined,
+        max: undefined
+    };
 
     if (_.startsWith(speedString, 'Over')) {
         out.min = parseFloat(speedString.split(/\s+/)[1]);
@@ -63,18 +62,16 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             return console.error(err);
         }
         _.each(result.speedSensors.sensor, function(sensor) {
-            var minMax
-              , metadata
-              , fieldValues;
+            var minMax, metadata, fieldValues;
 
             minMax = calculateMinAndMaxSpeed(sensor.speed[0]);
 
             metadata = {
-                id: sensor.deviceID[0]
-              , location: sensor.location[0]
-              , latitude: parseFloat(sensor.latitude[0])
-              , longitude: parseFloat(sensor.longitude[0])
-              , direction: sensor.direction[0]
+                id: sensor.deviceID[0],
+                location: sensor.location[0],
+                latitude: parseFloat(sensor.latitude[0]),
+                longitude: parseFloat(sensor.longitude[0]),
+                direction: sensor.direction[0]
             };
 
             metaDataCallback(sensor.deviceID, metadata);
@@ -82,9 +79,7 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             fieldValues = [minMax.min, minMax.max];
 
             temporalDataCallback(
-                sensor.deviceID[0]
-              , dateStringToTimestampWithZone(sensor.timeReported[0], config.timezone)
-              , fieldValues
+                sensor.deviceID[0], dateStringToTimestampWithZone(sensor.timeReported[0], config.timezone), fieldValues
             );
 
         });

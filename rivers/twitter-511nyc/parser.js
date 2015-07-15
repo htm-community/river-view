@@ -1,16 +1,16 @@
-var fs = require('fs')
-  , _ = require('lodash')
-  , request = require('request')
-  , geocoder = require('node-geocoder')('google', 'http')
-  , moment = require('moment-timezone')
-  , cheerio = require('cheerio')
-  , hashtagRegex = /(^|\s)(#[a-z\d-]+)/gi
-  , urlRegex = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?/i
-  ;
+var fs = require('fs'),
+    _ = require('lodash'),
+    request = require('request'),
+    geocoder = require('node-geocoder')('google', 'http'),
+    moment = require('moment-timezone'),
+    cheerio = require('cheerio'),
+    hashtagRegex = /(^|\s)(#[a-z\d-]+)/gi,
+    urlRegex = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?/i;
 
 function fetchMoreDataFrom(url, callback) {
     request.get(url, function(err, resp, body) {
-        var $, $content, $dataTexts, out = {}, headers;
+        var $, $content, $dataTexts, out = {},
+            headers;
         if (err) return callback(err);
         $ = cheerio.load(body);
         out = {};
@@ -20,8 +20,7 @@ function fetchMoreDataFrom(url, callback) {
         }
 
         headers = [
-            'region', 'county', 'roadway', 'direction'
-          , 'description', 'begins', 'lastUpdated'
+            'region', 'county', 'roadway', 'direction', 'description', 'begins', 'lastUpdated'
         ];
 
         $('#content p').each(function(i, p) {
@@ -43,37 +42,26 @@ function fetchMoreDataFrom(url, callback) {
 }
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var $ = cheerio.load(body)
-      , columnNames = []
-      , id = 'twitter-511nyc'
-      ;
+    var $ = cheerio.load(body),
+        columnNames = [],
+        id = 'twitter-511nyc';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
 
     $('.tweet').each(function(i, tweet) {
-        var $tweet = $(tweet)
-          , text
-          , timestamp
-          , eventType
-          , eventStatus
-          , colonSplit
-          , hashMatch
-          , hashtag
-          , urlMatch
-          , url
-          , fieldValues
-          ;
+        var $tweet = $(tweet),
+            text, timestamp, eventType, eventStatus, colonSplit, hashMatch, hashtag, urlMatch, url, fieldValues;
 
         text = $tweet.find('.tweet-text').text();
 
-        if (! text) {
+        if (!text) {
             return;
         }
 
         timestamp = parseInt(
             $tweet.find('.tweet-timestamp span.js-short-timestamp')
-                  .attr('data-time')
+                .attr('data-time')
         );
 
         eventType = text.split(' on ').shift().trim();
@@ -105,20 +93,12 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
                     return console.error(error);
                 }
                 fieldValues = fieldValues.concat([
-                    moreData.region
-                  , moreData.roadway
-                  , moreData.county
-                  , moreData.direction
-                  , moreData.description
-                  , moreData.begins
-                  , moreData.last_updated
-                  , moreData.latitude
-                  , moreData.longitude
+                    moreData.region, moreData.roadway, moreData.county, moreData.direction, moreData.description, moreData.begins, moreData.last_updated, moreData.latitude, moreData.longitude
                 ]);
                 temporalDataCallback(id, timestamp, fieldValues);
             });
         } else {
-            fieldValues = fieldValues.concat([null,null,null,null,null,null,null,null,null]);
+            fieldValues = fieldValues.concat([null, null, null, null, null, null, null, null, null]);
             temporalDataCallback(id, timestamp, fieldValues);
         }
 
