@@ -1,21 +1,16 @@
-var path = require('path')
-  , url = require('url')
-  , _ = require('lodash')
-  , express = require('express')
-  , buildStaticSite = require('./lib/site-builder')
-  , RiverFactory = require('./lib/river-factory')
-  , Lockmaster = require('./lib/lockmaster')
-  , startDataService = require('./lib/data-server')
-  , configuration = require('./lib/configuration')
-  , RedisClient = require('./lib/redis-client')
-  , appConfig = path.join(__dirname, 'config.yml')
-  , CONFIG
-  , REDIS_URL
-  , redisClient
-  , lockmaster
-  , rivers = []
-  , webapp = express()
-  ;
+var path = require('path'),
+    url = require('url'),
+    _ = require('lodash'),
+    express = require('express'),
+    buildStaticSite = require('./lib/site-builder'),
+    RiverFactory = require('./lib/river-factory'),
+    Lockmaster = require('./lib/lockmaster'),
+    startDataService = require('./lib/data-server'),
+    configuration = require('./lib/configuration'),
+    RedisClient = require('./lib/redis-client'),
+    appConfig = path.join(__dirname, 'config.yml'),
+    CONFIG, REDIS_URL, redisClient, lockmaster, rivers = [],
+    webapp = express();
 
 // read application configuration
 CONFIG = configuration.parseYaml(appConfig);
@@ -39,7 +34,7 @@ if (CONFIG.host == 'http://localhost') {
 // console.log('==============================================');
 
 // Fail fast
-if (! process.env[CONFIG.redisEnv]) {
+if (!process.env[CONFIG.redisEnv]) {
     throw new Error('Expected Redis connection to be set into environment variable "' + CONFIG.redisEnv + '".');
 } else {
     REDIS_URL = process.env[CONFIG.redisEnv];
@@ -60,9 +55,9 @@ redisClient.initialize(function(err) {
 
 
     lockmaster = new Lockmaster({
-        config: CONFIG
-      , rivers: rivers
-      , redisClient: redisClient
+        config: CONFIG,
+        rivers: rivers,
+        redisClient: redisClient
     });
 
     lockmaster.start();
@@ -72,10 +67,10 @@ redisClient.initialize(function(err) {
 
         webapp.use('/static', express.static('build'));
         startDataService({
-            app: webapp
-          , redisClient: redisClient
-          , rivers: rivers
-          , config: CONFIG
+            app: webapp,
+            redisClient: redisClient,
+            rivers: rivers,
+            config: CONFIG
 
         });
 

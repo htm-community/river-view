@@ -1,7 +1,6 @@
-var expect = require('chai').expect
-  , proxyquire = require('proxyquire')
-  , configuration
-  ;
+var expect = require('chai').expect,
+    proxyquire = require('proxyquire'),
+    configuration;
 
 describe('when parsing yaml config', function() {
 
@@ -13,8 +12,8 @@ describe('when parsing yaml config', function() {
                     expect(encoding).to.equal('utf8');
                     return 'mock yaml contents';
                 }
-            }
-          , 'js-yaml': {
+            },
+            'js-yaml': {
                 safeLoad: function(contents) {
                     expect(contents).to.equal('mock yaml contents');
                     return 'mock config';
