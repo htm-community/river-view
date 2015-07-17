@@ -1,3 +1,7 @@
+/**
+ * Main program. Starts the {@link Lockmaster} and {@link module:lib/data-server}.
+ * @module index
+ */
 var path = require('path'),
     url = require('url'),
     _ = require('lodash'),
@@ -28,12 +32,7 @@ if (CONFIG.host == 'http://localhost') {
     CONFIG.baseurl = CONFIG.host;
 }
 
-// console.log('Application Configuration');
-// console.log('==============================================');
-// console.log(CONFIG);
-// console.log('==============================================');
-
-// Fail fast
+// Fail fast if no Redis connection URL is set.
 if (!process.env[CONFIG.redisEnv]) {
     throw new Error('Expected Redis connection to be set into environment variable "' + CONFIG.redisEnv + '".');
 } else {
@@ -49,10 +48,6 @@ redisClient.initialize(function(err) {
     rivers = RiverFactory.createRivers(CONFIG.riverDir, redisClient)
 
     console.log('Starting with %s rivers:', rivers.length);
-    // console.log('==============================================');
-    // _.each(rivers, function(s) { console.log(s); });
-    // console.log('==============================================');
-
 
     lockmaster = new Lockmaster({
         config: CONFIG,

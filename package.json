@@ -1,7 +1,7 @@
 {
-  "name": "river-stream",
+  "name": "river-view",
   "version": "1.0.0",
-  "description": "Public data stream framework.",
+  "description": "Public Temporal Streaming Data Service Framework",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nupic-community/river-stream.git"
+    "url": "https://github.com/nupic-community/river-view.git"
   },
   "keywords": [
     "data",
@@ -24,9 +24,9 @@
   "author": "Matthew Taylor",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nupic-community/river-stream/issues"
+    "url": "https://github.com/nupic-community/river-view/issues"
   },
-  "homepage": "https://river-view.herokuapp.com/",
+  "homepage": "http://data.numenta.org/",
   "dependencies": {
     "adm-zip": "^0.4.7",
     "async": "^1.2.1",
