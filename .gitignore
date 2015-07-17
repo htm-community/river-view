@@ -4,6 +4,9 @@
 # Logs
 *.log
 
+# Docs
+out/
+
 # Static file build dir
 build/
 
