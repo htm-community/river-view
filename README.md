@@ -2,7 +2,6 @@
 
 > Public Temporal Streaming Data Service Framework
 
-
 [![A View of the Mississippi River](https://raw.githubusercontent.com/nupic-community/river-view/master/site/images/river-view.jpg)](http://data.numenta.org)
 
 [See **River View** in action ⤤](http://data.numenta.org)
@@ -11,6 +10,10 @@
 _**River View**_ is a _Public Temporal Streaming Data Service Framework_ (yes, that's a mouthful!). It provides a pluggable interface for users to expose temporal data streams in a time-boxed format that is easily query-able. It was built to provide a longer-lasting historical window for public data sources that provide only real-time data snapshots, especially for sensor data from public government services like weather, traffic, and geological data.
 
 _River View_ fetches data from user-defined [_Rivers_](#Rivers) at regular intervals, populating a local [Redis](http://redis.io) database. This data is provided in a windowed format, so that data older than a certain configured age is lost. But the window should be large enough to provide enough historical data to potentially train machine intelligence models on the data patterns within it.
+
+## Code Docs
+
+See online documentation at <http://nupic-community.github.io/river-view/>.
 
 ## Dependencies
 
