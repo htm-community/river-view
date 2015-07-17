@@ -1,9 +1,0 @@
-redisEnv: REDIS_URL
-riverDir: rivers
-
-# If no interval is provided by a river, this is used.
-defaultInterval: 10 minutes
-
-# These values can be overridden by ENV[HOST] and ENV[PORT] for deployment.
-host: 'http://localhost'
-port: 8085
