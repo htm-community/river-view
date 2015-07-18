@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "istanbul cover _mocha -- --recursive -R spec && istanbul report text-summary > coverage/summary.txt &&     cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "istanbul cover _mocha -- test/index-tests.js test/lib -R spec && istanbul report text-summary > coverage/summary.txt &&     cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
