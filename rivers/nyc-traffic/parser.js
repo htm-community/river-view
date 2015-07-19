@@ -35,7 +35,7 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
         delimiter: '\t',
         auto_parse: true
     }, function(err, data) {
-        var headers = data.shift()
+        var headers = data.shift();
 
         _.each(data, function(path) {
             var metaData = {},

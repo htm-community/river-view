@@ -14,6 +14,11 @@ var riverDir = path.join(__dirname, '..', '..', 'rivers', riverName);
 var configPath = path.join(riverDir, 'config.yml');
 var parserPath = path.join(riverDir, 'parser.js');
 
+var TIMEOUT = 5000;
+
+var config;
+var httpResponses = {};
+
 function parseYaml(filePath) {
     var contents = fs.readFileSync(filePath, 'utf8');
     return yaml.safeLoad(contents);
@@ -46,7 +51,7 @@ describe('river directory', function() {
 
 describe('river config', function() {
 
-    var config;
+    this.timeout(TIMEOUT);
 
     it('is valid YAML', function(done) {
         try {
@@ -85,14 +90,18 @@ describe('river config', function() {
     });
 
     it('sources all resolve to working URLs', function(done) {
-        var fetchers = [];
+        var fetchers = {};
         _.each(config.sources, function(sourceUrl) {
-            fetchers.push(function(callback) {
-                request.get(sourceUrl, callback);
-            });
+            fetchers[sourceUrl] = function(callback) {
+                request.get(sourceUrl, function(err, resp, body) {
+                    if (err) callback(err);
+                    callback(null, body);
+                });
+            };
         });
-        async.parallel(fetchers, function(error) {
+        async.parallel(fetchers, function(error, responses) {
             assert.notOk(error);
+            httpResponses = responses;
             done()
         });
     });
@@ -107,13 +116,75 @@ describe('river config', function() {
 
 });
 
-//describe('river parser', function() {
-//
-//    it('', function() {});
-//
-//    it('', function() {});
-//
-//    it('', function() {});
-//
-//
-//});
+describe('river parser', function() {
+
+    var requirePath = path.join(parserPath.split('.')[0]);
+    var parse = require(requirePath);
+
+    this.timeout(TIMEOUT);
+
+    it('parse script exports a function', function() {
+        expect(parse).to.be.instanceOf(Function);
+    });
+
+    describe('when passed a live response body', function() {
+        var temporalCallbacks = [];
+        var metadataCallbacks = [];
+
+        it('calls the temporalDataCallback with data matching config', function(done) {
+            var fetchers = [];
+            _.each(httpResponses, function(body, url) {
+                fetchers.push(function(cb) {
+                    parse(config, body, url,
+                        function(id, ts, vals) {
+                            assert.ok(id, 'temporal data callback must be sent an id');
+                            assert.ok(ts === parseInt(ts, 10), 'timestamp is not an integer');
+                            expect(vals).to.be.instanceOf(Array);
+                            expect(vals).to.have.length(config.fields.length, 'length of values array sent to temporal callback should match the fields in the config.');
+                            temporalCallbacks.push(arguments);
+                        },
+                        function(id, metadata) {}
+                    );
+                    setTimeout(cb, 1000);
+                });
+            });
+            async.parallel(fetchers, function(err) {
+                if (err) assert.fail(null, null, err.message);
+                expect(temporalCallbacks).to.have.length.above(0, 'temporal callback was never called');
+                done();
+            });
+        });
+
+        it('calls the metadataCallback with JSON-parseable data', function(done) {
+            var fetchers = [];
+            _.each(httpResponses, function(body, url) {
+                fetchers.push(function(cb) {
+                    parse(config, body, url,
+                        function() {},
+                        function(id, metadata) {
+                            assert.ok(id, 'metadata data callback must be sent an id');
+                            metadataCallbacks.push(metadata);
+                        }
+                    );
+                    setTimeout(cb, 1000);
+                });
+            });
+            async.parallel(fetchers, function(err) {
+                if (err) assert.fail(null, null, err.message);
+                if (metadataCallbacks.length) {
+                    _.each(metadataCallbacks, function(metadata) {
+                        try {
+                            JSON.stringify(metadata);
+                        } catch(e) {
+                            assert.fail(null, null, 'Cannot stringify metadata response into JSON: ' + metadata);
+                        }
+                    });
+                }
+                done();
+            });
+        });
+
+
+    });
+
+});
