@@ -1,0 +1,12 @@
+name: dummy
+description: desc
+author: me
+email: you
+timezone: America/New_York
+sources:
+- http://google.com
+- http://bing.com
+
+fields:
+- foo
+- bar

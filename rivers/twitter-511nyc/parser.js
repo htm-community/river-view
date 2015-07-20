@@ -9,12 +9,13 @@ var fs = require('fs'),
 
 function fetchMoreDataFrom(url, callback) {
     request.get(url, function(err, resp, body) {
-        var $, $content, $dataTexts, out = {},
+        var $, out = {},
             headers;
         if (err) return callback(err);
         $ = cheerio.load(body);
         out = {};
 
+        // If the tweet is old, the URL usually gets removed.
         if ($('#content h1').html() == 'Item Not Found') {
             return callback(null, out);
         }
@@ -27,6 +28,8 @@ function fetchMoreDataFrom(url, callback) {
             out[headers[i]] = $(p).html().trim();
         });
 
+        // If there is a roadway (usually a street name), we'll try to resolve
+        // it into lat/lon through Google Maps.
         if (out.roadway) {
             geocoder.geocode(out.roadway + ', New York City, NY', function(err, res) {
                 if (err) return callback(null, out);
@@ -43,15 +46,16 @@ function fetchMoreDataFrom(url, callback) {
 
 module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
     var $ = cheerio.load(body),
-        columnNames = [],
         id = 'twitter-511nyc';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
 
+    // For each .tweet HTML element on the page
     $('.tweet').each(function(i, tweet) {
         var $tweet = $(tweet),
-            text, timestamp, eventType, eventStatus, colonSplit, hashMatch, hashtag, urlMatch, url, fieldValues;
+            text, timestamp, eventType, eventStatus, hashMatch,
+            hashtag, urlMatch, url, fieldValues;
 
         text = $tweet.find('.tweet-text').text();
 
@@ -59,6 +63,7 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             return;
         }
 
+        // Twitter provides the timestamp in UNIX format.
         timestamp = parseInt(
             $tweet.find('.tweet-timestamp span.js-short-timestamp')
                 .attr('data-time')
@@ -66,27 +71,37 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
 
         eventType = text.split(' on ').shift().trim();
 
+        // Trying to guess the event type based on the tweet text. All the
+        // tweets from this account have a common format, or else this wouldn't
+        // work.
         if (_.contains(eventType, ':')) {
             eventStatus = eventType.split(':').shift().trim();
             eventType = eventType.split(':').pop().trim();
         } else {
+            // If there is no even status, it is an initial report, so we make
+            // it up.
             eventStatus = 'Initial';
         }
 
-        hashMatch = text.match(hashtagRegex)
+        // Look for hashtag and store it if there's one.
+        hashMatch = text.match(hashtagRegex);
         if (hashMatch) {
             hashtag = hashMatch.shift().trim();
         }
 
-        urlMatch = text.match(urlRegex)
+        // Look for a URL in the tweet that we can GET for extra information.
+        urlMatch = text.match(urlRegex);
         if (urlMatch) {
             url = urlMatch.shift().trim();
         }
 
+        // Even if there is no URL to get extra info, we'll always provide the
+        // following:
         fieldValues = [
             eventType, eventStatus, text, hashtag
         ];
 
+        // If there's a URL to GET, add more data.
         if (url) {
             fetchMoreDataFrom(url, function(error, moreData) {
                 if (error) {
@@ -97,7 +112,9 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
                 ]);
                 temporalDataCallback(id, timestamp, fieldValues);
             });
-        } else {
+        }
+        // If no URL to GET, the rest of the field values are empty.
+        else {
             fieldValues = fieldValues.concat([null, null, null, null, null, null, null, null, null]);
             temporalDataCallback(id, timestamp, fieldValues);
         }
