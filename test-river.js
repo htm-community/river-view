@@ -10,7 +10,7 @@ var runners = [];
 
 function testRiver(name, cb) {
     var mocha = new Mocha();
-    console.log('testing river %s', name);
+    console.log('Testing river %s', name);
     global._RIVER_NAME_ = name;
 
     mocha.addFile(path.join('test', 'rivers', 'river-tests.js'));
@@ -18,7 +18,6 @@ function testRiver(name, cb) {
     mocha.run(function(failures){
         process.on('exit', function () {
             if (cb) return cb(failures);
-            console.log('exiting');
             process.exit(failures);
         });
     });
