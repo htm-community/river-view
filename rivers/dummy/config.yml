@@ -1,4 +1,5 @@
 name: dummy
+type: scalar
 description: desc
 author: me
 email: you
