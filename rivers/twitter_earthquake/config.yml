@@ -19,11 +19,11 @@ sources:
   - https://twitter.com/USGSted
 
 # How often should River-View poll your data sources?
-interval: 1 second
+interval: 1 minute
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
-expires: 12 months
+expires: 6 months
 
 # Primary data, usually collected in one location. Should all be scalar values.
 fields:
