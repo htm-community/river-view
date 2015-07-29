@@ -1,15 +1,5 @@
 /*
-Structures: 
-
-Powerful earthquake,
-NEPAL,
-Apr-26 07:09 UTC,
-24 #quake tweets/min, 
-http://on.doi.gov/1b32DdF 
- 
-[Deprected; only until 26. Apr. 2015]
-
-Currently: 
+Structure: 
 
 Prelim M6.2 earthquake FIJI REGION Apr-28 16:39 UTC, updates http://on.doi.gov/1P3449l , 0 #quake tweets/min
 
@@ -127,13 +117,15 @@ function fetchMoreDataFrom(url, callback) {
 
         out['descriptionAndLinks'] = event_content; 
 
-
         callback(null, out);
     });
 }
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var $ = cheerio.load(body),
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config, 
+        url = options.url,
+        lastTimestamp = options.lastTimestamp,
+        $ = cheerio.load(body),
         columnNames = [],
         id = 'twitter_earthquake';
 
@@ -190,7 +182,12 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
                 if (moreData.timestamp === NaN) {
                     moreData.timestamp = parseTimeString(timeMatch, timestamp_posting);
                 }
-                temporalDataCallback(id, parseInt(moreData.timestamp), fieldValues);
+                // only push new data!
+                if (parseInt(moreData.timestamp) === lastTimestamp) {
+                    return;
+                } else {
+                    temporalDataCallback(id, parseInt(moreData.timestamp), fieldValues);
+                }
             });
         } else {
             var timeMatch, magnitude, timestamp;
@@ -201,7 +198,12 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             magnitude = parseFloat(text.split(' ')[1].replace('M', ''));
 
             fieldValues = fieldValues.concat([timestamp, magnitude, null, null, null, null, null, null, null]);
-            temporalDataCallback(id, parseInt(timestamp), fieldValues);
+            // only push new data!
+            if (parseInt(timestamp) === lastTimestamp) {
+                return;
+            } else {
+                temporalDataCallback(id, parseInt(timestamp), fieldValues);
+            }
         }
     });
 };
