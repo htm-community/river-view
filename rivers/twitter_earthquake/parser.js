@@ -186,7 +186,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
                 if (parseInt(moreData.timestamp) === lastTimestamp) {
                     return;
                 } else {
-                temporalDataCallback(id, parseInt(moreData.timestamp), fieldValues);
+                    temporalDataCallback(id, parseInt(moreData.timestamp), fieldValues);
                 }
             });
         } else {
@@ -202,7 +202,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             if (parseInt(timestamp) === lastTimestamp) {
                 return;
             } else {
-            temporalDataCallback(id, parseInt(timestamp), fieldValues);
+                temporalDataCallback(id, parseInt(timestamp), fieldValues);
             }
         }
     });
