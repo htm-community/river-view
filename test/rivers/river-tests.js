@@ -141,7 +141,8 @@ describe('river parser', function() {
             var fetchers = [];
             _.each(httpResponses, function(body, url) {
                 fetchers.push(function(cb) {
-                    parse(config, body, url,
+                    var options = {config: config, url: url};
+                    parse(body, options,
                         function(id, ts, vals) {
                             assert.ok(id, 'temporal data callback must be sent an id');
                             assert.ok(ts === parseInt(ts, 10), 'timestamp is not an integer');
@@ -165,7 +166,8 @@ describe('river parser', function() {
             var fetchers = [];
             _.each(httpResponses, function(body, url) {
                 fetchers.push(function(cb) {
-                    parse(config, body, url,
+                    var options = {config: config, url: url};
+                    parse(body, options,
                         function() {},
                         function(id, metadata) {
                             assert.ok(id, 'metadata data callback must be sent an id');
