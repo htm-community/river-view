@@ -91,6 +91,12 @@ describe('river config', function() {
 
     it('sources all resolve to working URLs', function(done) {
         var fetchers = {};
+        var me = this;
+
+        // Each source URL needs time for the HTTP call to respond. We will
+        // increase the callback for each source.
+        me.timeout(TIMEOUT * config.sources.length);
+
         _.each(config.sources, function(sourceUrl) {
             fetchers[sourceUrl] = function(callback) {
                 request.get(sourceUrl, function(err, resp, body) {
