@@ -17,8 +17,9 @@ function dateStringToTimestampWithZone(dateString, zone) {
     return timestamp;
 }
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var data = JSON.parse(body).results,
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        data = JSON.parse(body).results,
         id = 'portland-restaurant-inspections';
 
     _.each(data, function(point) {

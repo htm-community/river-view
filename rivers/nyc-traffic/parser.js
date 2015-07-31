@@ -24,8 +24,9 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     return timestamp;
 }
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var metadataNames = config.metadata,
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        metadataNames = config.metadata,
         fieldNames = config.fields;
 
     // This is important.
