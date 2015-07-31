@@ -132,8 +132,9 @@ function fetchMoreDataFrom(url, callback) {
     });
 }
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var $ = cheerio.load(body),
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        $ = cheerio.load(body),
         columnNames = [],
         id = 'twitter_earthquake';
 

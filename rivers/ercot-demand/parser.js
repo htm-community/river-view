@@ -61,8 +61,10 @@ function unzipToString(pathToZip, callback) {
 
 }
 
-function systemWideDemand(config, body, url, temporalDataCallback, metaDataCallback) {
-    var $ = cheerio.load(body),
+function systemWideDemand(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        url = options.url,
+        $ = cheerio.load(body),
         id = 'system_wide_demand',
         parsedUrl = nodeUrl.parse(url),
         sourceDomain = parsedUrl.protocol + '//' + parsedUrl.hostname,

@@ -22,10 +22,10 @@ describe('when running a river', function() {
             sources: ['mock url']
         };
 
-        var parseFn = function(config, body, url, cb1, cb2) {
-            expect(config).to.deep.equal(mockRiverConfig);
+        var parseFn = function(body, options, cb1, cb2) {
+            expect(options.config).to.deep.equal(mockRiverConfig);
             expect(body).to.equal('mock response body');
-            expect(url).to.equal('mock url');
+            expect(options.url).to.equal('mock url');
             assert.ok(urlFetched);
             done();
         };

@@ -26,8 +26,9 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     return timestamp;
 }
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var id = 'portland-911';
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        id = 'portland-911';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
@@ -38,7 +39,6 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
         }
         var meta = result.feed,
             data = result.feed.entry,
-            id = 'portland-911',
             title = meta.title,
             subtitle = meta.subtitle,
             author = meta.author.name,

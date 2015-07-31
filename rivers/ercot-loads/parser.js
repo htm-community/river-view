@@ -19,8 +19,10 @@ function dateStringToTimestampWithZone(dateString, timeString, zone) {
     return timestamp;
 }
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var $ = cheerio.load(body),
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        url = options.url,
+        $ = cheerio.load(body),
         columnNames = [],
         id = 'actual_loads_of_weather_zones';
 

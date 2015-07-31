@@ -52,7 +52,8 @@ function calculateMinAndMaxSpeed(speedString) {
     return out;
 }
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config;
 
     // This is important.
     moment.tz.setDefault(config.timezone);
