@@ -67,6 +67,11 @@ describe('river config', function() {
         assert.ok(config.name, 'config.yml is missing "name"');
     });
 
+    it('has a valid type', function() {
+        assert.ok(config.type, 'config.yml is missing "type"');
+        expect(['scalar', 'geospatial']).to.contain(config.type);
+    });
+
     it('has a description', function() {
         assert.ok(config.description, 'config.yml is missing "description"');
     });
