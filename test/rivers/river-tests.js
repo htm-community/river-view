@@ -67,6 +67,17 @@ describe('river config', function() {
         assert.ok(config.name, 'config.yml is missing "name"');
     });
 
+    it('has a valid type', function() {
+        assert.ok(config.type, 'config.yml is missing "type"');
+        expect(['scalar', 'geospatial']).to.contain(config.type);
+    });
+
+    it('fields contains lat/lon if geospatial', function() {
+        if (config.type == 'geospatial') {
+            expect(config.fields).to.contain('latitude', 'longitude');
+        }
+    });
+
     it('has a description', function() {
         assert.ok(config.description, 'config.yml is missing "description"');
     });
@@ -148,6 +159,11 @@ describe('river parser', function() {
                             assert.ok(ts === parseInt(ts, 10), 'timestamp is not an integer');
                             expect(vals).to.be.instanceOf(Array);
                             expect(vals).to.have.length(config.fields.length, 'length of values array sent to temporal callback should match the fields in the config.');
+                            // If this is a geospatial data stream, latitude and longitude MUST exist.
+                            if (config.type == 'geospatial') {
+                                assert.ok(vals[config.fields.indexOf('latitude')], 'geospatial river stream missing latitude value');
+                                assert.ok(vals[config.fields.indexOf('longitude')], 'geospatial river stream missing longitude value');
+                            }
                             temporalCallbacks.push(arguments);
                         },
                         function(id, metadata) {}
