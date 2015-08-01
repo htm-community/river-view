@@ -1,12 +1,14 @@
 # Please name this the same as the directory it is in.
-name: twitter_earthquake
+name: usgs-earthquakres
 type: geospatial
 
 # Short text description of the data you are providing.
-description: Tweets from @USGSted, in an attempt to get live earthquake events. DISCLAIMER ~10% fp rate!
+description: GeoJSON is a format for encoding a variety of geographic data structures. A GeoJSON object may represent a geometry, a feature, or a collection of features. GeoJSON uses the JSON standard. The GeoJSONP feed uses the same JSON response, but the GeoJSONP response is wrapped inside the function call, eqfeed_callback. See the GeoJSON site for more information.
 
-author: Pascal Weinberger
-email: passiweinberger@gmail.com
+poweredBy: '<a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php">Powered by USGS</a>'
+
+author: Matthew Taylor
+email: matt@numenta.org
 
 # Timezone is important! You should use the timezone that the data is
 # collected, or if time of day does not matter in the data patterns, you many
@@ -16,10 +18,10 @@ timezone: UTC
 # A list of URLs that contain the raw data. Each of these will be polled at the
 # interval specified below, and the response text will be sent to your parser.
 sources:
-  - https://twitter.com/USGSted
+  - http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson
 
 # How often should River-View poll your data sources?
-interval: 1 minute
+interval: 5 minutes
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
@@ -27,21 +29,41 @@ expires: 6 months
 
 # Primary data, usually collected in one location. Should all be scalar values.
 fields:
-  - event_type
-  - event_status
-  - tweet_text
-  - hashtag
-  - tweet_counter
-  - link
-  - timestamp_posting
-  - timestamp
-  - magnitude
-  - last_updated
-  - region
   - latitude
   - longitude
   - depth
-  - tsunami_alert
-  - descriptionAndLinks
+  - id
+  - mag
+  - place
+  - updated
+  - tz
+  - url
+  - detail
+  - felt
+  - cdi
+  - mmi
+  - alert
+  - status
+  - tsunami
+  - sig
+  - net
+  - code
+  - ids
+  - sources
+  - types
+  - nst
+  - dmin
+  - rms
+  - gap
+  - magType
+  - type
+  - title
+
+metadata:
+  - generated
+  - url
+  - title
+  - status
+  - api
 
 new: true
