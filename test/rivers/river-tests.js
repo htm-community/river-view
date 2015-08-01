@@ -14,7 +14,7 @@ var riverDir = path.join(__dirname, '..', '..', 'rivers', riverName);
 var configPath = path.join(riverDir, 'config.yml');
 var parserPath = path.join(riverDir, 'parser.js');
 
-var TIMEOUT = 5000;
+var TIMEOUT = 10000;
 
 var config;
 var httpResponses = {};
@@ -23,6 +23,8 @@ function parseYaml(filePath) {
     var contents = fs.readFileSync(filePath, 'utf8');
     return yaml.safeLoad(contents);
 }
+
+console.log('IN RUNNER: %s', riverName);
 
 describe('river directory', function() {
 
