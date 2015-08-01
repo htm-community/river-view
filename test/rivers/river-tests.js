@@ -196,7 +196,8 @@ describe('river parser', function() {
             async.parallel(fetchers, function(err) {
                 if (err) assert.fail(null, null, err.message);
                 if (metadataCallbacks.length) {
-                    _.each(metadataCallbacks, function(metadata) {
+                    _.each(metadataCallbacks, function(id, metadata) {
+                        assert.ok(id, 'Missing id when saving metadata');
                         try {
                             JSON.stringify(metadata);
                         } catch(e) {
