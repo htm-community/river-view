@@ -40,5 +40,3 @@ fields:
   - last_updated
   - latitude
   - longitude
-
-new: true
