@@ -78,6 +78,6 @@ running `ulimit -n`. If this number is less than 1024, you'll need to update it.
 - ```sudo launchctl limit maxfiles 1024 unlimited```
 
 This updates the maximum number of open file descriptors your Mac will allow. This number is not persistant across reboots. To make it persistant add `limit maxfiles 1024 unlimited` to `/etc/launchd.conf`
-- ```ulimit -n 1024``` 
+- ```ulimit -n 1024```
 
-This updates the current shell you're in to be able to make use of all those file descriptors. 
+This updates the current shell you're in to be able to make use of all those file descriptors.
