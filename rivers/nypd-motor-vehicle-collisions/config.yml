@@ -18,7 +18,7 @@ timezone: America/New_York
 sources:
   # see http://dev.socrata.com/
   # - https://data.cityofnewyork.us/resource/qiz3-axqb.json?$limit=5000&$order=date%20DESC,time%20DESC
-  - https://data.cityofnewyork.us/resource/qiz3-axqb.json?$limit=5000&$order=date%20DESC,time%20DESC
+  - https://data.cityofnewyork.us/resource/qiz3-axqb.json?$limit=2500&$order=date%20DESC,time%20DESC
 
 # How often should River View poll your data sources?
 interval: 5 days
