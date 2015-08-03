@@ -17,3 +17,11 @@ coverage/
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules/
 
+# OS X creates these to store window position and other display metadata.
+.DS_Store
+
+# Ignore editor backup and configuration files
+*.*.un~
+*.sublime-project
+*.sublime-workspace
+*~
