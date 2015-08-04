@@ -1,0 +1,48 @@
+new: true
+
+# Please name this the same as the directory it is in.
+name: mn-traffic-sensors
+type: scalar
+
+# Short text description of the data you are providing.
+description: The Minnesota Department of Transportation collects traffic data on the freeway system throughout the Twin Cities Metro area. This data is made public via XML files.
+
+poweredBy: 'Powered by the <a href="http://www.dot.state.mn.us/">Minnesota Department of Transportation</a>'
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/Chicago
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+  - http://data.dot.state.mn.us/iris_xml/det_sample.xml.gz
+
+# How often should River View poll your data sources?
+interval: 1 minute
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+# Primary data, usually collected in one location. Should both be scalar values.
+fields:
+  - flow
+  - speed
+  - occupancy
+
+# This provides more information about the data. This data doesn't change over
+# time like the fields.
+metadata:
+  - latitude
+  - longitude
+  - sensorId
+  - stationId
+  - stationLabel
+  - sensorLabel
+  - lane
+  - category
