@@ -21,18 +21,16 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
 
         _.each(freeways, function(freeway) {
             var title = freeway.title[0];
-            var id = freeway.guid[0]._;
             var fields;
             var travelTimeString;
             var travelTimeStringParts;
             var travelDuration;
             var metadata = {
-                title: title,
-                guid: id
+                title: title
             };
             var timestamp = gmtDateStringToTimestamp(freeway.pubDate[0]);
 
-            metaDataCallback(id, metadata);
+            metaDataCallback(title, metadata);
 
             travelTimeString = freeway.description[0].split(':').pop().trim();
             travelTimeStringParts = travelTimeString.split(/\s+/);
@@ -43,7 +41,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
 
             fields = [travelDuration.asMinutes()];
 
-            temporalDataCallback(id, timestamp, fields);
+            temporalDataCallback(title, timestamp, fields);
 
         });
 
