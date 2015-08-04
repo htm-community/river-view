@@ -19,7 +19,7 @@ sources:
 - http://www.portlandonline.com/scripts/911incidents.cfm
 
 # How often should River View poll your data sources?
-interval: 30 seconds
+interval: 1 minute
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
