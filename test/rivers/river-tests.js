@@ -14,7 +14,7 @@ var riverDir = path.join(__dirname, '..', '..', 'rivers', riverName);
 var configPath = path.join(riverDir, 'config.yml');
 var parserPath = path.join(riverDir, 'parser.js');
 
-var TIMEOUT = 10000;
+var TIMEOUT = 20000;
 
 var config;
 var httpResponses = {};
@@ -95,6 +95,30 @@ describe('river config', function() {
     it('has a valid timezone', function() {
         assert.ok(config.timezone, 'config.yml is missing "timezone"');
         assert.ok(_.contains(moment.tz.names(), config.timezone), '"timezone" value in config must be a valid timezone string.');
+    });
+
+    it('has a valid interval', function() {
+        var oneMin = moment.duration(1, 'minute').asSeconds();
+        var intervalString = config.interval;
+        var interval = moment.duration(
+            parseInt(intervalString.split(/\s+/).shift()),
+            intervalString.split(/\s+/).pop()
+        ).asSeconds();
+        assert.ok(config.interval, 'config.yml is missing "interval"');
+        // Interval must be over 1 minute.
+        expect(interval).to.be.at.least(oneMin);
+    });
+
+    it('has a valid expires', function() {
+        var sixMonths = moment.duration(6, 'months').asMonths();
+        var expiresString = config.expires;
+        var expires = moment.duration(
+            parseInt(expiresString.split(/\s+/).shift()),
+            expiresString.split(/\s+/).pop()
+        ).asMonths();
+        assert.ok(config.expires, 'config.yml is missing "expires"');
+        // Expires must be under 6 months.
+        expect(expires).to.be.at.most(sixMonths);
     });
 
     it('has at least one source', function() {
