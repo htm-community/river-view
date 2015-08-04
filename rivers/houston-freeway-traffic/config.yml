@@ -1,0 +1,40 @@
+new: true
+
+# Please name this the same as the directory it is in.
+name: houston-freeway-traffic
+type: scalar
+
+# Short text description of the data you are providing.
+description: Houston TranStar Travel Times
+
+poweredBy: '<a href="http://traffic.houstontranstar.org/rss/rss_info.html">Powered by <img src="http://traffic.houstontranstar.org/images/logo_topnav.png"/></a>'
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: UTC
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+  - http://traffic.houstontranstar.org/data/rss/traveltimes_rss.xml
+
+# How often should River View poll your data sources?
+interval: 10 minutes
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+# Primary data, usually collected in one location. Should both be scalar values.
+fields:
+  - travelTime # in minutes
+
+# This provides more information about the data. This data doesn't change over
+# time like the fields.
+metadata:
+  - title
+  - guid
