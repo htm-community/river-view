@@ -129,4 +129,3 @@ describe('when running a river', function() {
 
 
 });
-
