@@ -2,11 +2,11 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 var yaml = require('js-yaml');
-var request = require('request');
 var async = require('async');
 var moment = require('moment-timezone');
 var expect = require('chai').expect;
 var assert = require('chai').assert;
+var Lockmaster = require('../../lib/lockmaster.js');
 
 var riverName = global._RIVER_NAME_;
 
@@ -18,13 +18,12 @@ var TIMEOUT = 20000;
 
 var config;
 var httpResponses = {};
+var lockmaster = new Lockmaster({});
 
 function parseYaml(filePath) {
     var contents = fs.readFileSync(filePath, 'utf8');
     return yaml.safeLoad(contents);
 }
-
-console.log('IN RUNNER: %s', riverName);
 
 describe('river directory', function() {
 
@@ -136,7 +135,7 @@ describe('river config', function() {
 
         _.each(config.sources, function(sourceUrl) {
             fetchers[sourceUrl] = function(callback) {
-                request.get(sourceUrl, function(err, resp, body) {
+                lockmaster.makeRequest(sourceUrl, function(err, resp, body) {
                     if (err) callback(err);
                     callback(null, body);
                 });
@@ -162,78 +161,109 @@ describe('river config', function() {
 describe('river parser', function() {
 
     var requirePath = path.join(parserPath.split('.')[0]);
-    var parse = require(requirePath);
+    var riverModule = require(requirePath);
+    var parse, initialize;
 
     this.timeout(TIMEOUT);
 
-    it('parse script exports a function', function() {
-        expect(parse).to.be.instanceOf(Function);
+    it('parser module exports a parse function or parse/initialize functions', function() {
+        if (typeof riverModule != 'function') {
+            expect(riverModule).to.be.instanceOf(Object);
+            expect(riverModule).to.have.keys('parse', 'initialize');
+            expect(riverModule.parse).to.be.instanceOf(Function);
+            expect(riverModule.initialize).to.be.instanceOf(Function);
+            parse = riverModule.parse;
+            initialize = riverModule.initialize;
+        } else {
+            expect(riverModule).to.be.instanceOf(Function);
+            parse = riverModule;
+        }
     });
 
     describe('when passed a live response body', function() {
         var temporalCallbacks = [];
         var metadataCallbacks = [];
+        var riverModule = require(requirePath);
+        var parse, initialize;
 
-        it('calls the temporalDataCallback with data matching config', function(done) {
-            var fetchers = [];
-            _.each(httpResponses, function(body, url) {
-                fetchers.push(function(cb) {
-                    var options = {config: config, url: url};
-                    parse(body, options,
-                        function(id, ts, vals) {
-                            assert.ok(id, 'temporal data callback must be sent an id');
-                            assert.ok(ts === parseInt(ts, 10), 'timestamp is not an integer');
-                            expect(vals).to.be.instanceOf(Array);
-                            expect(vals).to.have.length(config.fields.length, 'length of values array sent to temporal callback should match the fields in the config.');
-                            // If this is a geospatial data stream, latitude and longitude MUST exist.
-                            if (config.type == 'geospatial') {
-                                assert.ok(vals[config.fields.indexOf('latitude')], 'geospatial river stream missing latitude value');
-                                assert.ok(vals[config.fields.indexOf('longitude')], 'geospatial river stream missing longitude value');
-                            }
-                            temporalCallbacks.push(arguments);
-                        },
-                        function(id, metadata) {}
-                    );
-                    setTimeout(cb, 1000);
-                });
-            });
-            async.parallel(fetchers, function(err) {
-                if (err) assert.fail(null, null, err.message);
-                expect(temporalCallbacks).to.have.length.above(0, 'temporal callback was never called');
-                done();
-            });
-        });
+        if (typeof riverModule != 'function') {
+            parse = riverModule.parse;
+            initialize = riverModule.initialize;
+        } else {
+            parse = riverModule;
+        }
 
-        it('calls the metadataCallback with JSON-parseable data', function(done) {
-            var fetchers = [];
-            _.each(httpResponses, function(body, url) {
-                fetchers.push(function(cb) {
-                    var options = {config: config, url: url};
-                    parse(body, options,
-                        function() {},
-                        function(id, metadata) {
-                            assert.ok(id, 'metadata data callback must be sent an id');
-                            metadataCallbacks.push(metadata);
-                        }
-                    );
-                    setTimeout(cb, 1000);
-                });
-            });
-            async.parallel(fetchers, function(err) {
-                if (err) assert.fail(null, null, err.message);
-                if (metadataCallbacks.length) {
-                    _.each(metadataCallbacks, function(id, metadata) {
-                        assert.ok(id, 'Missing id when saving metadata');
-                        try {
-                            JSON.stringify(metadata);
-                        } catch(e) {
-                            assert.fail(null, null, 'Cannot stringify metadata response into JSON: ' + metadata);
-                        }
+        lockmaster = new Lockmaster({rivers: [{
+            initialize: initialize,
+            parse: parse
+        }]});
+
+            it('calls the temporalDataCallback with data matching config', function(done) {
+                lockmaster.initializeRivers(function() {
+                    var fetchers = [];
+                    _.each(httpResponses, function(body, url) {
+                        fetchers.push(function(cb) {
+                            var options = {config: config, url: url};
+                            parse(body, options,
+                                function(id, ts, vals) {
+                                    assert.ok(id, 'temporal data callback must be sent an id');
+                                    assert.ok(ts === parseInt(ts, 10), 'timestamp is not an integer');
+                                    expect(vals).to.be.instanceOf(Array);
+                                    expect(vals).to.have.length(config.fields.length, 'length of values array sent to temporal callback should match the fields in the config.');
+                                    // If this is a geospatial data stream, latitude and longitude MUST exist.
+                                    if (config.type == 'geospatial') {
+                                        assert.ok(vals[config.fields.indexOf('latitude')], 'geospatial river stream missing latitude value');
+                                        assert.ok(vals[config.fields.indexOf('longitude')], 'geospatial river stream missing longitude value');
+                                    }
+                                    temporalCallbacks.push(arguments);
+                                },
+                                function(id, metadata) {}
+                            );
+                            setTimeout(cb, 1000);
+                        });
                     });
-                }
-                done();
+                    async.parallel(fetchers, function(err) {
+                        if (err) assert.fail(null, null, err.message);
+                        expect(temporalCallbacks).to.have.length.above(0, 'temporal callback was never called');
+                        done();
+                    });
+                });
             });
-        });
+
+            it('calls the metadataCallback with JSON-parseable data', function(done) {
+                lockmaster.initializeRivers(function() {
+                    var fetchers = [];
+                    _.each(httpResponses, function(body, url) {
+                        fetchers.push(function(cb) {
+                            var options = {config: config, url: url};
+                            parse(body, options,
+                                function() {},
+                                function(id, metadata) {
+                                    assert.ok(id, 'metadata data callback must be sent an id');
+                                    metadataCallbacks.push(metadata);
+                                }
+                            );
+                            setTimeout(cb, 1000);
+                        });
+                    });
+                    async.parallel(fetchers, function(err) {
+                        if (err) assert.fail(null, null, err.message);
+                        if (metadataCallbacks.length) {
+                            _.each(metadataCallbacks, function(id, metadata) {
+                                assert.ok(id, 'Missing id when saving metadata');
+                                try {
+                                    JSON.stringify(metadata);
+                                } catch(e) {
+                                    assert.fail(null, null, 'Cannot stringify metadata response into JSON: ' + metadata);
+                                }
+                            });
+                        }
+                        done();
+                    });
+                });
+            });
+
+
 
 
     });

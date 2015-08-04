@@ -2,11 +2,10 @@
 var fs = require('fs'),
     nodeUrl = require('url'),
     http = require('http'),
-    request = require('request'),
     _ = require('lodash'),
+    riverUtils = require('../../lib/river-utilities'),
     csvParse = require('csv-parse'),
     async = require('async'),
-    AdmZip = require('adm-zip'),
     moment = require('moment-timezone'),
     cheerio = require('cheerio');
 
@@ -28,39 +27,6 @@ function dateStringToTimestampWithZone(dateString, timeString, zone) {
     return timestamp;
 }
 
-function unzipToString(pathToZip, callback) {
-    var data = [],
-        dataLen = 0;
-
-    request.get({
-        url: pathToZip,
-        encoding: null
-    })
-        .on('error', function(err) {
-            callback(err)
-        })
-        .on('data', function(chunk) {
-            data.push(chunk);
-            dataLen += chunk.length;
-        })
-        .on('end', function() {
-            var buf = new Buffer(dataLen),
-                i = 0,
-                len, pos, zip, zipEntries;
-
-            for (i = 0, len = data.length, pos = 0; i < len; i++) {
-                data[i].copy(buf, pos);
-                pos += data[i].length;
-            }
-            zip = new AdmZip(buf);
-            zipEntries = zip.getEntries();
-
-            for (i = 0; i < zipEntries.length; i++)
-                callback(null, zip.readAsText(zipEntries[i]));
-        });
-
-}
-
 function systemWideDemand(body, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
         url = options.url,
@@ -77,10 +43,10 @@ function systemWideDemand(body, options, temporalDataCallback, metaDataCallback)
         var $tr = $(tr),
             href, downloadUrl, fileName = $tr.find('td.labelOptional_ind').html();
         if (_.endsWith(fileName, 'csv.zip')) {
-            href = $tr.find('td:nth-child(4) a').attr('href')
+            href = $tr.find('td:nth-child(4) a').attr('href');
             downloadUrl = sourceDomain + href;
             downloaders.push(function(callback) {
-                unzipToString(downloadUrl, function(err, csvContents) {
+                riverUtils.zippedPathToString(downloadUrl, function(err, csvContents) {
                     if (err) {
                         return console.error(err);
                     }
@@ -90,7 +56,8 @@ function systemWideDemand(body, options, temporalDataCallback, metaDataCallback)
                         if (err) {
                             return console.error(err);
                         }
-                        var headers = data.shift()
+                        // remove headers
+                        data.shift();
                         _.each(data, function(row) {
                             var dateString = row[0],
                                 timeString = row[1],
