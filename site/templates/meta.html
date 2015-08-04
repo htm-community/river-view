@@ -35,4 +35,43 @@
 </tbody>
 </table>
 
+{{#if metadata.latitude}}
+    <script type="application/javascript">
+
+        function initialize() {
+            var markerTemplate,
+                mapDiv = document.getElementById('map-canvas'),
+                map = new google.maps.Map(mapDiv, {
+                    zoom: 11
+                });
+
+            $.get('{{ baseurl }}/static/templates/partials/markerLabel/index.html', function(response) {
+                markerTemplate = response;
+
+                var latitude = {{metadata.latitude}},
+                    longitude = {{metadata.longitude}},
+                    latlng, marker, markerData = {};
+
+                latlng = new google.maps.LatLng(
+                    Number(latitude),
+                    Number(longitude)
+                );
+
+                marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    title: '{{metadata.id}}'
+                });
+
+                map.setCenter(latlng);
+
+            });
+
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+{{/if}}
+
 {{> footer }}
