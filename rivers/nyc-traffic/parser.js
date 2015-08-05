@@ -36,7 +36,13 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         delimiter: '\t',
         auto_parse: true
     }, function(err, data) {
-        var headers = data.shift();
+        var headers;
+
+        if (err) {
+            return console.error(err);
+        }
+        
+        headers = data.shift();
 
         _.each(data, function(path) {
             var metaData = {},
