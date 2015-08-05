@@ -41,7 +41,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         if (err) {
             return console.error(err);
         }
-        
+
         headers = data.shift();
 
         _.each(data, function(path) {

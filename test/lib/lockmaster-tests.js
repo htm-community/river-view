@@ -127,5 +127,47 @@ describe('when running a river', function() {
 
     });
 
+    it('handles an undefined reference error from the parser by logging it to redis', function(done) {
+        var Lockmaster = proxyquire('../../lib/lockmaster', {
+            request: {
+                get: function(url, cb) {
+                    expect(url).to.equal('mock url');
+                    cb(null, {statusCode: 200}, 'mock response body');
+                }
+            }
+        });
+        var mockRiverConfig = {
+            name: 'mock-river',
+            interval: '1 hour',
+            sources: ['mock url']
+        };
+        var parseFn = function() {
+            var noop = undefined;
+            noop.foo;
+        };
+        var mockLogObject = function(params) {
+            if (params.level == 'warn') {
+                expect(params.river).to.equal('mock-river');
+                expect(params.message).to.equal('Cannot read property \'foo\' of undefined');
+                done();
+            }
+        };
+
+        var lm = new Lockmaster({
+            config: {},
+            rivers: [{
+                config: mockRiverConfig,
+                parse: parseFn,
+                name: 'mock-river'
+            }],
+            redisClient: {
+                logObject: mockLogObject
+            }
+        });
+
+        lm.start();
+
+    });
+
 
 });
