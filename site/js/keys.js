@@ -4,9 +4,7 @@ $(function() {
     function initialize() {
         var markerTemplate,
             mapDiv = document.getElementById('map-canvas'),
-            map = new google.maps.Map(mapDiv, {
-                zoom: 11
-            }),
+            map,
             markers = [];
 
 
@@ -38,10 +36,12 @@ $(function() {
 
         $.getJSON(metaJsonUrl, function(data) {
             var fetchers = [];
-            $(mapDiv).removeClass('hidden');
 
             if (data.metadata.latitude && data.metadata.longitude) {
-
+                $(mapDiv).removeClass('hidden');
+                map = new google.maps.Map(mapDiv, {
+                    zoom: 11
+                })
                 $.get(baseurl + '/static/templates/partials/markerLabel/index.html', function(response) {
                     markerTemplate = response;
                     mapMetadata(data.metadata);
