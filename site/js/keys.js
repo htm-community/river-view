@@ -2,8 +2,7 @@ $(function() {
 
 
     function initialize() {
-        var markerTemplate,
-            mapDiv = document.getElementById('map-canvas'),
+        var mapDiv = document.getElementById('map-canvas'),
             map,
             markers = [];
 
@@ -14,10 +13,10 @@ $(function() {
         });
         var metaJsonUrl = metaJsonUrls.shift().replace('.html', '.json');
 
-        function mapMetadata(metadata) {
+        function mapMetadata(metadata, center) {
             var latitude = metadata.latitude,
                 longitude = metadata.longitude,
-            latlng;
+                latlng;
 
             latlng = new google.maps.LatLng(
                 Number(latitude),
@@ -30,7 +29,9 @@ $(function() {
                 title: '{{metadata.id}}'
             }));
 
-            map.setCenter(latlng);
+            if (center) {
+                map.setCenter(latlng);
+            }
 
         }
 
@@ -38,26 +39,25 @@ $(function() {
             var fetchers = [];
 
             if (data.metadata.latitude && data.metadata.longitude) {
+
                 $(mapDiv).removeClass('hidden');
                 map = new google.maps.Map(mapDiv, {
                     zoom: 11
-                })
-                $.get(baseurl + '/static/templates/partials/markerLabel/index.html', function(response) {
-                    markerTemplate = response;
-                    mapMetadata(data.metadata);
-                    _.each(metaJsonUrls, function(htmlUrl) {
-                        var jsonUrl = htmlUrl.replace('.html', '.json');
-                        fetchers.push(function(callback) {
-                            $.getJSON(jsonUrl, function(data) {
-                                if (data && data.metadata) {
-                                    mapMetadata(data.metadata);
-                                }
-                                callback();
-                            });
+                });
+
+                mapMetadata(data.metadata, true);
+                _.each(metaJsonUrls, function(htmlUrl) {
+                    var jsonUrl = htmlUrl.replace('.html', '.json');
+                    fetchers.push(function(callback) {
+                        $.getJSON(jsonUrl, function(data) {
+                            if (data && data.metadata) {
+                                mapMetadata(data.metadata);
+                            }
+                            callback();
                         });
                     });
-                    async.parallel(fetchers);
                 });
+                async.parallel(fetchers);
 
             }
         });
