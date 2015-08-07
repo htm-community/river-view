@@ -25,8 +25,7 @@ $(function() {
 
             markers.push(new google.maps.Marker({
                 position: latlng,
-                map: map,
-                title: '{{metadata.id}}'
+                map: map
             }));
 
             if (center) {

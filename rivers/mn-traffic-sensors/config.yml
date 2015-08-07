@@ -23,7 +23,7 @@ sources:
   - http://data.dot.state.mn.us/iris_xml/det_sample.xml.gz
 
 # How often should River View poll your data sources?
-interval: 1 minute
+interval: 5 minutes
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
