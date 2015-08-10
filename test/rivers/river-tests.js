@@ -6,6 +6,7 @@ var async = require('async');
 var moment = require('moment-timezone');
 var expect = require('chai').expect;
 var assert = require('chai').assert;
+var CronJob = require('cron').CronJob;
 var Lockmaster = require('../../lib/lockmaster.js');
 
 var riverName = global._RIVER_NAME_;
@@ -99,13 +100,34 @@ describe('river config', function() {
     it('has a valid interval', function() {
         var oneMin = moment.duration(1, 'minute').asSeconds();
         var intervalString = config.interval;
-        var interval = moment.duration(
-            parseInt(intervalString.split(/\s+/).shift()),
-            intervalString.split(/\s+/).pop()
-        ).asSeconds();
-        assert.ok(config.interval, 'config.yml is missing "interval"');
-        // Interval must be over 1 minute.
-        expect(interval).to.be.at.least(oneMin);
+        if (config.hasOwnProperty('interval')) {
+            var intervalString = config.interval
+                interval = moment.duration(
+                parseInt(intervalString.split(/\s+/).shift()),
+                intervalString.split(/\s+/).pop()
+            ).asSeconds();
+            // Interval must be over 1 minute.
+            expect(interval).to.be.at.least(oneMin);
+        } else if (config.hasOwnProperty('cronInterval')) {
+            var cronInterval = config.cronInterval;
+            if (typeof cronInterval === 'string') {
+                try {
+                    new CronJob(config.cronInterval, function() {})
+                } catch(e) {
+                    assert.fail(null, null, 'Invalid cronInterval: ' + config.cronInterval);
+                }
+            } else { // list of cron intervals
+                _.each(config.cronInterval, function(interval) {
+                    try {
+                        new CronJob(interval, function() {})
+                    } catch(e) {
+                        assert.fail(null, null, 'Invalid cronInterval in list: ' + interval);
+                    }
+                });
+            }
+        } else {
+            assert.fail(null, null, 'No valid interval specified. (possible options are "interval" and "cronInterval")');
+        }
     });
 
     it('has a valid expires', function() {
