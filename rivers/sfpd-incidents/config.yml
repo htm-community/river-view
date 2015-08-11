@@ -5,6 +5,8 @@ type: geospatial
 # Short text description of the data you are providing.
 description: Incidents derived from SFPD Crime Incident Reporting system Updated daily, showing data from 1/1/2003 up until two weeks ago from current date. (https://data.sfgov.org/Public-Safety/SFPD-Incidents-from-1-January-2003/tmnf-yvry)
 
+poweredBy: '<a href="https://data.sfgov.org/Public-Safety/SFPD-Incidents-from-1-January-2003/tmnf-yvry"><img src="http://www.socrata.com/wp-content/uploads/socrata-rectangle-color.png"></a>'
+
 author: Matthew Taylor
 email: matt@numenta.org
 
@@ -36,4 +38,3 @@ fields:
 - address
 - descript
 - resolution
-

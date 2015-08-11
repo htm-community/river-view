@@ -3,6 +3,8 @@ type: scalar
 
 description: Missouri water levels provided by National Weather Service.
 
+poweredBy: '<a href="http://water.weather.gov/ahps/"><img src="http://water.weather.gov/resources/images/noaaleft.jpg"></a>'
+
 author: Matthew Taylor
 email: matt@numenta.org
 

@@ -5,6 +5,8 @@ type: scalar
 # Short text description of the data you are providing.
 description: Maryland traffic speeds for key roadways. Lifted from http://www.chart.state.md.us/rss/rssfeeds.asp.
 
+poweredBy: '<a href="http://www.chart.state.md.us/"><img src="http://www.chart.state.md.us/egov/img/agencyLogo-generic.png"></a>'
+
 author: Matthew Taylor
 email: matt@numenta.org
 

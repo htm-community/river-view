@@ -7,7 +7,7 @@ type: scalar
 # Short text description of the data you are providing.
 description: Houston TranStar Travel Times
 
-poweredBy: '<a href="http://traffic.houstontranstar.org/rss/rss_info.html">Powered by <img src="http://traffic.houstontranstar.org/images/logo_topnav.png"/></a>'
+poweredBy: '<a href="http://traffic.houstontranstar.org/rss/rss_info.html"><img src="http://traffic.houstontranstar.org/images/logo_topnav.png"/></a>'
 
 author: Matthew Taylor
 email: matt@numenta.org

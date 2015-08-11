@@ -7,7 +7,7 @@ type: scalar
 # Short text description of the data you are providing.
 description: The Minnesota Department of Transportation collects traffic data on the freeway system throughout the Twin Cities Metro area. This data is made public via XML files.
 
-poweredBy: 'Powered by the <a href="http://www.dot.state.mn.us/">Minnesota Department of Transportation</a>'
+poweredBy: '<a href="http://www.dot.state.mn.us/"><img src="http://www.511mn.org/img/MNLogo.png"></a>'
 
 author: Matthew Taylor
 email: matt@numenta.org
