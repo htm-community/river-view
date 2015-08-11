@@ -6,7 +6,10 @@
 </ol>
 
 <div class="jumbotron">
-  <h1 style="display: inline;">{{ this.name }}</h1>{{{this.poweredBy}}}
+    <div class="poweredBy pull-right">
+        {{{tmpl.poweredBy}}}
+    </div>
+  <h1 style="display: inline;">{{ this.name }}</h1>
   <p>{{ this.description }}</p>
 
   <div class="btn-group" role="group">

@@ -9,7 +9,7 @@
 
     <div class="col-md-8">
         <div class="jumbotron">
-          <h1 style="display: inline;">{{ this.name }}</h1>{{{tmpl.poweredBy}}}
+          <h1 style="display: inline;">{{ this.name }}</h1>
           <h3>{{ id }} <small><em>(<strong>{{type}}</strong> data stream)</em></small></h3>
           <div class="btn-group btn-group-justified" role="group">
               <a class="btn btn-primary btn-lg download" href="data.json" role="button"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span> JSON API</a>
@@ -48,6 +48,10 @@
 
         <div class="alert alert-info" role="alert">
             Updated {{tmpl.lastDataLabel}}.
+        </div>
+
+        <div class="poweredBy">
+            {{{tmpl.poweredBy}}}
         </div>
 
     </div>
