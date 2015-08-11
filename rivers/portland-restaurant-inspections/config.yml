@@ -39,7 +39,3 @@ fields:
   - address_street
   - address_city
   - address_zip
-
-
-# You want a "new" badge on this?
-new: true

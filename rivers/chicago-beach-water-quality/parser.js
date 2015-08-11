@@ -28,8 +28,9 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     return timestamp;
 }
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var dataArray, fieldNames = config.fields,
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        dataArray, fieldNames = config.fields,
         metadataNames = config.metadata;
 
     try {

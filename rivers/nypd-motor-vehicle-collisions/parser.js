@@ -2,13 +2,13 @@
 var _ = require('lodash'),
     moment = require('moment-timezone');
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var data = JSON.parse(body),
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        data = JSON.parse(body),
         id = 'nypd-motor-vehicle-collisions';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
-
     _.each(data, function(event) {
         var dateString = event.date.split('T').shift(),
             timeString = event.time,
@@ -19,8 +19,8 @@ module.exports = function(config, body, url, temporalDataCallback, metaDataCallb
             fieldValues;
 
         if (isNaN(latitude) || isNaN(longitude)) {
-            latitude = null
-            longitude = null
+            // IF there is no coordinate, this data doesn't get into RV.
+            return;
         }
 
         fieldValues = [

@@ -5,8 +5,9 @@ var _ = require('lodash'),
 
 
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var metaDataNames = config.metadata,
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        metaDataNames = config.metadata,
         timezone = config.timezone;
 
     // This is important.

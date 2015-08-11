@@ -14,6 +14,10 @@
     <a class="btn btn-primary btn-lg" href="keys.json?includeDetails=1" role="button"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span> JSON API</a>
 </div>
 
+<div class="container">
+    <div id="map-canvas" class="hidden"></div>
+</div>
+
 <hr />
 
 <table class="table table-striped table-rivers">
@@ -26,9 +30,9 @@
 
             <div class="btn-group btn-group-justified" role="group">
 
-                <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{../name}}/{{this}}/data.html?limit=100" role="button"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Data</a>
+                <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{../name}}/{{this}}/data.html?limit={{../dataLimit}}" role="button"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Data</a>
 
-                <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{../name}}/{{this}}/meta.html" role="button"><span class="glyphicon glyphicon glyphicon-equalizer" aria-hidden="true"></span> Metadata</a>
+                <a class="btn btn-primary btn-lg meta" href="{{../baseurl}}/{{../name}}/{{this}}/meta.html" role="button"><span class="glyphicon glyphicon glyphicon-equalizer" aria-hidden="true"></span> Metadata</a>
 
             </div>
 
@@ -37,5 +41,11 @@
 {{/each}}
 </tbody>
 </table>
+
+<script type="application/javascript">
+    window.baseurl = "{{baseurl}}";
+</script>
+<script src="{{baseurl}}/static/js/keys.js"></script>
+
 
 {{> footer }}

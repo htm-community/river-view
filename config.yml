@@ -4,3 +4,8 @@ riverDir: rivers
 # These values can be overridden by ENV[HOST] and ENV[PORT] for deployment.
 host: 'http://localhost'
 port: 8085
+
+defaults:
+  data:
+    html:
+      limit: 500
