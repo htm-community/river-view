@@ -5,6 +5,8 @@ type: geospatial
 # Short text description of the data you are providing.
 description: Restaurant inspection scores by date in Portland, OR. http://www.civicapps.org/datasets/restaurant-inspections
 
+poweredBy: '<a href="http://www.civicapps.org/datasets/restaurant-inspections"><img src="http://www.civicapps.org/sites/civicapps.org/themes/civicapps/images/logo.png"></a>'
+
 author: Matthew Taylor
 email: matt@numenta.org
 

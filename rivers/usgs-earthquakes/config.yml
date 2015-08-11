@@ -5,7 +5,7 @@ type: geospatial
 # Short text description of the data you are providing.
 description: GeoJSON is a format for encoding a variety of geographic data structures. A GeoJSON object may represent a geometry, a feature, or a collection of features. GeoJSON uses the JSON standard. The GeoJSONP feed uses the same JSON response, but the GeoJSONP response is wrapped inside the function call, eqfeed_callback. See the GeoJSON site for more information.
 
-poweredBy: '<a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php">Powered by USGS</a>'
+poweredBy: '<a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php"><img src="http://earthquake.usgs.gov/template/images/usgs.jpg"></a>'
 
 author: Matthew Taylor
 email: matt@numenta.org

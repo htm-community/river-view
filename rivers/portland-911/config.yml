@@ -5,6 +5,8 @@ type: geospatial
 # Short text description of the data you are providing.
 description: An RSS feed which contains geographic locations for the 100 most recent, closed, non-confidential, 911 calls for service received by the City of Portland’s 911 system. This feed is updated every 30 seconds.
 
+poweredBy: '<a href="http://www.civicapps.org/datasets/911-dispatch-incidents-georss"><img src="http://www.civicapps.org/sites/civicapps.org/themes/civicapps/images/logo.png"></a>'
+
 author: Matthew Taylor
 email: matt@numenta.org
 

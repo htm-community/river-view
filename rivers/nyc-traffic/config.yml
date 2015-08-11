@@ -5,6 +5,8 @@ type: scalar
 # Short text description of the data you are providing.
 description: New York City traffic speeds and travel times across certain paths provided by the NYDOT.
 
+poweredBy: '<a href="http://www.nyc.gov/html/dot/html/about/datafeeds.shtml#realtime"><img src="http://www.nyc.gov/html/dot/assets/dot_logo_web.png"></a>'
+
 author: Matthew Taylor
 email: matt@numenta.org
 

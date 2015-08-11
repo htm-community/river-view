@@ -5,6 +5,8 @@ type: scalar
 # Short text description of the data you are providing.
 description: City of Chicago Beach Weather Stations - Automated Sensors - 2015 - Solar Radiation
 
+poweredBy: '<a href="https://data.cityofchicago.org/"><img src="https://data.cityofchicago.org/stylesheets/images/domains/data.cityofchicago.org/chicago_logo.png"></a>'
+
 author: Matthew Taylor
 email: matt@numenta.org
 

@@ -5,6 +5,8 @@ type: scalar
 # Short text description of the data you are providing.
 description: The Electric Reliability Council of Texas (ERCOT) manages scheduling on an electric grid carrying 85 percent of Texas' load.
 
+poweredBy: '<a href="http://www.ercot.com"><img src="http://www.ercot.com/content/images/logos/logoBanner.gif"></a>'
+
 author: Matthew Taylor
 email: matt@numenta.org
 
