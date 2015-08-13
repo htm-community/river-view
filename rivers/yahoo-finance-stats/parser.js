@@ -1,29 +1,29 @@
 var _ = require('lodash'),
     moment = require('moment-timezone');
 
-module.exports = function(config, body, url, temporalDataCallback, metaDataCallback) {
-    var data = JSON.parse(body);
+module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+    var config = options.config,
+        data = JSON.parse(body);
 
-    // This is important.
-    moment.tz.setDefault("UTC");
+    moment.tz.setDefault(config.timezone);
 
     var dtarray = data.query.created.split('T'),
         dateString = dtarray.shift(),
         timeString = dtarray.shift().split('Z').shift(),
         date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm:ss'),
-        timestamp = date.unix();
-
-    var res = data.query.results.quote,
+        timestamp = date.unix(),
+        res = data.query.results.quote,
         symbol = res.symbol,
         EBITDAStr = res.EBITDA,
         fieldValues;
 
+    var EBDITA = undefined;
     if (EBITDAStr.indexOf('M') != -1) {
-        var EBDITA = parseFloat(EBITDAStr.split("M").shift())*1000000;
+        EBDITA = parseFloat(EBITDAStr.split("M").shift())*1000000;
     } else if (EBITDAStr.indexOf('B') != -1) {
-        var EBDITA = parseFloat(EBITDAStr.split("B").shift())*1000000000;
+        EBDITA = parseFloat(EBITDAStr.split("B").shift())*1000000000;
     } else {
-        var EBDITA = parseFloat(EBITDAStr)
+        EBDITA = parseFloat(EBITDAStr)
     }
     fieldValues = [
         parseInt(res.AverageDailyVolume), parseFloat(res.DaysLow),
