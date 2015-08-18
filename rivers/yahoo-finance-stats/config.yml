@@ -1,0 +1,61 @@
+# Please name this the same as the directory it is in.
+name: yahoo-finance-stats
+type: scalar
+
+# Short text description of the data you are providing.
+description: Stock market info provided by Yahoo! finance
+
+author: Jared Weiss
+email: jared@jaredweiss.net
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/New_York
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Open%2C%20PreviousClose%2C%20DaysLow%2C%20DaysHigh%2C%20AverageDailyVolume%2C%20ESPEstimateCurrentYear%2C%20ESPEstimateNextYear%2C%20ESPEstimateNextQuarter%2C%20EBITDA%2C%20ChangeFromYearLow%2C%20PercentChangeFromYearLow%2C%20ChangeFromYearHigh%2C%20PercebtChangeFromYearHigh%2C%20FiftydayMovingAverage%2C%20TwoHundreddayMovingAverage%2C%20ChangeFromFiftydayMovingAverage%2C%20PercentChangeFromFiftydayMovingAverage%2C%20ChangeFromTwoHundreddayMovingAverage%2C%20PercentChangeFromTwoHundreddayMovingAverage%2C%20ShortRatio%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22AAPL%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Open%2C%20PreviousClose%2C%20DaysLow%2C%20DaysHigh%2C%20AverageDailyVolume%2C%20ESPEstimateCurrentYear%2C%20ESPEstimateNextYear%2C%20ESPEstimateNextQuarter%2C%20EBITDA%2C%20ChangeFromYearLow%2C%20PercentChangeFromYearLow%2C%20ChangeFromYearHigh%2C%20PercebtChangeFromYearHigh%2C%20FiftydayMovingAverage%2C%20TwoHundreddayMovingAverage%2C%20ChangeFromFiftydayMovingAverage%2C%20PercentChangeFromFiftydayMovingAverage%2C%20ChangeFromTwoHundreddayMovingAverage%2C%20PercentChangeFromTwoHundreddayMovingAverage%2C%20ShortRatio%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22GOOG%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Open%2C%20PreviousClose%2C%20DaysLow%2C%20DaysHigh%2C%20AverageDailyVolume%2C%20ESPEstimateCurrentYear%2C%20ESPEstimateNextYear%2C%20ESPEstimateNextQuarter%2C%20EBITDA%2C%20ChangeFromYearLow%2C%20PercentChangeFromYearLow%2C%20ChangeFromYearHigh%2C%20PercebtChangeFromYearHigh%2C%20FiftydayMovingAverage%2C%20TwoHundreddayMovingAverage%2C%20ChangeFromFiftydayMovingAverage%2C%20PercentChangeFromFiftydayMovingAverage%2C%20ChangeFromTwoHundreddayMovingAverage%2C%20PercentChangeFromTwoHundreddayMovingAverage%2C%20ShortRatio%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22MSFT%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Open%2C%20PreviousClose%2C%20DaysLow%2C%20DaysHigh%2C%20AverageDailyVolume%2C%20ESPEstimateCurrentYear%2C%20ESPEstimateNextYear%2C%20ESPEstimateNextQuarter%2C%20EBITDA%2C%20ChangeFromYearLow%2C%20PercentChangeFromYearLow%2C%20ChangeFromYearHigh%2C%20PercebtChangeFromYearHigh%2C%20FiftydayMovingAverage%2C%20TwoHundreddayMovingAverage%2C%20ChangeFromFiftydayMovingAverage%2C%20PercentChangeFromFiftydayMovingAverage%2C%20ChangeFromTwoHundreddayMovingAverage%2C%20PercentChangeFromTwoHundreddayMovingAverage%2C%20ShortRatio%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22NFLX%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Open%2C%20PreviousClose%2C%20DaysLow%2C%20DaysHigh%2C%20AverageDailyVolume%2C%20ESPEstimateCurrentYear%2C%20ESPEstimateNextYear%2C%20ESPEstimateNextQuarter%2C%20EBITDA%2C%20ChangeFromYearLow%2C%20PercentChangeFromYearLow%2C%20ChangeFromYearHigh%2C%20PercebtChangeFromYearHigh%2C%20FiftydayMovingAverage%2C%20TwoHundreddayMovingAverage%2C%20ChangeFromFiftydayMovingAverage%2C%20PercentChangeFromFiftydayMovingAverage%2C%20ChangeFromTwoHundreddayMovingAverage%2C%20PercentChangeFromTwoHundreddayMovingAverage%2C%20ShortRatio%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22TSLA%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Open%2C%20PreviousClose%2C%20DaysLow%2C%20DaysHigh%2C%20AverageDailyVolume%2C%20ESPEstimateCurrentYear%2C%20ESPEstimateNextYear%2C%20ESPEstimateNextQuarter%2C%20EBITDA%2C%20ChangeFromYearLow%2C%20PercentChangeFromYearLow%2C%20ChangeFromYearHigh%2C%20PercebtChangeFromYearHigh%2C%20FiftydayMovingAverage%2C%20TwoHundreddayMovingAverage%2C%20ChangeFromFiftydayMovingAverage%2C%20PercentChangeFromFiftydayMovingAverage%2C%20ChangeFromTwoHundreddayMovingAverage%2C%20PercentChangeFromTwoHundreddayMovingAverage%2C%20ShortRatio%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22YHOO%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  # Use this tool try new queries https://developer.yahoo.com/yql/console/?q=select%20symbol%2C%20Ask%2C%20Bid%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22YHOO%22)&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+
+# HTML "powered by" link to comply with source's TOU
+poweredBy: <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="https://poweredby.yahoo.com/purple.png" width="134" height="29"/> </a>
+
+# How often should River View poll your data sources?
+cronInterval:
+  - "30 9 * * 1-5"
+  - "0,30 9-16 * * 1-5"
+  # Collect these metrics every 30 minutes between 9:30am and 4:00pm on weekdays (when the market is open)
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 3 months
+
+# Primary data, usually collected in one location. Should both be scalar values.
+fields:
+  - AverageDailyVolume
+  - DaysLow
+  - DaysHigh
+  - EBITDA
+  - ChangeFromYearLow
+  - PercentChangeFromYearLow
+  - ChangeFromYearHigh
+  - PercentChangeFromYearHigh
+  - FiftydayMovingAverage
+  - ChangeFromFiftydayMovingAverage
+  - PercentChangeFromFiftydayMovingAverage
+  - TwoHundreddayMovingAverage
+  - ChangeFromTwoHundreddayMovingAverage
+  - PercentChangeFromTwoHundreddayMovingAverage
+  - Open
+  - PreviousClose
+  - ShortRatio
+
+# You want a "new" badge on this?
+new: true

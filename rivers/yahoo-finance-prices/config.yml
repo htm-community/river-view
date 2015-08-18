@@ -1,0 +1,49 @@
+# Please name this the same as the directory it is in.
+name: yahoo-finance-prices
+type: scalar
+
+# Short text description of the data you are providing.
+description: Stock market info provided by Yahoo! finance
+
+author: Jared Weiss
+email: jared@jaredweiss.net
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/New_York
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Ask%2C%20Bid%2C%20Change%2C%20LastTradePriceOnly%2C%20Volume%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22AAPL%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Ask%2C%20Bid%2C%20Change%2C%20LastTradePriceOnly%2C%20Volume%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22GOOG%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Ask%2C%20Bid%2C%20Change%2C%20LastTradePriceOnly%2C%20Volume%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22MSFT%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Ask%2C%20Bid%2C%20Change%2C%20LastTradePriceOnly%2C%20Volume%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22NFLX%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Ask%2C%20Bid%2C%20Change%2C%20LastTradePriceOnly%2C%20Volume%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22TSLA%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  - http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20Ask%2C%20Bid%2C%20Change%2C%20LastTradePriceOnly%2C%20Volume%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22YHOO%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+  # Use this tool try new queries https://developer.yahoo.com/yql/console/?q=select%20symbol%2C%20Ask%2C%20Bid%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22YHOO%22)&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys
+
+# HTML "powered by" link to comply with source's TOU
+poweredBy: <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="https://poweredby.yahoo.com/purple.png" width="134" height="29"/> </a>
+
+# How often should River View poll your data sources?
+cronInterval:
+  - "*/5 30-59 9 * * 1-5"
+  - "*/5 * 9-16 * * 1-5"
+  # Collect these metrics every 5 seconds between 9:30am and 4:00pm on weekdays (when the market is open)
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 3 months
+
+# Primary data, usually collected in one location. Should both be scalar values.
+fields:
+  - Ask
+  - Bid
+  - Change
+  - LastTradePriceOnly
+  - Volume
+
+# You want a "new" badge on this?
+new: true
