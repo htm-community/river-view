@@ -31,6 +31,7 @@ poweredBy: <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="h
 cronInterval:
   - "*/5 30-59 9 * * 1-5"
   - "*/5 * 9-16 * * 1-5"
+  # Collect these metrics every 5 seconds between 9:30am and 4:00pm on weekdays (when the market is open)
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.

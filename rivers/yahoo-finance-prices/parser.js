@@ -3,11 +3,8 @@ var _ = require('lodash'),
 
 module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
-        data = JSON.parse(body);
-
-    moment.tz.setDefault(config.timezone);
-
-    var dtarray = data.query.created.split('T'),
+        data = JSON.parse(body),
+        dtarray = data.query.created.split('T'),
         dateString = dtarray.shift(),
         timeString = dtarray.shift().split('Z').shift(),
         date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm:ss'),
@@ -15,6 +12,9 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         res = data.query.results.quote,
         symbol = res.symbol,
         fieldValues;
+
+    moment.tz.setDefault(config.timezone);
+
 
     fieldValues = [
         parseFloat(res.Ask), parseFloat(res.Bid), parseFloat(res.Change), parseFloat(res.LastTradePriceOnly), parseFloat(res.LastTradePriceOnly)
