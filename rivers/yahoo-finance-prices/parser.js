@@ -8,14 +8,16 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         dateString = dtarray.shift(),
         timeString = dtarray.shift().split('Z').shift(),
         date = undefined,
-        timestamp = date.unix(),
+        timestamp = undefined,
         res = data.query.results.quote,
         symbol = res.symbol,
-        fieldValues;
+        fieldValues = undefined;
 
     moment.tz.setDefault(config.timezone);
 
     date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm:ss');
+    timestamp = date.unix();
+    res =
 
     fieldValues = [
         parseFloat(res.Ask), parseFloat(res.Bid), parseFloat(res.Change), parseFloat(res.LastTradePriceOnly), parseFloat(res.LastTradePriceOnly)

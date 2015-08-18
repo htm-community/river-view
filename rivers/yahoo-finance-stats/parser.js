@@ -8,16 +8,17 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         dateString = dtarray.shift(),
         timeString = dtarray.shift().split('Z').shift(),
         date = undefined,
-        timestamp = date.unix(),
+        timestamp = undefined,
         res = data.query.results.quote,
         symbol = res.symbol,
         ebitdaStr = res.EBITDA,
         ebitda = undefined,
-        fieldValues;
+        fieldValues = undefined;
 
     moment.tz.setDefault(config.timezone);
 
     date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm:ss');
+    timestamp = date.unix();
 
     if (_.contains(ebitdaStr, 'M')) {
         ebitda = parseFloat(ebitdaStr.split("M").shift())*1000000;
