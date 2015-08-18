@@ -7,7 +7,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         dtarray = data.query.created.split('T'),
         dateString = dtarray.shift(),
         timeString = dtarray.shift().split('Z').shift(),
-        date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm:ss'),
+        date = undefined,
         timestamp = date.unix(),
         res = data.query.results.quote,
         symbol = res.symbol,
@@ -17,6 +17,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
 
     moment.tz.setDefault(config.timezone);
 
+    date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm:ss');
 
     if (_.contains(ebitdaStr, 'M')) {
         ebitda = parseFloat(ebitdaStr.split("M").shift())*1000000;
