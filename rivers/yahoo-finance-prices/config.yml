@@ -35,7 +35,7 @@ cronInterval:
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
-expires: 3 months
+expires: 2 weeks
 
 # Primary data, usually collected in one location. Should both be scalar values.
 fields:
