@@ -15,9 +15,8 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
 
     moment.tz.setDefault(config.timezone);
 
-    date = moment(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm:ss');
+    date = moment.tz(dateString + ' ' + timeString, 'YYYY-MM-DD HH:mm:ss', 'UTC'); // The returned timestamp is in UTC
     timestamp = date.unix();
-    res =
 
     fieldValues = [
         parseFloat(res.Ask), parseFloat(res.Bid), parseFloat(res.Change), parseFloat(res.LastTradePriceOnly), parseFloat(res.LastTradePriceOnly)
