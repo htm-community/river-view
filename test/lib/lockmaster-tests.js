@@ -2,6 +2,61 @@ var proxyquire = require('proxyquire');
 var expect = require('chai').expect;
 var assert = require('chai').assert;
 
+describe('when initializing a river', function() {
+    it('does not start rivers with initialization errors', function(done) {
+        var Lockmaster = proxyquire('../../lib/lockmaster', {
+            request: {
+                get: function(url, cb) {
+                    expect(url).to.equal('mock url');
+                    cb(null, {statusCode: 200}, 'mock response body');
+                }
+            }
+        });
+        var barParseCalled = false;
+        var mockRiverInitFail = {
+            initialize: function(callback) {
+                callback(new Error('oh noes!'));
+            },
+            parse: function() {
+                assert.fail('parse function should not be called on a river ' +
+                            'that failed initialization');
+            },
+            name: 'foo',
+            config: {
+                name: 'foo',
+                interval: '1 hour',
+                sources: ['mock url']
+            }
+        };
+        var mockRiverInitPass = {
+            initialize: function(callback) {
+                callback();
+            },
+            parse: function() {
+                barParseCalled = true;
+            },
+            name: 'bar',
+            config: {
+                name: 'bar',
+                interval: '1 hour',
+                sources: ['mock url']
+            }
+        };
+        var lm = new Lockmaster({
+            config: {},
+            rivers: [mockRiverInitFail, mockRiverInitPass],
+            redisClient: {
+                logObject: function() {}
+            }
+        });
+
+        lm.start(function() {
+            assert.ok(barParseCalled);
+            done();
+        });
+
+    });
+});
 
 describe('when running a river', function() {
 
