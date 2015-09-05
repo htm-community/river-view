@@ -10,11 +10,11 @@ var _ = require('lodash'),
 function getStationDetails(callback) {
     riverUtils.gZippedPathToString(stationsUrl, function(error, resp, xml) {
         if (error) {
-            throw error;
+            return callback(error);
         }
         xml2js.parseString(xml, function(err, result) {
             if (err) {
-                return console.error(err);
+                return callback(err);
             }
             _.each(result.tms_config.corridor, function(corridor) {
                 var corridorData = corridor['$'];
