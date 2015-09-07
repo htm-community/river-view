@@ -120,7 +120,13 @@ describe('when running a river', function() {
         var lm = new Lockmaster({
             config: {},
             rivers: [{
-                config: mockRiverConfig
+                config: mockRiverConfig,
+                parse: function() {
+                    assert.fail('Disabled rivers should now be run.');
+                },
+                initialize: function() {
+                    assert.fail('Disabled rivers should now be run.');
+                }
             }]
         });
 
