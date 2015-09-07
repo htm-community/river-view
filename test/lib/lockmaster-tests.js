@@ -102,6 +102,31 @@ describe('when initializing a river', function() {
 
 describe('when running a river', function() {
 
+    it('does not run disabled rivers', function(done) {
+        var Lockmaster = proxyquire('../../lib/lockmaster', {
+            request: {
+                get: function(url, cb) {
+                    assert.fail('Disabled rivers should not be run.');
+                }
+            }
+        });
+        var mockRiverConfig = {
+            name: 'mock-river',
+            interval: '1 hour',
+            sources: ['mock url'],
+            disabled: true
+        };
+
+        var lm = new Lockmaster({
+            config: {},
+            rivers: [{
+                config: mockRiverConfig
+            }]
+        });
+
+        lm.start(done);
+    });
+
     it('calls parse function with correct params', function(done) {
         var urlFetched = false;
         var Lockmaster = proxyquire('../../lib/lockmaster', {
