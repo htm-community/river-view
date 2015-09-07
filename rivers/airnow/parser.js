@@ -60,8 +60,8 @@ function dateStringToTimestampWithZone(timeIn) {
 
 function initialize(callback) {
     var urls = [],
-        //feedCount = 788;
-        feedCount = 10;
+        // As of today (Sep 7, 2015), there are 788 RSS feeds.
+        feedCount = 788;
     _.times(feedCount, function(index) {
         urls.push('http://feeds.airnowapi.org/rss/realtime/' + (index + 1) + '.xml');
     });

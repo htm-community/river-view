@@ -3,9 +3,9 @@ name: airnow
 type: scalar
 
 # Short text description of the data you are providing.
-description: airnow
+description: "The AQI is an index for reporting daily air quality. It tells you how clean or polluted your air is, and what associated health effects might be a concern for you. The AQI focuses on health effects you may experience within a few hours or days after breathing polluted air. EPA calculates the AQI for five major air pollutants regulated by the Clean Air Act: ground-level ozone, particle pollution (also known as particulate matter), carbon monoxide, sulfur dioxide, and nitrogen dioxide. For each of these pollutants, EPA has established national air quality standards to protect public health .Ground-level ozone and airborne particles are the two pollutants that pose the greatest threat to human health in this country."
 
-poweredBy: airnow
+poweredBy: '<a href="http://www.airnow.gov/"><img src="http://www.enviroflash.info/assets/logos/cityLogo-0-0.gif"/></a>'
 
 author: Matthew Taylor
 email: matt@numenta.org
