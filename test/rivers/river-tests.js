@@ -18,7 +18,7 @@ var parserPath = path.join(riverDir, 'parser.js');
 var TIMEOUT = 20000;
 
 var config;
-var httpResponses = {};
+var cachedHttpResponses = {};
 var lockmaster = new Lockmaster({});
 
 function parseYaml(filePath) {
@@ -99,9 +99,8 @@ describe('river config', function() {
 
     it('has a valid interval', function() {
         var oneMin = moment.duration(1, 'minute').asSeconds();
-        var intervalString = config.interval;
         if (config.hasOwnProperty('interval')) {
-            var intervalString = config.interval
+            var intervalString = config.interval,
                 interval = moment.duration(
                 parseInt(intervalString.split(/\s+/).shift()),
                 intervalString.split(/\s+/).pop()
@@ -142,32 +141,31 @@ describe('river config', function() {
         expect(expires).to.be.at.most(sixMonths);
     });
 
-    it('has at least one source', function() {
-        assert.ok(config.sources, 'config.yml is missing "sources"');
-        expect(config.sources).to.be.instanceOf(Array, '"sources" must be an array of URLs.');
-    });
-
     it('sources all resolve to working URLs', function(done) {
         var fetchers = {};
         var me = this;
 
-        // Each source URL needs time for the HTTP call to respond. We will
-        // increase the callback for each source.
-        me.timeout(TIMEOUT * config.sources.length);
+        if (config.sources) {
+            // Each source URL needs time for the HTTP call to respond. We will
+            // increase the callback for each source.
+            me.timeout(TIMEOUT * config.sources.length);
 
-        _.each(config.sources, function(sourceUrl) {
-            fetchers[sourceUrl] = function(callback) {
-                lockmaster.makeRequest(sourceUrl, function(err, resp, body) {
-                    if (err) callback(err);
-                    callback(null, body);
-                });
-            };
-        });
-        async.parallel(fetchers, function(error, responses) {
-            assert.notOk(error);
-            httpResponses = responses;
-            done()
-        });
+            _.each(config.sources, function(sourceUrl) {
+                fetchers[sourceUrl] = function(callback) {
+                    lockmaster.makeRequest(sourceUrl, function(err, resp, body) {
+                        if (err) callback(err);
+                        callback(null, body);
+                    });
+                };
+            });
+            async.parallel(fetchers, function(error, responses) {
+                assert.notOk(error);
+                cachedHttpResponses = responses;
+                done()
+            });
+        } else {
+            done();
+        }
     });
 
     it('has at least one field', function() {
@@ -180,7 +178,7 @@ describe('river config', function() {
 
 });
 
-describe('river parser', function() {
+describe('river initializer / parser', function() {
 
     var requirePath = path.join(parserPath.split('.')[0]);
     var riverModule = require(requirePath);
@@ -202,6 +200,25 @@ describe('river parser', function() {
         }
     });
 
+    it('initializer returns a list of source urls if the config has none', function(done) {
+        var riverModule = require(requirePath);
+        var initialize;
+
+        if (typeof riverModule != 'function') {
+            initialize = riverModule.initialize;
+            if (! config.sources) {
+                initialize(function(err, sources) {
+                    assert.ok(sources, 'config.yml is missing "sources" and initializer does not return any');
+                    expect(sources).to.be.instanceOf(Array, '"sources" must be an array of URLs.');
+                    done();
+                });
+            }
+        } else {
+            done();
+        }
+
+    });
+
     describe('when passed a live response body', function() {
         var temporalCallbacks = [];
         var metadataCallbacks = [];
@@ -217,14 +234,17 @@ describe('river parser', function() {
 
         lockmaster = new Lockmaster({rivers: [{
             initialize: initialize,
-            parse: parse
+            parse: parse,
+            name: 'foo'
         }]});
 
-            it('calls the temporalDataCallback with data matching config', function(done) {
-                lockmaster.initializeRivers(function() {
-                    var fetchers = [];
+        it('calls the temporalDataCallback with data matching config', function(done) {
+            lockmaster.initializeRivers(function(err, sourceUrls) {
+                var testers = [], fetchers = {};
+
+                function runTest(httpResponses) {
                     _.each(httpResponses, function(body, url) {
-                        fetchers.push(function(cb) {
+                        testers.push(function(cb) {
                             var options = {config: config, url: url};
                             parse(body, options,
                                 function(id, ts, vals) {
@@ -244,49 +264,68 @@ describe('river parser', function() {
                             setTimeout(cb, 1000);
                         });
                     });
-                    async.parallel(fetchers, function(err) {
+                    async.parallel(testers, function(err) {
                         if (err) assert.fail(null, null, err.message);
                         expect(temporalCallbacks).to.have.length.above(0, 'temporal callback was never called');
                         done();
                     });
-                });
-            });
+                }
 
-            it('calls the metadataCallback with JSON-parseable data', function(done) {
-                lockmaster.initializeRivers(function() {
-                    var fetchers = [];
-                    _.each(httpResponses, function(body, url) {
-                        fetchers.push(function(cb) {
-                            var options = {config: config, url: url};
-                            parse(body, options,
-                                function() {},
-                                function(id, metadata) {
-                                    assert.ok(id, 'metadata data callback must be sent an id');
-                                    metadataCallbacks.push(metadata);
-                                }
-                            );
-                            setTimeout(cb, 1000);
-                        });
-                    });
-                    async.parallel(fetchers, function(err) {
-                        if (err) assert.fail(null, null, err.message);
-                        if (metadataCallbacks.length) {
-                            _.each(metadataCallbacks, function(id, metadata) {
-                                assert.ok(id, 'Missing id when saving metadata');
-                                try {
-                                    JSON.stringify(metadata);
-                                } catch(e) {
-                                    assert.fail(null, null, 'Cannot stringify metadata response into JSON: ' + metadata);
-                                }
+                if (sourceUrls) {
+                    // Each source URL needs time for the HTTP call to respond. We will
+                    // increase the callback for each source.
+                    //me.timeout(TIMEOUT * sourceUrls.foo.length);
+
+                    _.each(sourceUrls.foo, function(sourceUrl) {
+                        fetchers[sourceUrl] = function(callback) {
+                            lockmaster.makeRequest(sourceUrl, function(err, resp, body) {
+                                if (err) callback(err);
+                                callback(null, body);
                             });
-                        }
-                        done();
+                        };
+                    });
+                    async.parallel(fetchers, function(error, responses) {
+                        assert.notOk(error);
+                        runTest(responses);
+                    });
+                } else {
+                    runTest(cachedHttpResponses);
+                }
+            });
+        });
+
+        it('calls the metadataCallback with JSON-parseable data', function(done) {
+            lockmaster.initializeRivers(function() {
+                var fetchers = [];
+                _.each(cachedHttpResponses, function(body, url) {
+                    fetchers.push(function(cb) {
+                        var options = {config: config, url: url};
+                        parse(body, options,
+                            function() {},
+                            function(id, metadata) {
+                                assert.ok(id, 'metadata data callback must be sent an id');
+                                metadataCallbacks.push(metadata);
+                            }
+                        );
+                        setTimeout(cb, 1000);
                     });
                 });
+                async.parallel(fetchers, function(err) {
+                    if (err) assert.fail(null, null, err.message);
+                    if (metadataCallbacks.length) {
+                        _.each(metadataCallbacks, function(id, metadata) {
+                            assert.ok(id, 'Missing id when saving metadata');
+                            try {
+                                JSON.stringify(metadata);
+                            } catch(e) {
+                                assert.fail(null, null, 'Cannot stringify metadata response into JSON: ' + metadata);
+                            }
+                        });
+                    }
+                    done();
+                });
             });
-
-
-
+        });
 
     });
 
