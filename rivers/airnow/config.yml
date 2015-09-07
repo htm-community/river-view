@@ -1,0 +1,38 @@
+# Please name this the same as the directory it is in.
+name: airnow
+type: scalar
+
+# Short text description of the data you are providing.
+description: "The AQI is an index for reporting daily air quality. It tells you how clean or polluted your air is, and what associated health effects might be a concern for you. The AQI focuses on health effects you may experience within a few hours or days after breathing polluted air. EPA calculates the AQI for five major air pollutants regulated by the Clean Air Act: ground-level ozone, particle pollution (also known as particulate matter), carbon monoxide, sulfur dioxide, and nitrogen dioxide. For each of these pollutants, EPA has established national air quality standards to protect public health .Ground-level ozone and airborne particles are the two pollutants that pose the greatest threat to human health in this country."
+
+poweredBy: '<a href="http://www.airnow.gov/"><img src="http://www.enviroflash.info/assets/logos/cityLogo-0-0.gif"/></a>'
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: UTC
+
+# URL sources are provided by the initialization function for this River.
+#sources:
+
+# How often should River View poll your data sources?
+interval: 1 hour
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+# Primary data, usually collected in one location. Should both be scalar values.
+fields:
+- Particle Pollution (2.5 microns)
+- Particle Pollution (10 microns)
+- Ozone
+
+# This provides more information about the data. This data doesn't change over
+# time like the fields.
+metadata:
+- agency
+- location
