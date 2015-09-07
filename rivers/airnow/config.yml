@@ -15,11 +15,8 @@ email: matt@numenta.org
 # use "UTC"
 timezone: UTC
 
-# A list of URLs that contain the raw data. Each of these will be polled at the
-# interval specified below, and the response text will be sent to your parser.
-sources:
-  - http://feeds.airnowapi.org/rss/realtime/13.xml
-  - http://feeds.airnowapi.org/rss/realtime/788.xml
+# URL sources are provided by the initialization function for this River.
+#sources:
 
 # How often should River View poll your data sources?
 interval: 1 hour
