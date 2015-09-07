@@ -3,6 +3,7 @@ var expect = require('chai').expect;
 var assert = require('chai').assert;
 
 describe('when initializing a river', function() {
+
     it('does not start rivers with initialization errors', function(done) {
         var Lockmaster = proxyquire('../../lib/lockmaster', {
             request: {
@@ -56,6 +57,47 @@ describe('when initializing a river', function() {
         });
 
     });
+
+    it('uses url list returned from initializer as source urls', function(done) {
+        var urlsCalled = [];
+        var Lockmaster = proxyquire('../../lib/lockmaster', {
+            request: {
+                get: function(url, cb) {
+                    urlsCalled.push(url);
+                    cb(null, {statusCode: 200}, 'mock response body');
+                }
+            }
+        });
+        var mockRiver = {
+            initialize: function(callback) {
+                callback(null, ['url1', 'url2', 'url3']);
+            },
+            parse: function() {
+                barParseCalled = true;
+            },
+            name: 'bar',
+            config: {
+                name: 'bar',
+                interval: '1 hour'
+            }
+        };
+        var lm = new Lockmaster({
+            config: {},
+            rivers: [mockRiver],
+            redisClient: {
+                logObject: function() {}
+            }
+        });
+
+        lm.start(function() {
+            expect(urlsCalled).to.have.length(3);
+            expect(urlsCalled).to.contain('url1');
+            expect(urlsCalled).to.contain('url2');
+            expect(urlsCalled).to.contain('url3');
+            done();
+        });
+    });
+
 });
 
 describe('when running a river', function() {
@@ -198,6 +240,7 @@ describe('when running a river', function() {
         };
         var parseFn = function() {
             var noop = undefined;
+            // Forcing an undefined reference error:
             noop.foo;
         };
         var mockLogObject = function(params) {
