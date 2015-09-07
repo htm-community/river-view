@@ -1,3 +1,5 @@
+new: true
+
 # Please name this the same as the directory it is in.
 name: airnow
 type: scalar
