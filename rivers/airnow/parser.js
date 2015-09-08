@@ -76,6 +76,11 @@ function parse(body, options, temporalDataCallback, metaDataCallback) {
         if (err) {
             return console.error(err);
         }
+        if (! result.rss) {
+            // Not every RSS feed from 1 - 788 is actually valid. We'll just
+            // ingore the ones that return 404s.
+            return console.warn('error fetching %s', options.url);
+        }
         data = result.rss.channel[0];
 
         html = data.item[0].description[0];
