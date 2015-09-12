@@ -11,6 +11,11 @@ _**River View**_ is a _Public Temporal Streaming Data Service Framework_ (yes, t
 
 _River View_ fetches data from user-defined [_Rivers_](#Rivers) at regular intervals, populating a local [Redis](http://redis.io) database. This data is provided in a windowed format, so that data older than a certain configured age is lost. But the window should be large enough to provide enough historical data to potentially train machine intelligence models on the data patterns within it.
 
+## Video Introduction
+
+[![River View Video Thumbnail](http://img.youtube.com/vi/1niMh92IP-s/hqdefault.jpg)](https://www.youtube.com/watch?v=1niMh92IP-s)
+> Watch [this short video](https://www.youtube.com/watch?v=1niMh92IP-s) for a quick introduction to River View.
+
 ## Code Docs
 
 See online documentation at <http://nupic-community.github.io/river-view/>.
