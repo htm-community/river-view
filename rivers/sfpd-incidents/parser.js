@@ -4,7 +4,7 @@ var _ = require('lodash'),
 module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
         data = JSON.parse(body),
-        id = 'sfpd-incidents';
+        streamId = 'sfpd-incidents';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
@@ -19,14 +19,14 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             fieldValues;
 
         if (isNaN(latitude) || isNaN(longitude)) {
-            latitude = null
-            longitude = null
+            latitude = null;
+            longitude = null;
         }
 
         fieldValues = [
             latitude, longitude, parseInt(event.incidntnum), event.category, event.pddistrict, event.pdid, event.address, event.descript, event.resolution
         ];
 
-        temporalDataCallback(id, timestamp, fieldValues);
+        temporalDataCallback(streamId, timestamp, fieldValues);
     });
 };

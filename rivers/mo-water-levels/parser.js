@@ -19,7 +19,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         }
 
         var props = result.site['$'],
-            id = props.id,
+            streamId = props.id,
             metaData = {},
             data = result.site.observed[0].datum.reverse();
 
@@ -34,13 +34,13 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
                 flow = parseFloat(point.secondary[0]._)
             }
 
-            temporalDataCallback(id, timestamp, [stage, flow]);
+            temporalDataCallback(streamId, timestamp, [stage, flow]);
         });
 
         _.each(metaDataNames, function(propName) {
             metaData[propName] = props[propName];
         });
-        metaDataCallback(id, metaData);
+        metaDataCallback(streamId, metaData);
 
     });
 };

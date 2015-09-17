@@ -10,7 +10,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         date = undefined,
         timestamp = undefined,
         res = data.query.results.quote,
-        symbol = res.symbol,
+        streamId = res.symbol,
         fieldValues = undefined;
 
     moment.tz.setDefault(config.timezone);
@@ -22,5 +22,5 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         parseFloat(res.Ask), parseFloat(res.Bid), parseFloat(res.Change), parseFloat(res.LastTradePriceOnly), parseFloat(res.LastTradePriceOnly)
     ];
 
-    temporalDataCallback(symbol, timestamp, fieldValues);
+    temporalDataCallback(streamId, timestamp, fieldValues);
 };

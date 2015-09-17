@@ -5,7 +5,7 @@ var _ = require('lodash'),
 module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
         data = JSON.parse(body),
-        id = 'nypd-motor-vehicle-collisions';
+        streamId = 'nypd-motor-vehicle-collisions';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
@@ -34,6 +34,6 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             event.vehicle_type_code2, event.zip_code
         ];
 
-        temporalDataCallback(id, timestamp, fieldValues);
+        temporalDataCallback(streamId, timestamp, fieldValues);
     });
 };

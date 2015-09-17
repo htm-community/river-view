@@ -21,10 +21,9 @@ function dateStringToTimestampWithZone(dateString, timeString, zone) {
 
 module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
-        url = options.url,
         $ = cheerio.load(body),
         columnNames = [],
-        id = 'actual_loads_of_weather_zones';
+        streamId = 'actual_loads_of_weather_zones';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
@@ -55,7 +54,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             // Shift off the first two values, which are date and time strings.
             row.shift();
             row.shift();
-            temporalDataCallback(id, timestamp, row);
+            temporalDataCallback(streamId, timestamp, row);
         }
     });
 };

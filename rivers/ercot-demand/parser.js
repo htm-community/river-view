@@ -31,7 +31,7 @@ function systemWideDemand(body, options, temporalDataCallback, metaDataCallback)
     var config = options.config,
         url = options.url,
         $ = cheerio.load(body),
-        id = 'system_wide_demand',
+        streamId = 'system_wide_demand',
         parsedUrl = nodeUrl.parse(url),
         sourceDomain = parsedUrl.protocol + '//' + parsedUrl.hostname,
         downloaders = [];
@@ -63,7 +63,7 @@ function systemWideDemand(body, options, temporalDataCallback, metaDataCallback)
                                 timeString = row[1],
                                 timestamp = dateStringToTimestampWithZone(dateString, timeString, config.timezone),
                                 demand = parseFloat(row[2]);
-                            temporalDataCallback(id, timestamp, [demand]);
+                            temporalDataCallback(streamId, timestamp, [demand]);
                         });
 
                     });

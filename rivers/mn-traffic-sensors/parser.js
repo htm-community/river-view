@@ -56,7 +56,7 @@ function parse(body, options, temporalDataCallback, metaDataCallback) {
 
         _.each(result.traffic_sample.sample, function(detector) {
             var data = detector['$'],
-                sensorId = data.sensor,
+                streamId = data.sensor,
                 station = stationMap[detectorToStation[data.sensor]],
                 stashedDetector = detectorMap[data.sensor];
 
@@ -65,7 +65,7 @@ function parse(body, options, temporalDataCallback, metaDataCallback) {
                 metadata = {
                     latitude: parseFloat(station.lat),
                     longitude: parseFloat(station.lon),
-                    sensorId: sensorId,
+                    sensorId: streamId,
                     stationId: station.station_id,
                     stationLabel: station.label,
                     sensorLabel: stashedDetector.label,
@@ -73,7 +73,7 @@ function parse(body, options, temporalDataCallback, metaDataCallback) {
                     category: stashedDetector.category
                 };
 
-                metaDataCallback(sensorId, metadata);
+                metaDataCallback(streamId, metadata);
 
                 fields = [
                     parseInt(data.flow),
@@ -81,7 +81,7 @@ function parse(body, options, temporalDataCallback, metaDataCallback) {
                     parseFloat(data.occ)
                 ];
 
-                temporalDataCallback(sensorId, timestamp, fields);
+                temporalDataCallback(streamId, timestamp, fields);
 
             }
 

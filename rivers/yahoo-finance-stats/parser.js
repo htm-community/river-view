@@ -10,7 +10,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         date = undefined,
         timestamp = undefined,
         res = data.query.results.quote,
-        symbol = res.symbol,
+        streamId = res.symbol,
         ebitdaStr = res.EBITDA,
         ebitda = undefined,
         fieldValues = undefined;
@@ -39,5 +39,5 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         parseFloat(res.Open), parseFloat(res.PreviousClose), parseFloat(res.ShortRatio)
     ];
 
-    temporalDataCallback(symbol, timestamp, fieldValues);
+    temporalDataCallback(streamId, timestamp, fieldValues);
 };

@@ -15,7 +15,7 @@ describe('when initializing a river', function() {
         });
         var barParseCalled = false;
         var mockRiverInitFail = {
-            initialize: function(callback) {
+            initialize: function(config, callback) {
                 callback(new Error('oh noes!'));
             },
             parse: function() {
@@ -30,7 +30,7 @@ describe('when initializing a river', function() {
             }
         };
         var mockRiverInitPass = {
-            initialize: function(callback) {
+            initialize: function(config, callback) {
                 callback();
             },
             parse: function() {
@@ -69,7 +69,7 @@ describe('when initializing a river', function() {
             }
         });
         var mockRiver = {
-            initialize: function(callback) {
+            initialize: function(config, callback) {
                 callback(null, ['url1', 'url2', 'url3']);
             },
             parse: function() {

@@ -40,7 +40,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
     _.each(dataArray, function(dataPoint) {
         var fieldValues = [],
             metadata = {},
-            sensorId = dataPoint.station_name,
+            streamId = dataPoint.station_name,
             dateString = dataPoint.measurement_timestamp_label,
             timestamp = dateStringToTimestampWithZone(dateString, config.timezone);
 
@@ -49,14 +49,14 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             fieldValues.push(parseFloat(dataPoint[fieldName]));
         });
 
-        temporalDataCallback(sensorId, timestamp, fieldValues);
+        temporalDataCallback(streamId, timestamp, fieldValues);
 
         // Metadata
         _.each(metadataNames, function(metadataName) {
             metadata[metadataName] = dataPoint[metadataName];
         });
 
-        metaDataCallback(sensorId, metadata);
+        metaDataCallback(streamId, metadata);
 
 
     });

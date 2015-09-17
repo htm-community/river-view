@@ -5,13 +5,13 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
     var config = options.config,
         payload = JSON.parse(body),
         metadata = payload.metadata,
-        id = 'usgs-earthquakes';
+        streamId = 'usgs-earthquakes';
 
     moment.tz.setDefault(config.timezone);
 
     metadata.bbox = payload.bbox;
 
-    metaDataCallback(id, payload.metadata);
+    metaDataCallback(streamId, payload.metadata);
 
     _.each(payload.features, function(quake) {
         var props = quake.properties,
@@ -51,6 +51,6 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             props.title
         ];
 
-        temporalDataCallback(id, timestamp, values);
+        temporalDataCallback(streamId, timestamp, values);
     });
 };

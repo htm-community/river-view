@@ -63,12 +63,13 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             return console.error(err);
         }
         _.each(result.speedSensors.sensor, function(sensor) {
-            var minMax, metadata, fieldValues;
+            var streamId, minMax, metadata, fieldValues;
 
+            streamId = sensor.deviceID[0];
             minMax = calculateMinAndMaxSpeed(sensor.speed[0]);
 
             metadata = {
-                id: sensor.deviceID[0],
+                id: streamId,
                 location: sensor.location[0],
                 latitude: parseFloat(sensor.latitude[0]),
                 longitude: parseFloat(sensor.longitude[0]),
@@ -80,7 +81,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             fieldValues = [minMax.min, minMax.max];
 
             temporalDataCallback(
-                sensor.deviceID[0], dateStringToTimestampWithZone(sensor.timeReported[0], config.timezone), fieldValues
+                streamId, dateStringToTimestampWithZone(sensor.timeReported[0], config.timezone), fieldValues
             );
 
         });

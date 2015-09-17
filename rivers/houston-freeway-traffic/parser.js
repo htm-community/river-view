@@ -20,17 +20,17 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
         freeways = result.rss.channel[0].item;
 
         _.each(freeways, function(freeway) {
-            var title = freeway.title[0];
+            var streamId = freeway.title[0];
             var fields;
             var travelTimeString;
             var travelTimeStringParts;
             var travelDuration;
             var metadata = {
-                title: title
+                title: streamId
             };
             var timestamp = gmtDateStringToTimestamp(freeway.pubDate[0]);
 
-            metaDataCallback(title, metadata);
+            metaDataCallback(streamId, metadata);
 
             travelTimeString = freeway.description[0].split(':').pop().trim();
             travelTimeStringParts = travelTimeString.split(/\s+/);
@@ -41,7 +41,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
 
             fields = [travelDuration.asMinutes()];
 
-            temporalDataCallback(title, timestamp, fields);
+            temporalDataCallback(streamId, timestamp, fields);
 
         });
 

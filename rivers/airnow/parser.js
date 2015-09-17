@@ -73,7 +73,7 @@ function initialize(config, callback) {
 
 function parse(body, options, temporalDataCallback, metaDataCallback) {
     xml2js.parseString(body, function(err, result) {
-        var data, html, $, $dataEl, location, airQualityString, airQualityParts,
+        var data, html, $, $dataEl, streamId, airQualityString, airQualityParts,
             agency, updatedAtString, updatedAt, airQualityReports = [],
             fieldValues = [];
         if (err) {
@@ -95,8 +95,8 @@ function parse(body, options, temporalDataCallback, metaDataCallback) {
         $ = cheerio.load(html);
         $dataEl = $('[valign="top"]');
 
-        location = $dataEl.find('div:first-child').text().split(':').pop().trim();
-        //console.log(location);
+        // The streamId is actually the 'location'.
+        streamId = $dataEl.find('div:first-child').text().split(':').pop().trim();
 
         airQualityString = $dataEl.find('div:nth-child(4)').text().trim();
         //console.log(airQualityString);
@@ -133,11 +133,11 @@ function parse(body, options, temporalDataCallback, metaDataCallback) {
 
         //console.log(fieldValues);
 
-        temporalDataCallback(location, updatedAt, fieldValues);
+        temporalDataCallback(streamId, updatedAt, fieldValues);
 
-        metaDataCallback(location, {
+        metaDataCallback(streamId, {
             agency: agency,
-            location: location
+            location: streamId
         });
 
     });

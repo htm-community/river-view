@@ -20,7 +20,7 @@ function dateStringToTimestampWithZone(dateString, zone) {
 module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
         data = JSON.parse(body).results,
-        id = 'portland-restaurant-inspections';
+        streamId = 'portland-restaurant-inspections';
 
     _.each(data, function(point) {
         var dateString = point.date,
@@ -31,7 +31,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             point.location.Latitude, point.location.Longitude, point.restaurant_id, point.name, parseInt(point.score), point.inspection_number, point.type, point.address.street, point.address.city, point.address.zip
         ];
 
-        temporalDataCallback(id, timestamp, fieldValues);
+        temporalDataCallback(streamId, timestamp, fieldValues);
 
     });
 };

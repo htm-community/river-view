@@ -65,10 +65,6 @@ describe('river config', function() {
         }
     });
 
-    it('has a name', function() {
-        assert.ok(config.name, 'config.yml is missing "name"');
-    });
-
     it('has a valid type', function() {
         assert.ok(config.type, 'config.yml is missing "type"');
         expect(['scalar', 'geospatial']).to.contain(config.type);
@@ -207,7 +203,7 @@ describe('river initializer / parser', function() {
         if (typeof riverModule != 'function') {
             initialize = riverModule.initialize;
             if (! config.sources) {
-                initialize(function(err, sources) {
+                initialize(config, function(err, sources) {
                     assert.ok(sources, 'config.yml is missing "sources" and initializer does not return any');
                     expect(sources).to.be.instanceOf(Array, '"sources" must be an array of URLs.');
                     done();

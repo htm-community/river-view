@@ -28,7 +28,7 @@ function dateStringToTimestampWithZone(timeIn, zone) {
 
 module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
-        id = 'portland-911';
+        streamId = 'portland-911';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
@@ -45,8 +45,8 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             email = meta.author.email,
             fieldValues = [];
 
-        metaDataCallback(id, {
-            id: id,
+        metaDataCallback(streamId, {
+            id: streamId,
             title: title,
             subtitle: subtitle,
             author: author,
@@ -69,7 +69,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
                 lat, lng, dispatchId, summary, category, updated, published
             ];
 
-            temporalDataCallback(id, timestamp, fieldValues);
+            temporalDataCallback(streamId, timestamp, fieldValues);
         });
 
     });
