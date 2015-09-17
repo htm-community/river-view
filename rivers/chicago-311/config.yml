@@ -1,0 +1,44 @@
+type: geospatial
+
+# Short text description of the data you are providing.
+description: All open graffiti removal requests made to 311 and all requests completed since January 1, 2011. The Department of Streets & Sanitation's Graffiti Blasters crews offer a vandalism removal service to private property owners. Graffiti Blasters employ "blast" trucks that use baking soda under high water pressure to erase painted graffiti from brick, stone and other mineral surfaces. They also use paint trucks to cover graffiti on the remaining surfaces. Organizations and residents may report graffiti and request its removal.
+
+poweredBy: '<a href="https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Graffiti-Removal/hec5-y4x5"><img src="https://data.cityofchicago.org/stylesheets/images/domains/data.cityofchicago.org/chicago_logo.png"></a>'
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/Chicago
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+- https://data.cityofchicago.org/resource/hec5-y4x5.json?$limit=1000&$order=creation_date%20DESC
+- https://data.cityofchicago.org/resource/uxic-zsuj.json?$limit=1000&$order=creation_date%20DESC
+- https://data.cityofchicago.org/resource/9ksk-na4q.json?$limit=1000&$order=creation_date%20DESC
+- https://data.cityofchicago.org/resource/97t6-zrhs.json?$limit=1000&$order=creation_date%20DESC
+- https://data.cityofchicago.org/resource/mab8-y9h3.json?$limit=1000&$order=creation_date%20DESC
+- https://data.cityofchicago.org/resource/3c9v-pnva.json?$limit=1000&$order=creation_date%20DESC
+- https://data.cityofchicago.org/resource/7as2-ds3y.json?$limit=1000&$order=creation_date%20DESC
+
+# How often should River View poll your data sources?
+interval: 1 day
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+fields:
+ - latitude
+ - longitude
+ - police_district
+ - zip_code
+ - status
+ - service_request_number
+ - ward
+ - community_area
+ - type_of_service_request
+ - street_address
