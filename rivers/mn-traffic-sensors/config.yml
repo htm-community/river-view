@@ -1,5 +1,3 @@
-# Please name this the same as the directory it is in.
-name: mn-traffic-sensors
 type: scalar
 
 # Short text description of the data you are providing.

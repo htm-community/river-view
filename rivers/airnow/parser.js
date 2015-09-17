@@ -58,12 +58,15 @@ function dateStringToTimestampWithZone(timeIn) {
     return timestamp;
 }
 
-function initialize(callback) {
+function initialize(config, callback) {
     var urls = [],
         // As of today (Sep 7, 2015), there are 788 RSS feeds.
         feedCount = 788;
     _.times(feedCount, function(index) {
-        urls.push('http://feeds.airnowapi.org/rss/realtime/' + (index + 1) + '.xml');
+        var feedId = index + 1;
+        if (! _.contains(config.excludedFeeds, feedId)) {
+            urls.push('http://feeds.airnowapi.org/rss/realtime/' + feedId + '.xml');
+        }
     });
     callback(null, urls);
 }

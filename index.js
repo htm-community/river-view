@@ -45,7 +45,9 @@ redisClient.initialize(function(err) {
     if (err) throw err;
 
     // Look for data-sources.
-    rivers = RiverFactory.createRivers(CONFIG.riverDir, redisClient)
+    rivers = RiverFactory.createRivers(
+        CONFIG.riverDir, CONFIG.defaults.river, redisClient
+    );
 
     console.log('Starting with %s rivers:', rivers.length);
 

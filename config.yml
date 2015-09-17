@@ -9,3 +9,6 @@ defaults:
   data:
     html:
       limit: 500
+  river:
+    interval: 10 minutes
+    expires: 6 months

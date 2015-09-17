@@ -1,5 +1,3 @@
-# Please name this the same as the directory it is in.
-name: nypd-motor-vehicle-collisions
 type: geospatial
 
 # Short text description of the data you are providing.

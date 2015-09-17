@@ -32,9 +32,9 @@ You may use authentication in the Redis URL string:
 
     export REDIS_URL=redis://username:password@hostname:port
 
-## Rivers
+## Rivers and Streams
 
-A _**River**_ is a pluggable public data stream gathered from one or more origins and collected in a query-able temporary temporal pool. _Rivers_ are declared within the [`rivers`](rivers) directory, and consist of:
+A _**River**_ is a pluggable collection of public data **Streams** gathered from one or more origins and collected in a query-able temporary temporal pool. _Rivers_ are declared within the [`rivers`](rivers) directory, and consist of:
 
 - a namespace, which is assumed based upon the directory name of the data source within the [`rivers`](rivers) directory
 - a YAML configuration file, containing:
@@ -43,13 +43,15 @@ A _**River**_ is a pluggable public data stream gathered from one or more origin
   - when the data should expire
 - a JavaScript parser module that is passed the body of an HTTP call to the aforementioned URL(s), which is expected to parse it and return a temporal object representation of the data.
 
-Each _River_ may produce data for many unique data items, but they must have unique identifiers. For example, a city traffic data source may produce data for many traffic paths within the city, each identified with a unique ID. A US state water level data source might have unique sources for each water level sensor in the state, each with a unique ID.
+Each _River_ may produce one or many _Streams_ of data, each collecting like data items over time. Each stream must have a unique ID, but all streams must use the same data schema (fields and meta data are defined at the River level).
+
+For example, a city traffic data source may produce data streams for many traffic paths within the city, each identified with a unique stream ID. A US state water level data source might have unique sources for each water level sensor in the state, each with a unique stream ID.
 
 ### River Types
 
 All river streams must have a timestamp for each row of data. Other than that, they might have different primary types of data, as described below:
 
-- _spacial_: integer or float values
+- _spatial_: integer or float values
 - _geospatial_: latitude / longitude (floats)
 - _categorical_: string values
 
