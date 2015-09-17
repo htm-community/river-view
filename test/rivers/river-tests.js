@@ -212,6 +212,8 @@ describe('river initializer / parser', function() {
                     expect(sources).to.be.instanceOf(Array, '"sources" must be an array of URLs.');
                     done();
                 });
+            } else {
+                done();
             }
         } else {
             done();
@@ -235,7 +237,8 @@ describe('river initializer / parser', function() {
         lockmaster = new Lockmaster({rivers: [{
             initialize: initialize,
             parse: parse,
-            name: 'foo'
+            name: 'foo',
+            config: {}
         }]});
 
         it('calls the temporalDataCallback with data matching config', function(done) {
