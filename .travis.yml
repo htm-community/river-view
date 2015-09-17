@@ -5,4 +5,5 @@ node_js:
 
 script:
   - npm test
-  - node test-river.js
+# I want to enable this once all the HTTP calls are mocked out somehow
+#  - node test-river.js
