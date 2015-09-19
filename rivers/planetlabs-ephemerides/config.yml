@@ -1,0 +1,34 @@
+type: scalar
+
+# Short text description of the data you are providing.
+description: todo
+
+poweredBy: todo
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: UTC
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+- http://ephemerides.planet-labs.com/planet_mc.tle
+
+# How often should River View poll your data sources?
+interval: 1 day
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+fields:
+ - x
+ - y
+ - z
+ - velocityX
+ - velocityY
+ - velocityZ
