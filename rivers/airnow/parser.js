@@ -58,8 +58,9 @@ function dateStringToTimestampWithZone(timeIn) {
     return timestamp;
 }
 
-function initialize(config, callback) {
-    var urls = [],
+function initialize(options, callback) {
+    var config = options.config,
+        urls = [],
         // As of today (Sep 7, 2015), there are 788 RSS feeds.
         feedCount = 788;
     _.times(feedCount, function(index) {

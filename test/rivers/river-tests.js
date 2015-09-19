@@ -203,7 +203,7 @@ describe('river initializer / parser', function() {
         if (typeof riverModule != 'function') {
             initialize = riverModule.initialize;
             if (! config.sources) {
-                initialize(config, function(err, sources) {
+                initialize({config: config}, function(err, sources) {
                     assert.ok(sources, 'config.yml is missing "sources" and initializer does not return any');
                     expect(sources).to.be.instanceOf(Array, '"sources" must be an array of URLs.');
                     done();
@@ -222,6 +222,11 @@ describe('river initializer / parser', function() {
         var metadataCallbacks = [];
         var riverModule = require(requirePath);
         var parse, initialize;
+        var mockRedisClient = {
+            getEarliestTimestampForRiver: function(name, cb) {
+                cb(null, 0);
+            }
+        };
 
         if (typeof riverModule != 'function') {
             parse = riverModule.parse;
@@ -235,7 +240,7 @@ describe('river initializer / parser', function() {
             parse: parse,
             name: 'foo',
             config: {}
-        }]});
+        }], redisClient: mockRedisClient});
 
         it('calls the temporalDataCallback with data matching config', function(done) {
             lockmaster.initializeRivers(function(err, sourceUrls) {

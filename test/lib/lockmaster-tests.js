@@ -15,7 +15,7 @@ describe('when initializing a river', function() {
         });
         var barParseCalled = false;
         var mockRiverInitFail = {
-            initialize: function(config, callback) {
+            initialize: function(options, callback) {
                 callback(new Error('oh noes!'));
             },
             parse: function() {
@@ -30,7 +30,7 @@ describe('when initializing a river', function() {
             }
         };
         var mockRiverInitPass = {
-            initialize: function(config, callback) {
+            initialize: function(options, callback) {
                 callback();
             },
             parse: function() {
@@ -47,7 +47,10 @@ describe('when initializing a river', function() {
             config: {},
             rivers: [mockRiverInitFail, mockRiverInitPass],
             redisClient: {
-                logObject: function() {}
+                logObject: function() {},
+                getEarliestTimestampForRiver: function(name, cb) {
+                    cb(null, 0);
+                }
             }
         });
 
@@ -69,7 +72,7 @@ describe('when initializing a river', function() {
             }
         });
         var mockRiver = {
-            initialize: function(config, callback) {
+            initialize: function(options, callback) {
                 callback(null, ['url1', 'url2', 'url3']);
             },
             parse: function() {
@@ -85,7 +88,10 @@ describe('when initializing a river', function() {
             config: {},
             rivers: [mockRiver],
             redisClient: {
-                logObject: function() {}
+                logObject: function() {},
+                getEarliestTimestampForRiver: function(name, cb) {
+                    cb(null, 0);
+                }
             }
         });
 
