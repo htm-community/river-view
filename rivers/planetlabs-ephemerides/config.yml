@@ -1,9 +1,9 @@
 type: scalar
 
 # Short text description of the data you are providing.
-description: todo
+description: 'PLANET LABS PUBLIC ORBITAL EPHEMERIDES: Orbits derived from 2-way UHF ranging data and are typically accurate to better than 2 km within 24 hours of epoch.'
 
-poweredBy: todo
+poweredBy: '<a href="http://ephemerides.planet-labs.com/"><img src="https://pbs.twimg.com/profile_images/378800000044864601/2adb3a0d793068936c4e6d6105eaa20d_400x400.png"/></a>'
 
 author: Matthew Taylor
 email: matt@numenta.org
@@ -17,6 +17,7 @@ timezone: UTC
 # interval specified below, and the response text will be sent to your parser.
 sources:
 - http://ephemerides.planet-labs.com/planet_mc.tle
+- http://ephemerides.planet-labs.com/jspoc_matches.txt
 
 # How often should River View poll your data sources?
 interval: 1 day
@@ -32,3 +33,7 @@ fields:
  - velocityX
  - velocityY
  - velocityZ
+
+meta:
+ - catid
+ - rms
