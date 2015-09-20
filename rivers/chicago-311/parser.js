@@ -53,6 +53,11 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             return;
         }
 
+        // Skip records with no location.
+        if (! point.location) {
+            return;
+        }
+
         var streamId = lookup[urlId],
             timestamp,
             fieldValues,
