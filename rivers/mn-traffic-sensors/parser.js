@@ -7,7 +7,7 @@ var _ = require('lodash'),
     detectorMap = {},
     detectorToStation = {};
 
-function getStationDetails(config, callback) {
+function getStationDetails(options, callback) {
     riverUtils.gZippedPathToString(stationsUrl, function(error, resp, xml) {
         if (error) {
             return callback(error);
