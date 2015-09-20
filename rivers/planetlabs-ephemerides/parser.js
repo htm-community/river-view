@@ -1,6 +1,8 @@
 var _ = require('lodash'),
     moment = require('moment-timezone'),
-    satellite = require('satellite.js').satellite;
+    satellite = require('satellite.js').satellite,
+    request = require('request'),
+    earliestSeenData = undefined;
 
 function julianYearAndDayToTimestamp(year, days) {
     var thisCentury = Math.round(moment().get('year') / 100) * 100;
@@ -43,8 +45,6 @@ function processTleBody(body, timezone, temporalDataCallback) {
     var lines = body.split('\n'),
         name, line1, line2;
 
-    moment.tz.setDefault(timezone);
-
     _.each(lines, function(line) {
         if (! name) {
             name = line.substr(2);
@@ -84,13 +84,64 @@ function processJspoc(body, metaDataCallback) {
     });
 }
 
+function initialize(options, callback) {
+    earliestSeenData = options.lastUpdated;
+    callback();
+}
 
-module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+function preload(since, until, config, temporalDataCallback) {
+    var current = since;
+    var urlPattern = config.historicUrlPattern;
+    var yesterday = moment().subtract(1, 'day');
+    console.log(current.unix());
+    console.log(until.unix());
+    console.log('');
+    while (current < until) {
+        console.log('hi');
+        console.log(current.format());
+        //var year = current.year();
+        //var month = current.month();
+        //var day = current.day();
+        //var url = urlPattern.replace('YYYYMMDD', year + month + day);
+        //if (current >= yesterday) {
+        //    break;
+        //}
+        //console.log(url);
+        //request.get(url, function(error, body, response) {
+        //    parse(body, {
+        //        url: url,
+        //        config: config
+        //    }, temporalDataCallback)
+        //});
+        current = current.add(1, 'day');
+    }
+    console.log('broke out');
+}
+
+function parse(body, options, temporalDataCallback, metaDataCallback) {
     var url = options.url,
         timezone = options.config.timezone;
+
+    moment.tz.setDefault(timezone);
+
+    // Let's preload data for the past month if it doesn't already exist :)
+    if (earliestSeenData && earliestSeenData.add(1, 'month') > moment()) {
+        preload(
+            moment().subtract(1, 'month'),
+            earliestSeenData,
+            options.config,
+            temporalDataCallback
+        );
+    }
+
     if (_.contains(url, 'jspoc_matches')) {
         processJspoc(body, metaDataCallback);
     } else {
         processTleBody(body, timezone, temporalDataCallback);
     }
+}
+
+module.exports = {
+    initialize: initialize,
+    parse: parse
 };

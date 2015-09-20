@@ -42,3 +42,5 @@ metadata:
   - sensorLabel
   - lane
   - category
+
+historicUrlPattern: http://ephemerides.planet-labs.com/planet_mc_YYYYMMDD.tle
