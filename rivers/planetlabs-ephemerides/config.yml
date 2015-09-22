@@ -1,0 +1,42 @@
+type: scalar
+
+# Short text description of the data you are providing.
+description: 'PLANET LABS PUBLIC ORBITAL EPHEMERIDES: Orbits derived from 2-way UHF ranging data and are typically accurate to better than 2 km within 24 hours of epoch.'
+
+poweredBy: '<a href="http://ephemerides.planet-labs.com/"><img src="https://pbs.twimg.com/profile_images/378800000044864601/2adb3a0d793068936c4e6d6105eaa20d_400x400.png"/></a>'
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: UTC
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+- http://ephemerides.planet-labs.com/planet_mc.tle
+- http://ephemerides.planet-labs.com/jspoc_matches.txt
+
+historicUrlPattern: http://ephemerides.planet-labs.com/planet_mc_YYYYMMDD.tle
+
+# How often should River View poll your data sources?
+interval: 1 day
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 3 years
+
+fields:
+ - x
+ - y
+ - z
+ - velocityX
+ - velocityY
+ - velocityZ
+
+meta:
+ - catid
+ - rms
+

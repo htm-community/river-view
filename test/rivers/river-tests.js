@@ -127,14 +127,29 @@ describe('river config', function() {
 
     it('has a valid expires', function() {
         var sixMonths = moment.duration(6, 'months').asMonths();
+        var threeYears = moment.duration(3, 'years').asMonths();
+        var oneDay = moment.duration(1, 'day').asDays();
         var expiresString = config.expires;
         var expires = moment.duration(
             parseInt(expiresString.split(/\s+/).shift()),
             expiresString.split(/\s+/).pop()
         ).asMonths();
+        var intervalString = config.interval;
+        var interval = undefined;
+        if (intervalString) {
+            interval = moment.duration(
+                parseInt(intervalString.split(/\s+/).shift()),
+                intervalString.split(/\s+/).pop()
+            ).asDays();
+        }
         assert.ok(config.expires, 'config.yml is missing "expires"');
-        // Expires must be under 6 months.
-        expect(expires).to.be.at.most(sixMonths);
+        // If the interval is more than one day, the expires can be up to 3 years
+        if (interval && interval >= oneDay) {
+            expect(expires).to.be.at.most(threeYears);
+        } else {
+            // Expires must be under 6 months.
+            expect(expires).to.be.at.most(sixMonths);
+        }
     });
 
     it('sources all resolve to working URLs', function(done) {
