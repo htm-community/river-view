@@ -1,3 +1,5 @@
+new: true
+
 type: geospatial
 
 # Short text description of the data you are providing.
@@ -16,13 +18,13 @@ timezone: America/Chicago
 # A list of URLs that contain the raw data. Each of these will be polled at the
 # interval specified below, and the response text will be sent to your parser.
 sources:
-- https://data.cityofchicago.org/resource/hec5-y4x5.json?$limit=1000&$order=creation_date%20DESC
-- https://data.cityofchicago.org/resource/uxic-zsuj.json?$limit=1000&$order=creation_date%20DESC
-- https://data.cityofchicago.org/resource/9ksk-na4q.json?$limit=1000&$order=creation_date%20DESC
-- https://data.cityofchicago.org/resource/97t6-zrhs.json?$limit=1000&$order=creation_date%20DESC
-- https://data.cityofchicago.org/resource/mab8-y9h3.json?$limit=1000&$order=creation_date%20DESC
-- https://data.cityofchicago.org/resource/3c9v-pnva.json?$limit=1000&$order=creation_date%20DESC
-- https://data.cityofchicago.org/resource/7as2-ds3y.json?$limit=1000&$order=creation_date%20DESC
+ - https://data.cityofchicago.org/resource/hec5-y4x5.json?$limit=1000&$order=creation_date%20DESC
+ - https://data.cityofchicago.org/resource/uxic-zsuj.json?$limit=1000&$order=creation_date%20DESC
+ - https://data.cityofchicago.org/resource/9ksk-na4q.json?$limit=1000&$order=creation_date%20DESC
+ - https://data.cityofchicago.org/resource/97t6-zrhs.json?$limit=1000&$order=creation_date%20DESC
+ - https://data.cityofchicago.org/resource/mab8-y9h3.json?$limit=1000&$order=creation_date%20DESC
+ - https://data.cityofchicago.org/resource/3c9v-pnva.json?$limit=1000&$order=creation_date%20DESC
+ - https://data.cityofchicago.org/resource/7as2-ds3y.json?$limit=1000&$order=creation_date%20DESC
 
 # How often should River View poll your data sources?
 interval: 1 day

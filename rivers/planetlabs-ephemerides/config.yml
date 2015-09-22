@@ -1,3 +1,5 @@
+new: true
+
 type: scalar
 
 # Short text description of the data you are providing.
