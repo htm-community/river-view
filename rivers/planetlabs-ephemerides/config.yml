@@ -19,12 +19,14 @@ sources:
 - http://ephemerides.planet-labs.com/planet_mc.tle
 - http://ephemerides.planet-labs.com/jspoc_matches.txt
 
+historicUrlPattern: http://ephemerides.planet-labs.com/planet_mc_YYYYMMDD.tle
+
 # How often should River View poll your data sources?
 interval: 1 day
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
-expires: 6 months
+expires: 3 years
 
 fields:
  - x
@@ -37,3 +39,4 @@ fields:
 meta:
  - catid
  - rms
+

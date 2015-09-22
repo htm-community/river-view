@@ -29,6 +29,11 @@ function processTle(name, line1, line2, temporalDataCallback) {
     var timestamp = julianYearAndDayToTimestamp(record.epochyr, record.epochdays);
     var fieldValues;
 
+    if (positionAndVelocity.length) {
+        // bad data point.
+        return;
+    }
+
     fieldValues = [
         position.x,
         position.y,
@@ -41,7 +46,7 @@ function processTle(name, line1, line2, temporalDataCallback) {
     temporalDataCallback(name, timestamp, fieldValues);
 }
 
-function processTleBody(body, timezone, temporalDataCallback) {
+function processTleBody(body, temporalDataCallback) {
     var lines = body.split('\n'),
         name, line1, line2;
 
@@ -93,29 +98,32 @@ function preload(since, until, config, temporalDataCallback) {
     var current = since;
     var urlPattern = config.historicUrlPattern;
     var yesterday = moment().subtract(1, 'day');
-    console.log(current.unix());
-    console.log(until.unix());
-    console.log('');
+    if (! until) {
+        until = yesterday;
+    }
     while (current < until) {
-        console.log('hi');
-        console.log(current.format());
-        //var year = current.year();
-        //var month = current.month();
         //var day = current.day();
-        //var url = urlPattern.replace('YYYYMMDD', year + month + day);
-        //if (current >= yesterday) {
-        //    break;
-        //}
-        //console.log(url);
-        //request.get(url, function(error, body, response) {
-        //    parse(body, {
-        //        url: url,
-        //        config: config
-        //    }, temporalDataCallback)
-        //});
+        var replacement = current.format('YYYYMMDD');
+        var url = urlPattern.replace('YYYYMMDD', replacement);
+        if (current >= yesterday) {
+            break;
+        }
+        request.get(url, function(error, response, body) {
+            if (error) {
+                //console.info(error);
+                return;
+            }
+            if (response.statusCode != 200) {
+                //console.info('%s returned status code %s', url, response.statusCode);
+                return;
+            }
+            parse(body, {
+                url: url,
+                config: config
+            }, temporalDataCallback)
+        });
         current = current.add(1, 'day');
     }
-    console.log('broke out');
 }
 
 function parse(body, options, temporalDataCallback, metaDataCallback) {
@@ -124,20 +132,19 @@ function parse(body, options, temporalDataCallback, metaDataCallback) {
 
     moment.tz.setDefault(timezone);
 
-    // Let's preload data for the past month if it doesn't already exist :)
-    if (earliestSeenData && earliestSeenData.add(1, 'month') > moment()) {
-        preload(
-            moment().subtract(1, 'month'),
-            earliestSeenData,
-            options.config,
-            temporalDataCallback
-        );
-    }
-
     if (_.contains(url, 'jspoc_matches')) {
         processJspoc(body, metaDataCallback);
+        // Let's preload data for the past 6 months if it doesn't already exist.
+        if (! earliestSeenData || earliestSeenData.add(1, 'month') > moment()) {
+            preload(
+                moment().subtract(18, 'months'),
+                earliestSeenData,
+                options.config,
+                temporalDataCallback
+            );
+        }
     } else {
-        processTleBody(body, timezone, temporalDataCallback);
+        processTleBody(body, temporalDataCallback);
     }
 }
 
