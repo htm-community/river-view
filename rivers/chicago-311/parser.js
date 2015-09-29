@@ -1,5 +1,5 @@
-var _ = require('lodash')
-    moment = require('moment-timezone')
+var _ = require('lodash'),
+    moment = require('moment-timezone'),
     lookup = {};
 
 lookup['hec5-y4x5'] = 'Graffiti Removal';
