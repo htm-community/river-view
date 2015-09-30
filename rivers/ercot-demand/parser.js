@@ -29,7 +29,7 @@ function dateStringToTimestampWithZone(dateString, timeString, zone) {
 
 function systemWideDemand(body, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
-        url = options.url,
+        url = options.source,
         $ = cheerio.load(body),
         streamId = 'system_wide_demand',
         parsedUrl = nodeUrl.parse(url),

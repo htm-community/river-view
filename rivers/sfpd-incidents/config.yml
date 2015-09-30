@@ -13,11 +13,12 @@ email: matt@numenta.org
 # use "UTC"
 timezone: America/Los_Angeles
 
-# A list of URLs that contain the raw data. Each of these will be polled at the
-# interval specified below, and the response text will be sent to your parser.
-sources:
-  # see http://dev.socrata.com/
-- https://data.sfgov.org/resource/tmnf-yvry.json?%24order=date%20DESC&%24limit=5000
+soda:
+- name: sfpd-incidents
+  source: data.sfgov.org
+  dataset: tmnf-yvry
+  limit: 5000
+  order: date DESC
 
 # How often should River View poll your data sources?
 interval: 5 days

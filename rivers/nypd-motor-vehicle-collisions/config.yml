@@ -13,12 +13,11 @@ email: matt@numenta.org
 # use "UTC"
 timezone: America/New_York
 
-# A list of URLs that contain the raw data. Each of these will be polled at the
-# interval specified below, and the response text will be sent to your parser.
-sources:
-  # see http://dev.socrata.com/
-  # - https://data.cityofnewyork.us/resource/qiz3-axqb.json?$limit=5000&$order=date%20DESC,time%20DESC
-  - https://data.cityofnewyork.us/resource/qiz3-axqb.json?$limit=2500&$order=date%20DESC,time%20DESC
+soda:
+- source: data.cityofnewyork.us
+  dataset: qiz3-axqb
+  limit: 2500
+  order: date DESC,time DESC
 
 # How often should River View poll your data sources?
 interval: 5 days

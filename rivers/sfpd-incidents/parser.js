@@ -1,9 +1,8 @@
 var _ = require('lodash'),
     moment = require('moment-timezone');
 
-module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+module.exports = function(data, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
-        data = JSON.parse(body),
         streamId = 'sfpd-incidents';
 
     // This is important.

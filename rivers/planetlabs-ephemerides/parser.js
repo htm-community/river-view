@@ -34,6 +34,12 @@ function processTle(name, line1, line2, temporalDataCallback) {
         return;
     }
 
+    // If any values are NaN, ingore the whole point.
+    if (isNaN(position.x) || isNaN(position.y) || isNaN(position.z) ||
+        isNaN(velocity.x) || isNaN(velocity.y) || isNaN(velocity.z)) {
+        return;
+    }
+
     fieldValues = [
         position.x,
         position.y,
@@ -127,11 +133,10 @@ function preload(since, until, config, temporalDataCallback) {
 }
 
 function parse(body, options, temporalDataCallback, metaDataCallback) {
-    var url = options.url,
+    var url = options.source,
         timezone = options.config.timezone;
 
     moment.tz.setDefault(timezone);
-
     if (_.contains(url, 'jspoc_matches')) {
         processJspoc(body, metaDataCallback);
         // Let's preload data for the past 6 months if it doesn't already exist.
