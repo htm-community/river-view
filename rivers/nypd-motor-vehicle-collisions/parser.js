@@ -2,10 +2,9 @@
 var _ = require('lodash'),
     moment = require('moment-timezone');
 
-module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+module.exports = function(data, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
-        data = JSON.parse(body),
-        streamId = 'nypd-motor-vehicle-collisions';
+        streamId = options.source.soda.name;
 
     // This is important.
     moment.tz.setDefault(config.timezone);

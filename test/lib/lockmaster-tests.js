@@ -159,7 +159,7 @@ describe('when running a river', function() {
         var parseFn = function(body, options, cb1, cb2) {
             expect(options.config).to.deep.equal(mockRiverConfig);
             expect(body).to.equal('mock response body');
-            expect(options.url).to.equal('mock url');
+            expect(options.source).to.equal('mock url');
             assert.ok(urlFetched);
             done();
         };

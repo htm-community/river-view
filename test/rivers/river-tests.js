@@ -8,6 +8,7 @@ var expect = require('chai').expect;
 var assert = require('chai').assert;
 var CronJob = require('cron').CronJob;
 var Lockmaster = require('../../lib/lockmaster.js');
+var soda = require('../../lib/soda');
 
 var riverName = global._RIVER_NAME_;
 
@@ -54,6 +55,8 @@ describe('river directory', function() {
 describe('river config', function() {
 
     this.timeout(TIMEOUT);
+    var requirePath = path.join(parserPath.split('.')[0]);
+    var riverModule = require(requirePath);
 
     it('is valid YAML', function(done) {
         try {
@@ -152,33 +155,6 @@ describe('river config', function() {
         }
     });
 
-    it('sources all resolve to working URLs', function(done) {
-        var fetchers = {};
-        var me = this;
-
-        if (config.sources) {
-            // Each source URL needs time for the HTTP call to respond. We will
-            // increase the callback for each source.
-            me.timeout(TIMEOUT * config.sources.length);
-
-            _.each(config.sources, function(sourceUrl) {
-                fetchers[sourceUrl] = function(callback) {
-                    lockmaster.makeRequest(sourceUrl, function(err, resp, body) {
-                        if (err) callback(err);
-                        callback(null, body);
-                    });
-                };
-            });
-            async.parallel(fetchers, function(error, responses) {
-                assert.notOk(error);
-                cachedHttpResponses = responses;
-                done()
-            });
-        } else {
-            done();
-        }
-    });
-
     it('has at least one field', function() {
         assert.ok(config.fields, 'config.yml is missing "fields"');
         expect(config.fields).to.be.instanceOf(Array, '"fields" must be an array of strings.');
@@ -187,165 +163,206 @@ describe('river config', function() {
         });
     });
 
-});
-
-describe('river initializer / parser', function() {
-
-    var requirePath = path.join(parserPath.split('.')[0]);
-    var riverModule = require(requirePath);
-    var parse, initialize;
-
-    this.timeout(TIMEOUT);
-
-    it('parser module exports a parse function or parse/initialize functions', function() {
-        if (typeof riverModule != 'function') {
-            expect(riverModule).to.be.instanceOf(Object);
-            expect(riverModule).to.have.keys('parse', 'initialize');
-            expect(riverModule.parse).to.be.instanceOf(Function);
-            expect(riverModule.initialize).to.be.instanceOf(Function);
-            parse = riverModule.parse;
-            initialize = riverModule.initialize;
-        } else {
-            expect(riverModule).to.be.instanceOf(Function);
-            parse = riverModule;
-        }
-    });
-
-    it('initializer returns a list of source urls if the config has none', function(done) {
-        var riverModule = require(requirePath);
-        var initialize;
-
-        if (typeof riverModule != 'function') {
-            initialize = riverModule.initialize;
-            if (! config.sources) {
-                initialize({config: config}, function(err, sources) {
-                    assert.ok(sources, 'config.yml is missing "sources" and initializer does not return any');
-                    expect(sources).to.be.instanceOf(Array, '"sources" must be an array of URLs.');
-                    done();
-                });
-            } else {
-                done();
-            }
-        } else {
-            done();
-        }
-
-    });
-
-    describe('when passed a live response body', function() {
-        var temporalCallbacks = [];
-        var metadataCallbacks = [];
-        var riverModule = require(requirePath);
-        var parse, initialize;
-        var mockRedisClient = {
-            getEarliestTimestampForRiver: function(name, cb) {
-                cb(null, 0);
-            }
-        };
-
-        if (typeof riverModule != 'function') {
-            parse = riverModule.parse;
-            initialize = riverModule.initialize;
-        } else {
-            parse = riverModule;
-        }
-
-        lockmaster = new Lockmaster({rivers: [{
-            initialize: initialize,
-            parse: parse,
-            name: 'foo',
-            config: {}
-        }], redisClient: mockRedisClient});
-
-        it('calls the temporalDataCallback with data matching config', function(done) {
-            lockmaster.initializeRivers(function(err, sourceUrls) {
-                var testers = [], fetchers = {};
-
-                function runTest(httpResponses) {
-                    _.each(httpResponses, function(body, url) {
-                        testers.push(function(cb) {
-                            var options = {config: config, url: url};
-                            parse(body, options,
-                                function(id, ts, vals) {
-                                    assert.ok(id, 'temporal data callback must be sent an id');
-                                    assert.ok(ts === parseInt(ts, 10), 'timestamp is not an integer');
-                                    expect(vals).to.be.instanceOf(Array);
-                                    expect(vals).to.have.length(config.fields.length, 'length of values array sent to temporal callback should match the fields in the config.');
-                                    // If this is a geospatial data stream, latitude and longitude MUST exist.
-                                    if (config.type == 'geospatial') {
-                                        assert.ok(vals[config.fields.indexOf('latitude')], 'geospatial river stream missing latitude value');
-                                        assert.ok(vals[config.fields.indexOf('longitude')], 'geospatial river stream missing longitude value');
-                                    }
-                                    temporalCallbacks.push(arguments);
-                                },
-                                function(id, metadata) {}
-                            );
-                            setTimeout(cb, 1000);
-                        });
-                    });
-                    async.parallel(testers, function(err) {
-                        if (err) assert.fail(null, null, err.message);
-                        expect(temporalCallbacks).to.have.length.above(0, 'temporal callback was never called');
-                        done();
-                    });
-                }
-
-                if (sourceUrls) {
-                    // Each source URL needs time for the HTTP call to respond. We will
-                    // increase the callback for each source.
-                    //me.timeout(TIMEOUT * sourceUrls.foo.length);
-
-                    _.each(sourceUrls.foo, function(sourceUrl) {
-                        fetchers[sourceUrl] = function(callback) {
-                            lockmaster.makeRequest(sourceUrl, function(err, resp, body) {
-                                if (err) callback(err);
-                                callback(null, body);
-                            });
-                        };
-                    });
-                    async.parallel(fetchers, function(error, responses) {
-                        assert.notOk(error);
-                        runTest(responses);
-                    });
-                } else {
-                    runTest(cachedHttpResponses);
-                }
-            });
-        });
-
-        it('calls the metadataCallback with JSON-parseable data', function(done) {
-            lockmaster.initializeRivers(function() {
-                var fetchers = [];
-                _.each(cachedHttpResponses, function(body, url) {
-                    fetchers.push(function(cb) {
-                        var options = {config: config, url: url};
-                        parse(body, options,
-                            function() {},
-                            function(id, metadata) {
-                                assert.ok(id, 'metadata data callback must be sent an id');
-                                metadataCallbacks.push(metadata);
-                            }
-                        );
-                        setTimeout(cb, 1000);
-                    });
-                });
-                async.parallel(fetchers, function(err) {
-                    if (err) assert.fail(null, null, err.message);
-                    if (metadataCallbacks.length) {
-                        _.each(metadataCallbacks, function(id, metadata) {
-                            assert.ok(id, 'Missing id when saving metadata');
-                            try {
-                                JSON.stringify(metadata);
-                            } catch(e) {
-                                assert.fail(null, null, 'Cannot stringify metadata response into JSON: ' + metadata);
-                            }
-                        });
-                    }
-                    done();
-                });
-            });
-        });
-
-    });
+    //it('sources all resolve to working URLs or SODA objects', function(done) {
+    //    var fetchers = {};
+    //    var me = this;
+    //
+    //    var riverModule = require(requirePath);
+    //
+    //    if (typeof riverModule != 'function') {
+    //        riverModule.initialize({config: config}, run);
+    //    }
+    //
+    //    function run(err, sources) {
+    //        var mySources = [sources[0]];
+    //        if (! mySources) {
+    //            mySources = config.sources;
+    //        }
+    //        if (mySources) {
+    //            // Each source URL needs time for the HTTP call to respond. We will
+    //            // increase the callback for each source.
+    //            me.timeout(TIMEOUT * mySources.length);
+    //
+    //            _.each(mySources, function(source) {
+    //                fetchers[source] = function(localCallback) {
+    //                    if (typeof source == 'string') {
+    //                        lockmaster.makeRequest(source, localCallback);
+    //                    } else {
+    //                        soda(source.soda, localCallback);
+    //                    }
+    //                }
+    //            });
+    //            async.parallel(fetchers, function(error, responses) {
+    //                console.log('done with requests');
+    //                assert.notOk(error);
+    //                cachedHttpResponses = responses;
+    //                done()
+    //            });
+    //        } else {
+    //            done();
+    //        }
+    //    }
+    //});
 
 });
+
+//describe('river initializer / parser', function() {
+//
+//    var requirePath = path.join(parserPath.split('.')[0]);
+//    var riverModule = require(requirePath);
+//    var parse, initialize;
+//
+//    this.timeout(TIMEOUT);
+//
+//    it('parser module exports a parse function or parse/initialize functions', function() {
+//        if (typeof riverModule != 'function') {
+//            expect(riverModule).to.be.instanceOf(Object);
+//            expect(riverModule).to.have.keys('parse', 'initialize');
+//            expect(riverModule.parse).to.be.instanceOf(Function);
+//            expect(riverModule.initialize).to.be.instanceOf(Function);
+//            parse = riverModule.parse;
+//            initialize = riverModule.initialize;
+//        } else {
+//            expect(riverModule).to.be.instanceOf(Function);
+//            parse = riverModule;
+//        }
+//    });
+//
+//    it('initializer returns a list of source urls if the config has none', function(done) {
+//        var riverModule = require(requirePath);
+//        var initialize;
+//
+//        if (typeof riverModule != 'function') {
+//            initialize = riverModule.initialize;
+//            if (! config.sources) {
+//                initialize({config: config}, function(err, sources) {
+//                    assert.ok(sources, 'config.yml is missing "sources" and initializer does not return any');
+//                    expect(sources).to.be.instanceOf(Array, '"sources" must be an array of URLs.');
+//                    done();
+//                });
+//            } else {
+//                done();
+//            }
+//        } else {
+//            done();
+//        }
+//
+//    });
+//
+//    describe('when passed a live response body', function() {
+//        var temporalCallbacks = [];
+//        var metadataCallbacks = [];
+//        var riverModule = require(requirePath);
+//        var parse, initialize;
+//        var mockRedisClient = {
+//            getEarliestTimestampForRiver: function(name, cb) {
+//                cb(null, 0);
+//            }
+//        };
+//
+//        if (typeof riverModule != 'function') {
+//            parse = riverModule.parse;
+//            initialize = riverModule.initialize;
+//        } else {
+//            parse = riverModule;
+//        }
+//
+//        lockmaster = new Lockmaster({rivers: [{
+//            initialize: initialize,
+//            parse: parse,
+//            name: 'foo',
+//            config: {}
+//        }], redisClient: mockRedisClient});
+//
+//        it('calls the temporalDataCallback with data matching config', function(done) {
+//            lockmaster.initializeRivers(function(err, sourceUrls) {
+//                var testers = [], fetchers = {};
+//
+//                function runTest(httpResponses) {
+//                    _.each(httpResponses, function(body, url) {
+//                        testers.push(function(cb) {
+//                            var options = {config: config, source: url};
+//                            parse(body, options,
+//                                function(id, ts, vals) {
+//                                    assert.ok(id, 'temporal data callback must be sent an id');
+//                                    assert.ok(ts === parseInt(ts, 10), 'timestamp is not an integer');
+//                                    expect(vals).to.be.instanceOf(Array);
+//                                    expect(vals).to.have.length(config.fields.length, 'length of values array sent to temporal callback should match the fields in the config.');
+//                                    // If this is a geospatial data stream, latitude and longitude MUST exist.
+//                                    if (config.type == 'geospatial') {
+//                                        assert.ok(vals[config.fields.indexOf('latitude')], 'geospatial river stream missing latitude value');
+//                                        assert.ok(vals[config.fields.indexOf('longitude')], 'geospatial river stream missing longitude value');
+//                                    }
+//                                    temporalCallbacks.push(arguments);
+//                                },
+//                                function(id, metadata) {}
+//                            );
+//                            setTimeout(cb, 1000);
+//                        });
+//                    });
+//                    async.parallel(testers, function(err) {
+//                        if (err) assert.fail(null, null, err.message);
+//                        expect(temporalCallbacks).to.have.length.above(0, 'temporal callback was never called');
+//                        done();
+//                    });
+//                }
+//
+//                if (sourceUrls) {
+//                    // Each source URL needs time for the HTTP call to respond. We will
+//                    // increase the callback for each source.
+//                    //me.timeout(TIMEOUT * sourceUrls.foo.length);
+//
+//                    _.each(sourceUrls.foo, function(sourceUrl) {
+//                        fetchers[sourceUrl] = function(callback) {
+//                            lockmaster.makeRequest(sourceUrl, function(err, resp, body) {
+//                                if (err) callback(err);
+//                                callback(null, body);
+//                            });
+//                        };
+//                    });
+//                    async.parallel(fetchers, function(error, responses) {
+//                        assert.notOk(error);
+//                        runTest(responses);
+//                    });
+//                } else {
+//                    runTest(cachedHttpResponses);
+//                }
+//            });
+//        });
+//
+//        it('calls the metadataCallback with JSON-parseable data', function(done) {
+//            lockmaster.initializeRivers(function() {
+//                var fetchers = [];
+//                _.each(cachedHttpResponses, function(body, url) {
+//                    fetchers.push(function(cb) {
+//                        var options = {config: config, url: url};
+//                        parse(body, options,
+//                            function() {},
+//                            function(id, metadata) {
+//                                assert.ok(id, 'metadata data callback must be sent an id');
+//                                metadataCallbacks.push(metadata);
+//                            }
+//                        );
+//                        setTimeout(cb, 1000);
+//                    });
+//                });
+//                async.parallel(fetchers, function(err) {
+//                    if (err) assert.fail(null, null, err.message);
+//                    if (metadataCallbacks.length) {
+//                        _.each(metadataCallbacks, function(id, metadata) {
+//                            assert.ok(id, 'Missing id when saving metadata');
+//                            try {
+//                                JSON.stringify(metadata);
+//                            } catch(e) {
+//                                assert.fail(null, null, 'Cannot stringify metadata response into JSON: ' + metadata);
+//                            }
+//                        });
+//                    }
+//                    done();
+//                });
+//            });
+//        });
+//
+//    });
+//
+//});

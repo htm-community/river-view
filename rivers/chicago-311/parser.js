@@ -1,14 +1,5 @@
 var _ = require('lodash'),
-    moment = require('moment-timezone'),
-    lookup = {};
-
-lookup['hec5-y4x5'] = 'Graffiti Removal';
-lookup['uxic-zsuj'] = 'Tree Trim';
-lookup['9ksk-na4q'] = 'Garbage Carts';
-lookup['97t6-zrhs'] = 'Rodent Baiting';
-lookup['mab8-y9h3'] = 'Tree Debris';
-lookup['3c9v-pnva'] = 'Abandoned Vehicles';
-lookup['7as2-ds3y'] = 'Pot Holes';
+    moment = require('moment-timezone');
 
 function dateStringToTimestampWithZone(timeIn, zone) {
     // "2015-09-16T00:00:00"
@@ -33,17 +24,10 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     return timestamp;
 }
 
-function getStreamIdFromUrl(url) {
-    // https://data.cityofchicago.org/resource/uxic-zsuj.json?$limit=1000&$order=creation_date%20DESC
-    return url.split(/\//).pop().split('.').shift();
-}
-
-module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
-    var payload = JSON.parse(body),
-        url = options.url,
+module.exports = function(payload, options, temporalDataCallback, metaDataCallback) {
+    var source = options.source,
         config = options.config,
-        timezone = options.config.timezone,
-        urlId = getStreamIdFromUrl(url);
+        timezone = options.config.timezone;
 
     moment.tz.setDefault(config.timezone);
 
@@ -58,7 +42,7 @@ module.exports = function(body, options, temporalDataCallback, metaDataCallback)
             return;
         }
 
-        var streamId = lookup[urlId],
+        var streamId = source.name,
             timestamp,
             fieldValues,
             location = point.location,

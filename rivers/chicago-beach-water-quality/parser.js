@@ -28,19 +28,11 @@ function dateStringToTimestampWithZone(timeIn, zone) {
     return timestamp;
 }
 
-module.exports = function(body, options, temporalDataCallback, metaDataCallback) {
+module.exports = function(dataArray, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
-        dataArray, fieldNames = config.fields,
+        fieldNames = config.fields,
         metadataNames = config.metadata;
 
-    try {
-        dataArray = JSON.parse(body)
-    } catch (err) {
-        console.error(body);
-        return console.error(new Error('JSON parse error: ' + err.message));
-    }
-
-    // This is important.
     moment.tz.setDefault(config.timezone);
 
     _.each(dataArray, function(dataPoint) {
