@@ -38,16 +38,15 @@ module.exports = function(payload, options, temporalDataCallback, metaDataCallba
         }
 
         // Skip records with no location.
-        if (! point.location) {
+        if (! point.longitude || ! point.latitude) {
             return;
         }
 
         var streamId = source.name,
             timestamp,
             fieldValues,
-            location = point.location,
-            latitude = location.latitude,
-            longitude = location.longitude,
+            latitude = point.latitude,
+            longitude = point.longitude,
             creation_date = point.creation_date,
             police_district = point.police_district,
             zip_code = point.zip_code,
