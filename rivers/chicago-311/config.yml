@@ -41,7 +41,7 @@ soda:
   dataset: mab8-y9h3
   limit: 200
   order: creation_date DESC
-- name: Abandonded Vehicles
+- name: Abandoned Vehicles
   source: data.cityofchicago.org
   dataset: 3c9v-pnva
   limit: 200
