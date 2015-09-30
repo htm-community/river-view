@@ -14,8 +14,7 @@ email: matt@numenta.org
 timezone: America/New_York
 
 soda:
-- name: nypd-motor-vehicle-collisions
-  source: data.cityofnewyork.us
+- source: data.cityofnewyork.us
   dataset: qiz3-axqb
   limit: 2500
   order: date DESC,time DESC

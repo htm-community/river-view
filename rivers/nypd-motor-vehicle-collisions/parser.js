@@ -4,7 +4,7 @@ var _ = require('lodash'),
 
 module.exports = function(data, options, temporalDataCallback, metaDataCallback) {
     var config = options.config,
-        streamId = options.source.soda.name;
+        streamId = 'nypd-motor-vehicle-collisions';
 
     // This is important.
     moment.tz.setDefault(config.timezone);
