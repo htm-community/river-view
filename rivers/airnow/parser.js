@@ -66,7 +66,7 @@ function initialize(options, callback) {
     _.times(feedCount, function(index) {
         var feedId = index + 1;
         if (! _.contains(config.excludedFeeds, feedId)) {
-            urls.push('http://feeds.airnowapi.org/rss/realtime/' + feedId + '.xml');
+            urls.push('http://feeds.enviroflash.info/rss/realtime/' + feedId + '.xml');
         }
     });
     callback(null, urls);
