@@ -16,7 +16,7 @@ timezone: America/Los_Angeles
 soda:
 - name: sfpd-incidents
   source: data.sfgov.org
-  dataset: tmnf-yvry
+  dataset: cuks-n6tp
   limit: 5000
   order: date DESC
 
@@ -25,7 +25,7 @@ interval: 5 days
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
-expires: 6 months
+expires: 2 years
 
 fields:
 - latitude

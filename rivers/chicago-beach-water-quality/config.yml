@@ -15,7 +15,7 @@ timezone: America/Chicago
 
 soda:
 - source: data.cityofchicago.org
-  dataset: 3ipq-j3gd
+  dataset: 46rk-hgnz
   limit: 100
 
 # How often should River View poll your data sources?
@@ -23,7 +23,7 @@ interval: 1 hour
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
-expires: 6 months
+expires: 2 years
 
 # Primary data, usually collected in one location. Should both be scalar values.
 fields:

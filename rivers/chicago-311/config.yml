@@ -18,37 +18,37 @@ timezone: America/Chicago
 soda:
 - name: Graffiti Removal
   source: data.cityofchicago.org
-  dataset: hec5-y4x5
+  dataset: cdmx-wzbz
   limit: 1000
   order: creation_date DESC
 - name: Tree Trim
   source: data.cityofchicago.org
-  dataset: uxic-zsuj
+  dataset: yvxb-fxjz
   limit: 600
   order: creation_date DESC
 - name: Garbage Carts
   source: data.cityofchicago.org
-  dataset: 9ksk-na4q
+  dataset: a9br-8sqt
   limit: 400
   order: creation_date DESC
 - name: Rodent Baiting
   source: data.cityofchicago.org
-  dataset: 97t6-zrhs
+  dataset: dvua-vftq
   limit: 600
   order: creation_date DESC
 - name: Tree Debris
   source: data.cityofchicago.org
-  dataset: mab8-y9h3
+  dataset: ee5t-jv3t
   limit: 200
   order: creation_date DESC
 - name: Abandoned Vehicles
   source: data.cityofchicago.org
-  dataset: 3c9v-pnva
+  dataset: suj7-cg3j
   limit: 200
   order: creation_date DESC
 - name: Pot Holes
   source: data.cityofchicago.org
-  dataset: 7as2-ds3y
+  dataset: 787j-mys9
   limit: 300
   order: creation_date DESC
 
@@ -57,7 +57,7 @@ interval: 1 day
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
-expires: 6 months
+expires: 2 years
 
 fields:
 - latitude
