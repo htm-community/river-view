@@ -24,7 +24,7 @@ interval: 5 days
 
 # When should your collected data expire? This means that River View will store
 # a time-boxed window of data. Data outside of this timebox will be flushed.
-expires: 6 months
+expires: 1 year
 
 fields:
   - latitude

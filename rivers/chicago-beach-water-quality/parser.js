@@ -35,11 +35,12 @@ module.exports = function(dataArray, options, temporalDataCallback, metaDataCall
 
     moment.tz.setDefault(config.timezone);
 
+
     _.each(dataArray, function(dataPoint) {
         var fieldValues = [],
             metadata = {},
             streamId = dataPoint.beach_name,
-            dateString = dataPoint.last_updated_label,
+            dateString = dataPoint.measurement_timestamp_label,
             timestamp = dateStringToTimestampWithZone(dateString, config.timezone);
 
         // Temporal data
