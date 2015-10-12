@@ -106,6 +106,50 @@ describe('after starting', function() {
 
         });
 
+        describe('river data', function() {
+
+            var handler = handlers['/:river/:id/data\.:ext?'];
+            var testStatus = undefined;
+
+            it('returns 400 if "since" and "until" and "limit" query params are all provided', function(done) {
+
+                var mockRequest = {
+                    query: {
+                        since: 1111111,
+                        until: 2222222,
+                        limit: 10
+                    },
+                    params: {
+                        ext: 'json',
+                        river: 'foo',
+                        id: 'bar'
+                    },
+                    accepts: function(type) {
+                        return (type == 'json');
+                    }
+                };
+                var mockResponse = {
+                    setHeader: dummyFunction,
+                    end: function(stringOut) {
+                        var jsonOut = JSON.parse(stringOut);
+                        expect(jsonOut).to.have.key('errors');
+                        expect(jsonOut.errors).to.be.instanceOf(Array);
+                        expect(jsonOut.errors).to.have.length(1);
+                        expect(jsonOut.errors[0]).to.equal('Cannot specify "since" and "until" and "limit" simultaneously.');
+                        expect(testStatus).to.equal(400);
+                        done();
+                    },
+                    status: function(status) {
+                        testStatus = status;
+                    }
+                };
+
+                handler(mockRequest, mockResponse);
+
+            });
+
+        });
+
     });
 
 });
