@@ -13,16 +13,24 @@
 
         var chartWidth = $('#chart-container').width()
           , $chart = $('#chart')
-          , dataLimit = RV.utils.getUrlVars().limit || 100
-          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv?limit=' + dataLimit
+          , dataLimit = RV.utils.getUrlVars().limit || '{{dataLimit}}'
+          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv'
           , lastField = '{{headers}}'.split(',').pop()
           , graphConfig = {}
           ;
 
+        if (dataLimit) {
+            csvPath += '?limit=' + dataLimit;
+        }
+
         $('#data-limit').html(dataLimit);
         $('a.download').each(function(i, a) {
-            var $a = $(a);
-            $a.attr('href', $a.attr('href') + '?limit=' + dataLimit);
+            var $a = $(a), url;
+            url = $a.attr('href');
+            if (dataLimit) {
+                url = url += '?limit=' + dataLimit;
+            }
+            $a.attr('href', url);
         });
 
         function highlightWeekends(canvas, area, g) {
