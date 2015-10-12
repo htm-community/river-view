@@ -6,11 +6,15 @@
 
 <script type="text/javascript">
     $(function() {
-        var dataLimit = RV.utils.getUrlVars().limit || 100;
+        var dataLimit = RV.utils.getUrlVars().limit || '{{dataLimit}}';
         $('#data-limit').html(dataLimit);
         $('a.download').each(function(i, a) {
-            var $a = $(a);
-            $a.attr('href', $a.attr('href') + '?limit=' + dataLimit);
+            var $a = $(a), url;
+            url = $a.attr('href');
+            if (dataLimit) {
+                url = url += '?limit=' + dataLimit;
+            }
+            $a.attr('href', url);
         });
     });
 </script>

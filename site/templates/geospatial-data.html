@@ -37,20 +37,28 @@
             zoom: 11
         });
         var urlVars = RV.utils.getUrlVars();
-        var dataLimit = urlVars.limit || 100;
+        var dataLimit = urlVars.limit || '{{dataLimit}}';
         var dataUrl;
 
         $('#data-limit').html(dataLimit);
         $('a.download').each(function(i, a) {
-            var $a = $(a);
-            $a.attr('href', $a.attr('href') + '?limit=' + dataLimit);
+            var $a = $(a), url;
+            url = $a.attr('href');
+            if (dataLimit) {
+                url = url += '?limit=' + dataLimit;
+            }
+            $a.attr('href', url);
         });
 
         $.get('{{ baseurl }}/static/templates/partials/markerLabel/index.html', function(response) {
             markerTemplate = response;
         });
 
-        dataUrl = '{{ baseurl }}/{{name}}/{{id}}/data.json?limit=' + dataLimit;
+        dataUrl = '{{ baseurl }}/{{name}}/{{id}}/data.json';
+
+        if (dataLimit) {
+            dataUrl += '?limit=' + dataLimit;
+        }
 
         function handleTemporalData(payload) {
             _.each(payload.data, function(eventData) {

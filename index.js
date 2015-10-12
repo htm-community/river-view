@@ -40,7 +40,7 @@ if (!process.env[CONFIG.redisEnv]) {
 }
 
 // Connect to redis
-redisClient = new RedisClient(REDIS_URL);
+redisClient = new RedisClient(REDIS_URL, CONFIG.maxDataPointsPerRequest);
 redisClient.initialize(function(err) {
     if (err) throw err;
 
