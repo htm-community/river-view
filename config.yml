@@ -8,6 +8,8 @@ port: 8085
 maxDataPointsPerRequest: 5000
 
 defaults:
+  json:
+    snapto: until
   html:
     maxPoints: 500
   river:
