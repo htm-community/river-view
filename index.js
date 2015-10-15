@@ -61,6 +61,7 @@ redisClient.initialize(function(err) {
         redisClient: redisClient
     });
 
+    lockmaster.start();
 
     buildStaticSite(CONFIG, function(err) {
         if (err) throw err;
