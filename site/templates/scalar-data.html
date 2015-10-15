@@ -13,22 +13,25 @@
 
         var chartWidth = $('#chart-container').width()
           , $chart = $('#chart')
-          , dataLimit = RV.utils.getUrlVars().limit || '{{dataLimit}}'
-          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv'
+          , queryString = RV.utils.getUrlQueryString()
+          , dataLimit = '{{dataLimit}}'
+          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv?'
           , lastField = '{{headers}}'.split(',').pop()
           , graphConfig = {}
           ;
 
-        if (dataLimit) {
-            csvPath += '?limit=' + dataLimit;
+
+
+        if (! queryString) {
+            queryString = 'limit=' + dataLimit;
         }
 
-        $('#data-limit').html(dataLimit);
+        csvPath += queryString;
+
         $('a.download').each(function(i, a) {
             var $a = $(a), url;
-            url = $a.attr('href');
-            if (dataLimit) {
-                url = url += '?limit=' + dataLimit;
+            if (queryString) {
+                url = $a.attr('href') + '?' + queryString;
             }
             $a.attr('href', url);
         });

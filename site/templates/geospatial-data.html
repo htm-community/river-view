@@ -19,8 +19,8 @@
 
 <script type="text/javascript">
 
-    function showAggregateChart(urlVars) {
-        var csvPath = '{{ baseurl }}/{{name}}/{{id}}/data.csv?aggregate=' + urlVars.aggregate + '&since=' + urlVars.since;
+    function showAggregateChart(queryString) {
+        var csvPath = '{{ baseurl }}/{{name}}/{{id}}/data.csv?' + queryString;
         var chartWidth = $('#chart-container').width();
         var graphConfig = {
             title: 'Aggregate view',
@@ -36,16 +36,21 @@
         var map = new google.maps.Map(mapDiv, {
             zoom: 11
         });
+        var queryString = RV.utils.getUrlQueryString();
         var urlVars = RV.utils.getUrlVars();
-        var dataLimit = urlVars.limit || '{{dataLimit}}';
-        var dataUrl;
+        var dataLimit = '{{dataLimit}}';
+        var dataUrl = '{{tmpl.dataUrl}}';
 
-        $('#data-limit').html(dataLimit);
+        if (! queryString) {
+            queryString = 'limit=' + dataLimit;
+        }
+
+        dataUrl += '?' + queryString;
+
         $('a.download').each(function(i, a) {
             var $a = $(a), url;
-            url = $a.attr('href');
-            if (dataLimit) {
-                url = url += '?limit=' + dataLimit;
+            if (queryString) {
+                url = $a.attr('href') + '?' + queryString;
             }
             $a.attr('href', url);
         });
@@ -53,12 +58,6 @@
         $.get('{{ baseurl }}/static/templates/partials/markerLabel/index.html', function(response) {
             markerTemplate = response;
         });
-
-        dataUrl = '{{ baseurl }}/{{name}}/{{id}}/data.json';
-
-        if (dataLimit) {
-            dataUrl += '?limit=' + dataLimit;
-        }
 
         function handleTemporalData(payload) {
             _.each(payload.data, function(eventData) {
@@ -104,7 +103,7 @@
 
         if (urlVars.aggregate) {
             $(mapDiv).hide();
-            showAggregateChart(urlVars);
+            showAggregateChart(queryString);
         } else {
             $.getJSON(dataUrl, handleTemporalData);
         }
