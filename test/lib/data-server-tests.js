@@ -31,7 +31,7 @@ describe('after starting', function() {
         rivers: [{
             name: 'foo',
             config: {},
-            getKeys: function(cb) {
+            getKeys: function(options, cb) {
                 cb(null, []);
             }
         }, {
