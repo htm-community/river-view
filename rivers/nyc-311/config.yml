@@ -36,7 +36,6 @@ fields:
 - agency
 - borough
 - city
-- complaint_type
 - community_board
 - descriptor
 - due_date
