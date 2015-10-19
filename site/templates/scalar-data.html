@@ -15,7 +15,7 @@
           , $chart = $('#chart')
           , queryString = RV.utils.getUrlQueryString()
           , dataLimit = '{{dataLimit}}'
-          , csvPath = '{{baseurl}}/{{name}}/{{id}}/data.csv?'
+          , csvPath = '{{baseurl}}/{{name}}/' + encodeURIComponent('{{id}}') + '/data.csv?'
           , lastField = '{{headers}}'.split(',').pop()
           , graphConfig = {}
           ;

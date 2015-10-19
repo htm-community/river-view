@@ -31,15 +31,15 @@
 <tbody>
 {{#each keys}}
     <tr>
-        <td class="river-name" style="width:50%"><h3>{{this}}</h3></td>
+        <td class="river-name" style="width:50%"><h3>{{name}}</h3></td>
         <td style="width:50%">
 
 
             <div class="btn-group btn-group-justified" role="group">
 
-                <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{../name}}/{{this}}/data.html" role="button"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Data</a>
+                <a class="btn btn-primary btn-lg" href="{{../baseurl}}/{{../name}}/{{urlEncodedName}}/data.html" role="button"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Data</a>
 
-                <a class="btn btn-primary btn-lg meta" href="{{../baseurl}}/{{../name}}/{{this}}/meta.html" role="button"><span class="glyphicon glyphicon glyphicon-equalizer" aria-hidden="true"></span> Metadata</a>
+                <a class="btn btn-primary btn-lg meta" href="{{../baseurl}}/{{../name}}/{{urlEncodedName}}/meta.html" role="button"><span class="glyphicon glyphicon glyphicon-equalizer" aria-hidden="true"></span> Metadata</a>
 
             </div>
 
