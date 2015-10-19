@@ -1,0 +1,48 @@
+new: true
+
+type: geospatial
+
+# Short text description of the data you are providing.
+description: All open graffiti removal requests made to 311 and all requests completed since January 1, 2011. The Department of Streets & Sanitation's Graffiti Blasters crews offer a vandalism removal service to private property owners. Graffiti Blasters employ "blast" trucks that use baking soda under high water pressure to erase painted graffiti from brick, stone and other mineral surfaces. They also use paint trucks to cover graffiti on the remaining surfaces. Organizations and residents may report graffiti and request its removal.
+
+poweredBy: '<a href="https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Graffiti-Removal/hec5-y4x5"><img src="https://data.cityofchicago.org/stylesheets/images/domains/data.cityofchicago.org/chicago_logo.png"></a>'
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/Chicago
+
+soda:
+- name: NYC 311
+  source: data.cityofnewyork.us
+  dataset: fhrw-4uyv
+  limit: 2000
+  order: created_date DESC
+
+# How often should River View poll your data sources?
+interval: 1 day
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 2 years
+
+fields:
+- latitude
+- longitude
+- address_type
+- agency
+- borough
+- city
+- complaint_type
+- community_board
+- descriptor
+- due_date
+- facility_type
+- incident_address
+- incident_zip
+- location_type
+- street_name
+- unique_key
