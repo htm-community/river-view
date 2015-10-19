@@ -13,10 +13,10 @@ email: matt@numenta.org
 # Timezone is important! You should use the timezone that the data is
 # collected, or if time of day does not matter in the data patterns, you many
 # use "UTC"
-timezone: America/Chicago
+timezone: America/New_York
 
 soda:
-- name: NYC 311
+- name: nyc-311
   source: data.cityofnewyork.us
   dataset: fhrw-4uyv
   limit: 2000
