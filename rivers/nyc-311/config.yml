@@ -5,7 +5,7 @@ type: geospatial
 # Short text description of the data you are providing.
 description: All open graffiti removal requests made to 311 and all requests completed since January 1, 2011. The Department of Streets & Sanitation's Graffiti Blasters crews offer a vandalism removal service to private property owners. Graffiti Blasters employ "blast" trucks that use baking soda under high water pressure to erase painted graffiti from brick, stone and other mineral surfaces. They also use paint trucks to cover graffiti on the remaining surfaces. Organizations and residents may report graffiti and request its removal.
 
-poweredBy: '<a href="https://data.cityofchicago.org/Service-Requests/311-Service-Requests-Graffiti-Removal/hec5-y4x5"><img src="https://data.cityofchicago.org/stylesheets/images/domains/data.cityofchicago.org/chicago_logo.png"></a>'
+poweredBy: '<a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9"><img src="https://data.cityofnewyork.us/api/assets/8F33CCC7-3371-478A-AFCA-00CE3F148A80"></a>'
 
 author: Matthew Taylor
 email: matt@numenta.org
