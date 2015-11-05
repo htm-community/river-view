@@ -1,0 +1,36 @@
+type: scalar
+
+# Short text description of the data you are providing.
+description: BTCC trades
+
+poweredBy: '<a href="https://exchange.btcc.com"><img src="https://com.btcchinacdn.com/assets/images/btcc-logo.png"></a>'
+
+author: Li Meng Jun
+email: lmjubuntu@gmail.com
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: Asia/Shanghai
+
+# A list of URLs that contain the raw data. Each of these will be polled at the
+# interval specified below, and the response text will be sent to your parser.
+sources:
+  - https://data.btcchina.com/data/trades
+
+# How often should River View poll your data sources?
+interval: 10 minutes
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 6 months
+
+# Primary data, usually collected in one location. Should both be scalar values.
+fields:
+  - price
+  - amount
+
+# This provides more information about the data. This data doesn't change over
+# time like the fields.
+metadata:
+  #- tid
