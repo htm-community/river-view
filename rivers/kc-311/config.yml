@@ -1,0 +1,52 @@
+new: true
+
+type: geospatial
+
+# Short text description of the data you are providing.
+description:
+
+poweredBy: '<a href="https://dev.socrata.com/foundry/data.kcmo.org/cyqf-nban"><img src="https://data.kcmo.org/api/assets/CD993454-4A60-47DF-A407-D0750069D8CB"></a>'
+
+author: Matthew Taylor
+email: matt@numenta.org
+
+# Timezone is important! You should use the timezone that the data is
+# collected, or if time of day does not matter in the data patterns, you many
+# use "UTC"
+timezone: America/Chicago
+
+soda:
+- name: ks-311
+  source: data.kcmo.org
+  dataset: 7at3-sxhp
+  limit: 2000
+  order: creation_date DESC
+
+# How often should River View poll your data sources?
+interval: 1 day
+
+# When should your collected data expire? This means that River View will store
+# a time-boxed window of data. Data outside of this timebox will be flushed.
+expires: 2 years
+
+fields:
+- longitude
+- latitude
+- case_id
+- case_url
+- category
+- closed_date
+- council_district
+- days_to_close
+- department
+- detail
+- exceeded_est_timeframe
+- neighborhood
+- parcel_id_no
+- request_type
+- source
+- status
+- street_address
+- type
+- work_group
+- zip_code
