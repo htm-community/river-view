@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Public Temporal Streaming Data Service Framework",
   "main": "index.js",
+  "engines": {
+    "node": "8.1.4"
+  },
   "directories": {
     "test": "test"
   },
